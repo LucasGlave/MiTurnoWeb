@@ -9,12 +9,34 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    gap: 24rem;
     justify-content: space-around;
     .headerRight {
       display: flex;
       flex-direction: row;
       gap: 4rem;
     }
+  }
+  .button {
+    display: flex;
+    padding: 12px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    align-self: stretch;
+    border-radius: 8px;
+    border: none;
+    color: white;
+    background: var(--Principal, #a442f1);
+    text-align: center;
+    font-variant-numeric: slashed-zero;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+      sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
   }
   .card {
     display: flex;
@@ -50,27 +72,63 @@
             background-image: url("http://www.w3.org/2000/svg");
           }
         }
-        button {
+      }
+    }
+  }
+  .cardContainer {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    justify-content: flex-start;
+    margin-top: 5rem;
+    min-height: 69vh;
+    .cardTop {
+      display: flex;
+      justify-content: flex-start;
+    }
+    .cardBottom {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+      .reserva {
+        display: flex;
+        width: 679px;
+        height: 362px;
+        padding: 32px 53px;
+        flex-direction: column;
+        align-items: flex-start;
+        flex-shrink: 0;
+        .circulo {
           display: flex;
-          padding: 12px 24px;
+          width: 32px;
+          height: 32px;
+          padding: 6px 8px;
           justify-content: center;
           align-items: center;
-          gap: 4px;
+          border-radius: 8px;
+          color: #fff;
+          background: var(--Principal, #a442f1);
+        }
+        .dropdown {
+          display: flex;
+          padding: 12px 8px 12px 12px;
+          align-items: center;
+          gap: 8px;
           align-self: stretch;
           border-radius: 8px;
-          border: none;
-          color: white;
-          background: var(--Principal, #a442f1);
-          text-align: center;
-          font-variant-numeric: slashed-zero;
-          font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-            Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
-            sans-serif;
-          font-size: 16px;
-          font-style: normal;
-          font-weight: 500;
-          line-height: 20px;
+          border: 1px solid var(--Grey-3, #c6c6c6);
+          background: var(--White, #fff);
         }
+      }
+      .calendario {
+        display: flex;
+        border-radius: 30px;
+        border: 1px solid #a442f1;
+        width: 457px;
+        padding: 32px;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
       }
     }
   }
