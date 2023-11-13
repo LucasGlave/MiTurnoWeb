@@ -1,11 +1,6 @@
 import React from "react";
 
-const HomePage = () => {
-  return (
-    <div>
-      <h1>Home Page</h1>
-    </div>
-  );
+const index = () => {
+  return <div>index</div>;
 };
-
-export default HomePage;
+export default index;
