@@ -5,10 +5,10 @@ import styles from "../../app/login.module.scss";
 
 const Login = () => {
   return (
-    <div className="container">
-      <div className="header">
+    <div className={styles.container}>
+      <div className={styles.header}>
         <h3 style={{ color: "#a442f1" }}>Reservar</h3>
-        <div className="headerRight">
+        <div className={styles.headerRight}>
           <div
             style={{
               display: "flex",
@@ -57,20 +57,20 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <div className="card">
+      <div className={styles.card}>
         <h1>Iniciar sesión</h1>
         <form>
-          <div className="form-group">
+          <div className={styles.group}>
             <h2>Usuario</h2>
             <input type="text" />
           </div>
-          <div className="form-group">
+          <div className={styles.group}>
             <h2>Contraseña</h2>
             <input type="text" className="input-with-icon" />
           </div>
           <h4>¿Olvidaste tu contraseña?</h4>
-          <div className="form-group">
-            <button>Ingresar</button>
+          <div className={styles.group}>
+            <button className={styles.button}>Ingresar</button>
           </div>
         </form>
         <h4 style={{ marginTop: "4rem" }}>¿No tenés una cuenta? Registrate</h4>
