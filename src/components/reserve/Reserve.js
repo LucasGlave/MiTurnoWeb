@@ -10,7 +10,7 @@ import { StaticTimePicker } from "@mui/x-date-pickers/StaticTimePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 
-const Reserva = () => {
+const Reserve = () => {
   const sweetReserve = () => {
     Swal.fire({
       title: "Turno reservado con éxito",
@@ -144,4 +144,4 @@ const Reserva = () => {
   );
 };
 
-export default Reserva;
+export default Reserve;
