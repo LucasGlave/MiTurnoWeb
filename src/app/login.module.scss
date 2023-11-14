@@ -109,6 +109,46 @@
           color: #fff;
           background: var(--Principal, #a442f1);
         }
+        .pVioleta {
+          height: 2px;
+          flex: 1 0 0;
+          border-radius: 8px;
+          background: var(--Principal, #a442f1);
+        }
+        .circuloVerde {
+          display: flex;
+          width: 32px;
+          height: 32px;
+          padding: 6px 8px;
+          justify-content: center;
+          align-items: center;
+          border-radius: 8px;
+          color: #fff;
+          background: var(--Principal, #00a541);
+        }
+        .pVerde {
+          height: 2px;
+          flex: 1 0 0;
+          border-radius: 8px;
+          background: var(--Principal, #00a541);
+        }
+        .circuloGris {
+          display: flex;
+          width: 32px;
+          height: 32px;
+          padding: 6px 8px;
+          justify-content: center;
+          align-items: center;
+          border-radius: 8px;
+          color: #fff;
+          background: var(--Principal, #c8c8c8);
+        }
+        .pGris {
+          height: 2px;
+          flex: 1 0 0;
+          border-radius: 8px;
+          background: var(--Principal, #c8c8c8);
+        }
         .dropdown {
           display: flex;
           padding: 12px 8px 12px 12px;
@@ -158,7 +198,4 @@
     font-size: 12px;
     color: #a442f1;
   }
-}
-.css-umzx0k-MuiClock-pin {
-  background-color: #a442f1;
 }

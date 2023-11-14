@@ -39,23 +39,9 @@ const Reserva = () => {
                   width: "100%",
                 }}
               >
-                <p
-                  style={{
-                    height: "2px",
-                    flex: "1 0 0",
-                    borderRadius: "8px",
-                    background: "var(--Principal, #A442F1)",
-                  }}
-                />
-                <div className={styles.circulo}>1</div>
-                <p
-                  style={{
-                    height: "2px",
-                    flex: "1 0 0",
-                    borderRadius: "8px",
-                    background: "var(--Principal, #A442F1)",
-                  }}
-                />
+                <p className={styles.pVerde} />
+                <div className={styles.circuloVerde}>1</div>
+                <p className={styles.pVerde} />
               </div>
               <div
                 style={{
@@ -66,23 +52,9 @@ const Reserva = () => {
                   width: "100%",
                 }}
               >
-                <p
-                  style={{
-                    height: "2px",
-                    flex: "1 0 0",
-                    borderRadius: "8px",
-                    background: "var(--Principal, #A442F1)",
-                  }}
-                />
+                <p className={styles.pVioleta} />
                 <div className={styles.circulo}>2</div>
-                <p
-                  style={{
-                    height: "2px",
-                    flex: "1 0 0",
-                    borderRadius: "8px",
-                    background: "var(--Principal, #A442F1)",
-                  }}
-                />
+                <p className={styles.pVioleta} />
               </div>
               <div
                 style={{
@@ -93,23 +65,9 @@ const Reserva = () => {
                   width: "100%",
                 }}
               >
-                <p
-                  style={{
-                    height: "2px",
-                    flex: "1 0 0",
-                    borderRadius: "8px",
-                    background: "var(--Principal, #A442F1)",
-                  }}
-                />
-                <div className={styles.circulo}>3</div>
-                <p
-                  style={{
-                    height: "2px",
-                    flex: "1 0 0",
-                    borderRadius: "8px",
-                    background: "var(--Principal, #A442F1)",
-                  }}
-                />
+                <p className={styles.pGris} />
+                <div className={styles.circuloGris}>3</div>
+                <p className={styles.pGris} />
               </div>
             </div>
             <div
@@ -122,7 +80,7 @@ const Reserva = () => {
               <h3 style={{ color: "#a442f1", marginLeft: "1.2rem" }}>
                 Elegí tu sucursal
               </h3>
-              <h3 style={{ color: "#a442f1", marginLeft: "2.2rem" }}>
+              <h3 style={{ color: "#a442f1", marginLeft: "2.6rem" }}>
                 Seleccioná el día
               </h3>
               <h3 style={{ color: "#a442f1", marginLeft: "1rem" }}>
