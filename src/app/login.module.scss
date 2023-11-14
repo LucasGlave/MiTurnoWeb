@@ -55,6 +55,11 @@
       align-items: center;
       justify-content: center;
       width: 100%;
+      .twoForm {
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+      }
       .group {
         width: 80%;
         display: flex;
