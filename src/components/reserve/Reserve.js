@@ -3,6 +3,7 @@ import React from "react";
 import styles from "../../app/login.module.scss";
 import Header from "../header/Header";
 import { Roboto } from "next/font/google";
+import Swal from "sweetalert2";
 import dayjs from "dayjs";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { StaticTimePicker } from "@mui/x-date-pickers/StaticTimePicker";
@@ -10,6 +11,20 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 
 const Reserve = () => {
+  const sweetReserve = () => {
+    Swal.fire({
+      title: "Turno reservado con éxito",
+      text: "Gracias por confiar en nuestro servicio",
+      icon: "success",
+    });
+  };
+  const sweetModified = () => {
+    Swal.fire({
+      title: "Turno modificado con éxito",
+      text: "Gracias por confiar en nuestro servicio",
+      icon: "success",
+    });
+  };
   return (
     <div className={styles.container}>
       <Header />
@@ -90,7 +105,11 @@ const Reserve = () => {
             <h2>Sucursal</h2>
             <input type="text" className={styles.dropdown}></input>
             <div className={styles.group}>
-              <button className={styles.button} style={{ marginTop: "2rem" }}>
+              <button
+                onClick={sweetReserve}
+                className={styles.button}
+                style={{ marginTop: "2rem" }}
+              >
                 Confirmar reserva
               </button>
             </div>
