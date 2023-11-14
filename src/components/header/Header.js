@@ -5,7 +5,7 @@ import Link from "next/link";
 const Header = () => {
   return (
     <div className={styles.header}>
-      <Link style={{ textDecoration: "none" }} href="/reserva">
+      <Link style={{ textDecoration: "none" }} href="/reserve">
         <h3 style={{ color: "#a442f1" }}>Reservar</h3>
       </Link>
       <div className={styles.headerRight}>
