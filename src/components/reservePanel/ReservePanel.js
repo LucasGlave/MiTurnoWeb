@@ -7,6 +7,9 @@ const ReservePanel = () => {
   return (
     <div className={styles.container}>
       <Header />
+      <div style={{ width: "80%" }}>
+        <h1>Reservas</h1>
+      </div>
       <div
         style={{
           width: "80%",
