@@ -9,7 +9,7 @@ import { StaticTimePicker } from "@mui/x-date-pickers/StaticTimePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 
-const Reserva = () => {
+const Reserve = () => {
   return (
     <div className={styles.container}>
       <Header />
@@ -125,4 +125,4 @@ const Reserva = () => {
   );
 };
 
-export default Reserva;
+export default Reserve;
