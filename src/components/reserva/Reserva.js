@@ -1,9 +1,13 @@
+"use client";
 import React from "react";
 import styles from "../../app/login.module.scss";
 import Header from "../header/Header";
 import { Roboto } from "next/font/google";
-// import { DatePicker } from "@mui/lab";
-import DesktopDatePicker from "@mui/lab";
+import dayjs from "dayjs";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { StaticTimePicker } from "@mui/x-date-pickers/StaticTimePicker";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 
 const Reserva = () => {
   return (
@@ -134,7 +138,13 @@ const Reserva = () => {
             </div>
           </div>
           <div className={styles.calendario}>
-            <h3>calendario</h3>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={["TimePicker", "StaticTimePicker"]}>
+                <DemoItem>
+                  <StaticTimePicker defaultValue={dayjs("2022-04-17T15:30")} />
+                </DemoItem>
+              </DemoContainer>
+            </LocalizationProvider>
           </div>
         </div>
         <div
