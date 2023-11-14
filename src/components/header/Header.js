@@ -1,10 +1,13 @@
 import React from "react";
 import styles from "../../app/login.module.scss";
+import Link from "next/link";
 
 const Header = () => {
   return (
     <div className={styles.header}>
-      <h3 style={{ color: "#a442f1" }}>Reservar</h3>
+      <Link style={{ textDecoration: "none" }} href="/reserva">
+        <h3 style={{ color: "#a442f1" }}>Reservar</h3>
+      </Link>
       <div className={styles.headerRight}>
         <div
           style={{
@@ -14,7 +17,9 @@ const Header = () => {
             gap: "5px",
           }}
         >
-          <h3>Mis reservas</h3>
+          <Link style={{ textDecoration: "none" }} href="/reserve-panel">
+            <h3>Mis reservas</h3>
+          </Link>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
