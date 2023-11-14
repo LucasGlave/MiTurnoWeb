@@ -3,6 +3,7 @@
   align-items: center;
   min-height: 100vh;
   width: 100%;
+  min-height: 100vh;
   flex-direction: column;
   .header {
     margin-top: 2rem;
@@ -68,9 +69,17 @@
           align-items: center;
           gap: 8px;
           align-self: stretch;
-          .input-with-icon {
-            background-image: url("http://www.w3.org/2000/svg");
-          }
+        }
+        .innerInput {
+          z-index: 0;
+          position: relative;
+        }
+        svg {
+          position: absolute;
+          top: 52.6%;
+          right: 566px;
+          transform: translateY(-50%);
+          z-index: 1;
         }
       }
     }
