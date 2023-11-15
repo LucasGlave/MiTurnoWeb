@@ -1,23 +1,77 @@
-import React from "react";
-import { Roboto } from "next/font/google";
+"use client";
+
+import React, { useState } from "react";
+
 import styles from "../../app/login.module.scss";
 import Header from "../header/Header";
 import Link from "next/link";
+// import axios from "axios";
 
 const Login = () => {
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [error, setError] = useState(null);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setError(null);
+    if (!userData.email || !userData.password) {
+      setError("Por favor, complete todos los campos.");
+      return;
+    }
+
+    // axios
+    //   .post(`http://localhost:5000/api/users/login`, {
+    //     ...userData,
+    //     role: "client",
+    //   })
+    //   .then((response) => {
+    //     setUserData({
+    //       email: "",
+    //       password: "",
+    //     });
+    //     // useRouter("/??");
+    //   })
+    //   .catch((error) => {
+    //     setError(
+    //       "Error al Iniciar Sesion. Verifica tus datos e inténtalo nuevamente."
+    //     );
+    //   });
+    console.log(userData);
+  };
+
   return (
     <div className={styles.container}>
       <Header />
       <div className={styles.card}>
         <h1>Iniciar sesión</h1>
-        <form>
+        <form onSubmit={onSubmit}>
           <div className={styles.group}>
-            <h2>Usuario</h2>
-            <input type="text" />
+            <h2>Email</h2>
+            <input
+              value={userData.email}
+              name="email"
+              onChange={handleInputChange}
+              type="text"
+            />
           </div>
           <div className={styles.group}>
             <h2>Contraseña</h2>
-            <input type="text" className={styles.innerInput} />
+            <input
+              value={userData.password}
+              name="password"
+              onChange={handleInputChange}
+              type="password"
+              className={styles.innerInput}
+            />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -35,7 +89,9 @@ const Login = () => {
           </div>
           <h4>¿Olvidaste tu contraseña?</h4>
           <div className={styles.group}>
-            <button className={styles.button}>Ingresar</button>
+            <button type="submit" className={styles.button}>
+              Ingresar
+            </button>
           </div>
         </form>
         <Link style={{ textDecoration: "none" }} href="/register">
