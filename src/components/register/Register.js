@@ -1,7 +1,67 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import styles from "../../app/login.module.scss";
+import Link from "next/link";
+import axios from "axios";
 
 const Register = () => {
+  const [formData, setFormData] = useState({
+    fullname: "",
+    dni: 0,
+    mail: "",
+    password: "",
+    repPassword: "",
+  });
+  const [userId, setUserId] = useState(null);
+  const [error, setError] = useState(null);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => {
+      return { ...prevState, [name]: value };
+    });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setError(null);
+    if (
+      !formData.fullname ||
+      !formData.dni ||
+      !formData.mail ||
+      !formData.password ||
+      !formData.repPassword
+    ) {
+      setError("Por favor, complete todos los campos.");
+      return;
+    }
+    if (formData.password !== formData.repPassword) {
+      setError("Las contraseñas no coinciden.");
+      return;
+    }
+    axios
+      .post(`http://localhost:5000/api/users/register`, {
+        ...formData,
+        role: "client",
+      })
+      .then((response) => {
+        setUserId(response.data.id);
+        setFormData({
+          fullname: "",
+          dni: 0,
+          mail: "",
+          password: "",
+          repPassword: "",
+        });
+        // navigate("/user/login");
+      })
+      .catch((error) => {
+        setError(
+          "Error al registrar. Verifica tus datos e inténtalo nuevamente."
+        );
+      });
+    console.log(formData);
+  };
   return (
     <div className={styles.container}>
       <div className={styles.card}>
@@ -29,32 +89,56 @@ const Register = () => {
           <h4 className={styles.back}> Atras</h4>
         </div>
         <h1>Crear Cuenta</h1>
-        <form>
+        <form onSubmit={onSubmit}>
           <div className={styles.twoForm}>
             <div className={styles.group} style={{ marginRight: "8px" }}>
               <p>Nombre y Apellido</p>
-              <input type="text" />
+              <input
+                value={formData.fullname}
+                name="fullname"
+                onChange={handleInputChange}
+                type="text"
+              />
             </div>
             <div className={styles.group}>
               <p>DNI</p>
-              <input type="text" />
+              <input
+                value={formData.dni}
+                name="dni"
+                onChange={handleInputChange}
+                type="number"
+              />
             </div>
           </div>
           <div className={styles.group}>
             <p>Mail</p>
-            <input type="text" />
+            <input
+              value={formData.mail}
+              name="mail"
+              onChange={handleInputChange}
+              type="text"
+            />
           </div>
           <div className={styles.twoForm} style={{ marginBottom: "16px" }}>
             <div className={styles.group} style={{ marginRight: "8px" }}>
               <p>Contraseña</p>
-              <input type="text" className="input-with-icon" />
+              <input
+                value={formData.password}
+                name="password"
+                onChange={handleInputChange}
+                type="password"
+              />
             </div>
             <div className={styles.group}>
               <p>Repetir Contraseña</p>
-              <input type="text" className="input-with-icon" />
+              <input
+                value={formData.repPassword}
+                name="repPassword"
+                onChange={handleInputChange}
+                type="password"
+              />
             </div>
           </div>
-
           <div
             className={styles.group}
             style={{
@@ -83,7 +167,7 @@ const Register = () => {
             <hr
               style={{
                 border: "1px solid #e1e1e1",
-                width: "90%",
+                width: "100%",
               }}
             />
             <div
@@ -110,7 +194,12 @@ const Register = () => {
                 marginBottom: "8px",
               }}
             >
-              <button className={styles.button} style={{ width: "100%" }}>
+              {error && <p className="error-message">{error}</p>}
+              <button
+                type="submit"
+                className={styles.button}
+                style={{ width: "100%" }}
+              >
                 Registrarme
               </button>
             </div>
@@ -127,16 +216,18 @@ const Register = () => {
                 marginTop: "8px",
               }}
             >
-              <h4
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                ¿Ya tenes cuenta? Inicia sesion
-              </h4>
+              <Link style={{ textDecoration: "none" }} href="/login">
+                <h4
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  ¿Ya tenes cuenta? Inicia sesion
+                </h4>
+              </Link>
             </div>
           </div>
         </form>
