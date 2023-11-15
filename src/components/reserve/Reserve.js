@@ -25,6 +25,13 @@ const Reserve = () => {
       icon: "success",
     });
   };
+  const sweetError = () => {
+    Swal.fire({
+      title: "No se pudo realizar el cambio",
+      text: "Este turno ya fue ocupado, vuelve a intentarlo más tarde o modificando algún parámetro",
+      icon: "error",
+    });
+  };
   return (
     <div className={styles.container}>
       <Header />
