@@ -6,9 +6,9 @@ import axios from "axios";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    fullname: "",
+    fullName: "",
     dni: 0,
-    mail: "",
+    email: "",
     password: "",
     repPassword: "",
   });
@@ -26,9 +26,9 @@ const Register = () => {
     e.preventDefault();
     setError(null);
     if (
-      !formData.fullname ||
+      !formData.fullName ||
       !formData.dni ||
-      !formData.mail ||
+      !formData.email ||
       !formData.password ||
       !formData.repPassword
     ) {
@@ -39,28 +39,7 @@ const Register = () => {
       setError("Las contraseñas no coinciden.");
       return;
     }
-    axios
-      .post(`http://localhost:5000/api/users/register`, {
-        ...formData,
-        role: "client",
-      })
-      .then((response) => {
-        setUserId(response.data.id);
-        setFormData({
-          fullname: "",
-          dni: 0,
-          mail: "",
-          password: "",
-          repPassword: "",
-        });
-        // navigate("/user/login");
-      })
-      .catch((error) => {
-        setError(
-          "Error al registrar. Verifica tus datos e inténtalo nuevamente."
-        );
-      });
-    console.log(formData);
+    //axios
   };
   return (
     <div className={styles.container}>
@@ -94,8 +73,8 @@ const Register = () => {
             <div className={styles.group} style={{ marginRight: "8px" }}>
               <p>Nombre y Apellido</p>
               <input
-                value={formData.fullname}
-                name="fullname"
+                value={formData.fullName}
+                name="fullName"
                 onChange={handleInputChange}
                 type="text"
               />
@@ -113,8 +92,8 @@ const Register = () => {
           <div className={styles.group}>
             <p>Mail</p>
             <input
-              value={formData.mail}
-              name="mail"
+              value={formData.email}
+              name="email"
               onChange={handleInputChange}
               type="text"
             />
