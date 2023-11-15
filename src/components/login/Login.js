@@ -2,6 +2,7 @@ import React from "react";
 import { Roboto } from "next/font/google";
 import styles from "../../app/login.module.scss";
 import Header from "../header/Header";
+import Link from "next/link";
 
 const Login = () => {
   return (
@@ -37,7 +38,11 @@ const Login = () => {
             <button className={styles.button}>Ingresar</button>
           </div>
         </form>
-        <h4 style={{ marginTop: "4rem" }}>¿No tenés una cuenta? Registrate</h4>
+        <Link style={{ textDecoration: "none" }} href="/register">
+          <h4 style={{ marginTop: "4rem" }}>
+            ¿No tenés una cuenta? Registrate
+          </h4>
+        </Link>
       </div>
     </div>
   );
