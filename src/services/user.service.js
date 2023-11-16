@@ -1,30 +1,29 @@
-import React from "react";
-import { useRouter } from "next/router";
+import axios from "axios";
 
-const userService = ({ formData }) => {
-  const navigate = useRouter();
-  axios
+export const userServiceRegister = (formData) => {
+  return axios
     .post(`http://localhost:5000/api/users/register`, {
       ...formData,
       role: "client",
     })
-    .then((response) => {
-      setUserId(response.data.id);
-      setFormData({
-        fullName: "",
-        dni: 0,
-        email: "",
-        password: "",
-        repPassword: "",
-      });
-      navigate.push("/login");
+    .then(() => {
+      console.log(formData);
     })
     .catch((error) => {
-      setError(
-        "Error al registrar. Verifica tus datos e inténtalo nuevamente."
+      console.error("Error al registrar:", error);
+    });
+};
+export const userServiceLogin = (userData) => {
+  return axios
+    .post(`http://localhost:5000/api/users/login`, userData, {
+      withCredentials: true,
+    })
+    .then(() => {
+      console.log(userData);
+    })
+    .catch(() => {
+      console.log(
+        "Error al Iniciar Sesion. Verifica tus datos e inténtalo nuevamente."
       );
     });
-  console.log(formData);
 };
-
-export default userService;

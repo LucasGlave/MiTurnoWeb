@@ -2,9 +2,11 @@
 import React, { useState } from "react";
 import styles from "../../app/login.module.scss";
 import Link from "next/link";
-import axios from "axios";
+import { userServiceRegister } from "../../services/user.service";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
+  const navigate = useRouter();
   const [formData, setFormData] = useState({
     fullname: "",
     dni: 0,
@@ -12,7 +14,6 @@ const Register = () => {
     password: "",
     repPassword: "",
   });
-  const [userId, setUserId] = useState(null);
   const [error, setError] = useState(null);
 
   const handleInputChange = (e) => {
@@ -21,7 +22,6 @@ const Register = () => {
       return { ...prevState, [name]: value };
     });
   };
-
   const onSubmit = (e) => {
     e.preventDefault();
     setError(null);
@@ -39,28 +39,8 @@ const Register = () => {
       setError("Las contraseñas no coinciden.");
       return;
     }
-    axios
-      .post(`http://localhost:5000/api/users/register`, {
-        ...formData,
-        role: "client",
-      })
-      .then((response) => {
-        setUserId(response.data.id);
-        setFormData({
-          fullname: "",
-          dni: 0,
-          mail: "",
-          password: "",
-          repPassword: "",
-        });
-        // navigate("/user/login");
-      })
-      .catch((error) => {
-        setError(
-          "Error al registrar. Verifica tus datos e inténtalo nuevamente."
-        );
-      });
-    console.log(formData);
+    let temp = { ...formData };
+    userServiceRegister(temp).then(() => navigate.push("/login"));
   };
   return (
     <div className={styles.container}>
