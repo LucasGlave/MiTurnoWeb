@@ -10,7 +10,7 @@ const Register = () => {
   const [formData, setFormData] = useState({
     fullName: "",
     dni: 0,
-    mail: "",
+    email: "",
     password: "",
     repPassword: "",
   });
@@ -28,7 +28,7 @@ const Register = () => {
     if (
       !formData.fullName ||
       !formData.dni ||
-      !formData.mail ||
+      !formData.email ||
       !formData.password ||
       !formData.repPassword
     ) {
@@ -74,7 +74,7 @@ const Register = () => {
             <div className={styles.group} style={{ marginRight: "8px" }}>
               <p>Nombre y Apellido</p>
               <input
-                value={formData.fullname}
+                value={formData.fullName}
                 name="fullname"
                 onChange={handleInputChange}
                 type="text"
@@ -93,7 +93,7 @@ const Register = () => {
           <div className={styles.group}>
             <p>Mail</p>
             <input
-              value={formData.mail}
+              value={formData.email}
               name="mail"
               onChange={handleInputChange}
               type="text"
