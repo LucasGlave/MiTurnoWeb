@@ -39,6 +39,7 @@ const Register = () => {
       setError("Las contraseñas no coinciden.");
       return;
     }
+    console.log(formData);
     let temp = { ...formData };
     userServiceRegister(temp).then(() => navigate.push("/login"));
   };
@@ -75,7 +76,7 @@ const Register = () => {
               <p>Nombre y Apellido</p>
               <input
                 value={formData.fullName}
-                name="fullname"
+                name="fullName"
                 onChange={handleInputChange}
                 type="text"
               />
@@ -94,7 +95,7 @@ const Register = () => {
             <p>Mail</p>
             <input
               value={formData.email}
-              name="mail"
+              name="email"
               onChange={handleInputChange}
               type="text"
             />
