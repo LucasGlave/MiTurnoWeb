@@ -46,10 +46,13 @@
     justify-content: center;
     flex-direction: column;
     margin-top: 10rem;
-    width: 42rem;
-    height: 35rem;
+    width: 580px;
+    padding: 32px;
     border-radius: 30px;
     font-weight: 400;
+    border-radius: 12px;
+    background: var(--White, #fff);
+    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.12);
     form {
       display: flex;
       flex-direction: column;
@@ -78,14 +81,11 @@
         }
         .innerInput {
           z-index: 0;
-          position: relative;
         }
         svg {
-          position: absolute;
-          top: 52.6%;
-          right: 566px;
-          transform: translateY(-50%);
+          transform: translateX(-135%);
           z-index: 1;
+          cursor: pointer;
         }
       }
     }
