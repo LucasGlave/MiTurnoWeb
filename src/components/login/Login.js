@@ -1,11 +1,9 @@
 "use client";
-
 import React, { useState } from "react";
-
 import styles from "../../app/login.module.scss";
 import Header from "../header/Header";
 import Link from "next/link";
-// import axios from "axios";
+import axios from "axios";
 
 const Login = () => {
   const [userData, setUserData] = useState({
@@ -27,24 +25,21 @@ const Login = () => {
       setError("Por favor, complete todos los campos.");
       return;
     }
-
-    // axios
-    //   .post(`http://localhost:5000/api/users/login`, {
-    //     ...userData,
-    //     role: "client",
-    //   })
-    //   .then((response) => {
-    //     setUserData({
-    //       email: "",
-    //       password: "",
-    //     });
-    //     // useRouter("/??");
-    //   })
-    //   .catch((error) => {
-    //     setError(
-    //       "Error al Iniciar Sesion. Verifica tus datos e inténtalo nuevamente."
-    //     );
-    //   });
+    axios
+      .post(`http://localhost:5000/api/users/login`, userData, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setUserData({
+          email: "",
+          password: "",
+        });
+      })
+      .catch((error) => {
+        setError(
+          "Error al Iniciar Sesion. Verifica tus datos e inténtalo nuevamente."
+        );
+      });
     console.log(userData);
   };
 
