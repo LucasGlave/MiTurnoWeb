@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 const Register = () => {
   const navigate = useRouter();
   const [formData, setFormData] = useState({
-    fullname: "",
+    fullName: "",
     dni: 0,
     mail: "",
     password: "",
@@ -26,7 +26,7 @@ const Register = () => {
     e.preventDefault();
     setError(null);
     if (
-      !formData.fullname ||
+      !formData.fullName ||
       !formData.dni ||
       !formData.mail ||
       !formData.password ||
