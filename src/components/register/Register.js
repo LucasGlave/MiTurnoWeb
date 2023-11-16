@@ -6,6 +6,7 @@ import { userServiceRegister } from "../../services/user.service";
 import { useRouter } from "next/navigation";
 
 const Register = () => {
+  const [inputValue, setInputValue] = useState("");
   const navigate = useRouter();
   const [formData, setFormData] = useState({
     fullName: "",
@@ -19,6 +20,7 @@ const Register = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => {
+      if (name === "password") setInputValue(e.target.value);
       return { ...prevState, [name]: value };
     });
   };
@@ -123,7 +125,7 @@ const Register = () => {
           <div
             className={styles.group}
             style={{
-              backgroundColor: "#f5f5f5",
+              backgroundColor: "#fff",
               marginBottom: "12px",
               color: "#6e6e6e",
               fontSize: "12px",
@@ -159,12 +161,53 @@ const Register = () => {
               }}
             >
               <div style={{ display: "flex", flexDirection: "column" }}>
-                <p>ABC Una letra mayúscula</p>
-                <p>123 Un número</p>
+                <p
+                  style={{
+                    color: /[A-Z]/.test(inputValue)
+                      ? "green"
+                      : inputValue
+                      ? "red"
+                      : "gray",
+                  }}
+                >
+                  ABC Una letra mayúscula
+                </p>
+                <p
+                  style={{
+                    color: /\d/.test(inputValue)
+                      ? "green"
+                      : inputValue
+                      ? "red"
+                      : "gray",
+                  }}
+                >
+                  123 Un número
+                </p>
               </div>
               <div style={{ display: "flex", flexDirection: "column" }}>
-                <p>Una letra minúscula</p>
-                <p>*** Mínimo 8 caracteres</p>
+                <p
+                  style={{
+                    color: /[a-z]/.test(inputValue)
+                      ? "green"
+                      : inputValue
+                      ? "red"
+                      : "gray",
+                  }}
+                >
+                  Una letra minúscula
+                </p>
+                <p
+                  style={{
+                    color:
+                      inputValue.length >= 8
+                        ? "green"
+                        : inputValue
+                        ? "red"
+                        : "gray",
+                  }}
+                >
+                  *** Mínimo 8 caracteres
+                </p>
               </div>
             </div>
           </div>
