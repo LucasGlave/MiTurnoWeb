@@ -3,9 +3,12 @@ import React, { useState } from "react";
 import styles from "../../app/login.module.scss";
 import Header from "../header/Header";
 import Link from "next/link";
-import axios from "axios";
+import { userServiceLogin } from "../../services/user.service";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
+  const navigate = useRouter();
+
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -25,21 +28,8 @@ const Login = () => {
       setError("Por favor, complete todos los campos.");
       return;
     }
-    axios
-      .post(`http://localhost:5000/api/users/login`, userData, {
-        withCredentials: true,
-      })
-      .then((response) => {
-        setUserData({
-          email: "",
-          password: "",
-        });
-      })
-      .catch((error) => {
-        setError(
-          "Error al Iniciar Sesion. Verifica tus datos e inténtalo nuevamente."
-        );
-      });
+    let temp = { ...userData };
+    userServiceLogin(temp).then(() => navigate.push("/register"));
     console.log(userData);
   };
 
