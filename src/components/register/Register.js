@@ -2,9 +2,11 @@
 import React, { useState } from "react";
 import styles from "../../app/login.module.scss";
 import Link from "next/link";
-import axios from "axios";
+import { userServiceRegister } from "../../services/user.service";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
+  const navigate = useRouter();
   const [formData, setFormData] = useState({
     fullName: "",
     dni: 0,
@@ -12,7 +14,6 @@ const Register = () => {
     password: "",
     repPassword: "",
   });
-  const [userId, setUserId] = useState(null);
   const [error, setError] = useState(null);
 
   const handleInputChange = (e) => {
@@ -21,7 +22,6 @@ const Register = () => {
       return { ...prevState, [name]: value };
     });
   };
-
   const onSubmit = (e) => {
     e.preventDefault();
     setError(null);
@@ -39,7 +39,8 @@ const Register = () => {
       setError("Las contraseñas no coinciden.");
       return;
     }
-    //axios
+    let temp = { ...formData };
+    userServiceRegister(temp).then(() => navigate.push("/login"));
   };
   return (
     <div className={styles.container}>
