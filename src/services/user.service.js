@@ -27,3 +27,17 @@ export const userServiceLogin = (userData) => {
       );
     });
 };
+// export const userServiceForgotPassword = (userData) => {
+//   return axios
+//     .post(`http://localhost:5001/api/users/forgot-password`, userData, {
+//       withCredentials: true,
+//     })
+//     .then(() => {
+//       console.log(userData);
+//     })
+//     .catch(() => {
+//       console.log(
+//         "Error al Iniciar Sesion. Verifica tus datos e inténtalo nuevamente."
+//       );
+//     });
+// };

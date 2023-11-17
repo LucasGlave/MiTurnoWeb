@@ -85,7 +85,10 @@ const Login = () => {
               </svg>
             </div>
           </div>
-          <h4>¿Olvidaste tu contraseña?</h4>
+          <Link href="/forgot-password">
+            <h4>¿Olvidaste tu contraseña?</h4>
+          </Link>
+
           <div className={styles.group}>
             <button type="submit" className={styles.button}>
               Ingresar
