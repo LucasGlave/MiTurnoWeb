@@ -1,6 +1,6 @@
 import React from "react";
 import { Roboto } from "next/font/google";
-import styles from "../../app/login.module.scss";
+import styles from "../../app/general.module.scss";
 import Header from "../header/Header";
 import HeaderOpeDetails from "../header/HeaderOpeDetails";
 

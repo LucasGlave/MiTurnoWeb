@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import styles from "../../app/login.module.scss";
+import styles from "../../app/general.module.scss";
 import Header from "../header/Header";
 import { Roboto } from "next/font/google";
 import Swal from "sweetalert2";
