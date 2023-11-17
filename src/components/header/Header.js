@@ -7,7 +7,7 @@ const Header = () => {
     <div className={styles.header}>
       <Link
         className={styles.headerLeft}
-        style={{ textDecoration: "none" }}
+        style={{ textDecoration: "none", height: "3rem", alignSelf: "center" }}
         href="/reserve"
       >
         <h3 style={{ color: "#a442f1" }}>Reservar</h3>
