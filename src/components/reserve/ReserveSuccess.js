@@ -1,6 +1,6 @@
 import React from "react";
 
-import styles from "../../app/login.module.scss";
+import styles from "../../app/general.module.scss";
 import Header from "../header/Header";
 const ReserveSuccess = () => {
   //const {id} = useParams()
