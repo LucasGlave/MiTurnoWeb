@@ -5,9 +5,14 @@ import Link from "next/link";
 const Header = () => {
   return (
     <div className={styles.header}>
-      <Link style={{ textDecoration: "none" }} href="/reserve">
+      <Link
+        className={styles.headerLeft}
+        style={{ textDecoration: "none" }}
+        href="/reserve"
+      >
         <h3 style={{ color: "#a442f1" }}>Reservar</h3>
       </Link>
+
       <div className={styles.headerRight}>
         <div
           style={{
@@ -18,7 +23,7 @@ const Header = () => {
           }}
         >
           <Link style={{ textDecoration: "none" }} href="/reserve-panel">
-            <h3>Mis reservas</h3>
+            <h3 style={{ color: "#000" }}>Mis reservas</h3>
           </Link>
           <svg
             xmlns="http://www.w3.org/2000/svg"

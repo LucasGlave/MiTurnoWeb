@@ -4,19 +4,39 @@ import styles from "../../app/login.module.scss";
 import Link from "next/link";
 import { userServiceRegister } from "../../services/user.service";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import EyeOpen from "../../../public/visibility_FILL0_wght400_GRAD0_opsz24.svg";
+import EyeClose from "../../../public/visibility_off_FILL0_wght400_GRAD0_opsz24.svg";
 
 const Register = () => {
   const [inputValue, setInputValue] = useState("");
   const navigate = useRouter();
+  const [eye, setEye] = useState("password");
   const [formData, setFormData] = useState({
     fullName: "",
-    dni: 0,
+    dni: "",
     email: "",
     password: "",
     repPassword: "",
   });
+  const handleEye = () => {
+    if (eye === "password") setEye("text");
+    else setEye("password");
+  };
   const [error, setError] = useState(null);
-
+  const handleKeyDown = (event) => {
+    if (
+      !(
+        event.key === "Backspace" ||
+        event.key === "Delete" ||
+        event.key === "ArrowLeft" ||
+        event.key === "ArrowRight"
+      ) &&
+      isNaN(Number(event.key))
+    ) {
+      event.preventDefault();
+    }
+  };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => {
@@ -27,6 +47,7 @@ const Register = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     setError(null);
+
     if (
       !formData.fullName ||
       !formData.dni ||
@@ -41,13 +62,16 @@ const Register = () => {
       setError("Las contraseñas no coinciden.");
       return;
     }
-    console.log(formData);
+    if (!/^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}$/.test(formData.password)) {
+      setError("La contraseña debe cumplir los requisitos.");
+      return;
+    }
     let temp = { ...formData };
     userServiceRegister(temp).then(() => navigate.push("/login"));
   };
   return (
     <div className={styles.container}>
-      <div className={styles.card}>
+      <div style={{ marginTop: "8rem" }} className={styles.card}>
         <div
           style={{
             width: "80%",
@@ -89,7 +113,8 @@ const Register = () => {
                 value={formData.dni}
                 name="dni"
                 onChange={handleInputChange}
-                type="number"
+                onKeyDown={handleKeyDown}
+                type="text"
               />
             </div>
           </div>
@@ -102,23 +127,63 @@ const Register = () => {
               type="text"
             />
           </div>
-          <div className={styles.twoForm} style={{ marginBottom: "16px" }}>
-            <div className={styles.group} style={{ marginRight: "8px" }}>
+          <div
+            className={styles.twoForm}
+            style={{
+              marginBottom: "16px",
+              gap: 5,
+              display: "flex",
+              alignItems: "flex-end",
+            }}
+          >
+            <div
+              className={styles.group}
+              style={{
+                alignItems: "flex-start",
+                display: "flex",
+              }}
+            >
               <p>Contraseña</p>
               <input
                 value={formData.password}
                 name="password"
                 onChange={handleInputChange}
-                type="password"
+                type={eye}
               />
             </div>
-            <div className={styles.group}>
+            {eye === "password" ? (
+              <Image
+                src={EyeClose}
+                onClick={handleEye}
+                style={{
+                  marginBottom: 7,
+                  opacity: "0.6",
+                  cursor: "pointer",
+                }}
+                width={23}
+                height={23}
+                alt="eye close"
+              />
+            ) : (
+              <Image
+                src={EyeOpen}
+                onClick={handleEye}
+                style={{ marginBottom: 7, opacity: "0.6", cursor: "pointer" }}
+                width={23}
+                height={23}
+                alt="eye open"
+              />
+            )}
+            <div
+              className={styles.group}
+              style={{ alignItems: "flex-start", display: "flex" }}
+            >
               <p>Repetir Contraseña</p>
               <input
                 value={formData.repPassword}
                 name="repPassword"
                 onChange={handleInputChange}
-                type="password"
+                type={eye}
               />
             </div>
           </div>
@@ -243,13 +308,20 @@ const Register = () => {
               <Link style={{ textDecoration: "none" }} href="/login">
                 <h4
                   style={{
+                    textDecoration: "none",
                     display: "flex",
-                    flexDirection: "row",
                     justifyContent: "center",
                     alignItems: "center",
+                    gap: "4px",
+                    width: "100%",
+                    height: "2.7rem",
+                    marginTop: "0.25rem",
+                    alignSelf: "center",
+                    borderRadius: "8px",
+                    background: "rgba(164, 66, 241, 0.1)",
                   }}
                 >
-                  ¿Ya tenes cuenta? Inicia sesion
+                  ¿Ya tenés cuenta? Iniciá sesión
                 </h4>
               </Link>
             </div>

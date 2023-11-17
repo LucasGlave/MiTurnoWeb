@@ -17,6 +17,16 @@
       flex-direction: row;
       gap: 4rem;
     }
+    .headerLeft {
+      display: flex;
+      padding: 0 24px;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      align-self: stretch;
+      border-radius: 8px;
+      background: rgba(164, 66, 241, 0.1);
+    }
   }
   .button {
     display: flex;
@@ -82,7 +92,7 @@
         .innerInput {
           z-index: 0;
         }
-        svg {
+        .image {
           transform: translateX(-135%);
           z-index: 1;
           cursor: pointer;
