@@ -10,6 +10,7 @@ export const userServiceRegister = (formData) => {
       console.error("Error al registrar:", error);
     });
 };
+
 export const userServiceLogin = (userData) => {
   return axios
     .post(`http://localhost:5001/api/users/login`, userData, {
@@ -19,6 +20,16 @@ export const userServiceLogin = (userData) => {
       console.error("Error al Iniciar Sesion: ", error);
     });
 };
+
+// export const userServiceMe = (userData) => {
+
+//   return axios
+//     .get(`http://localhost:5001/api/users/me`,{
+//       withCredentials: true,
+//     })
+//     .then((res)=> res.data)
+// };
+
 // export const userServiceForgotPassword = (userData) => {
 //   return axios
 //     .post(`http://localhost:5001/api/users/forgot-password`, userData, {
