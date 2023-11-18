@@ -36,7 +36,7 @@ const Login = () => {
       return;
     }
     let temp = { ...userData };
-    userServiceLogin(temp).then(() => navigate.push("/register"));
+    userServiceLogin(temp).then(() => navigate.push("/reserve"));
   };
 
   return (

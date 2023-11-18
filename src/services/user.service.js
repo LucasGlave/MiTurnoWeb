@@ -19,17 +19,16 @@ export const userServiceLogin = (userData) => {
       console.error("Error al Iniciar Sesion: ", error);
     });
 };
-// export const userServiceForgotPassword = (userData) => {
-//   return axios
-//     .post(`http://localhost:5001/api/users/forgot-password`, userData, {
-//       withCredentials: true,
-//     })
-//     .then(() => {
-//       console.log(userData);
-//     })
-//     .catch(() => {
-//       console.log(
-//         "Error al Iniciar Sesion. Verifica tus datos e inténtalo nuevamente."
-//       );
-//     });
-// };
+export const userServiceForgotPassword = (userData) => {
+  return axios
+    .post(`http://localhost:5001/api/users/forgot-password`, userData, {
+      withCredentials: true,
+    })
+    .catch((error) => {
+      console.log(
+        "Error al solicitar la recuperacion de contraseña. Verifica tus datos e inténtalo nuevamente.",
+        error
+      );
+      throw error;
+    });
+};

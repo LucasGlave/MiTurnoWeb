@@ -132,13 +132,6 @@ const NewPassword = () => {
                 Confirmar
               </button>
             </div>
-            <hr
-              style={{
-                border: "1px solid #ccc",
-                width: "100%",
-                margin: "8px 0",
-              }}
-            />
           </div>
         </form>
       </div>

@@ -26,11 +26,12 @@ const ForgotPassword = () => {
       setError("Por favor, llenar el campo Email.");
       return;
     }
-    // let temp = { ...userData };
-    // userServiceForgotPassword(temp).then(() =>
-    //   navigate.push("/forgot-password")
-    // );
-    // console.log(userData);
+
+    userServiceForgotPassword(userData.email)
+      .then(() => navigate.push("/forgot-password"))
+      .catch((error) => setError("Verificar direccion de email"));
+
+    console.log(userData);
   };
 
   return (
