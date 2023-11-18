@@ -21,26 +21,16 @@ export const userServiceLogin = (userData) => {
     });
 };
 
-// export const userServiceMe = (userData) => {
-
-//   return axios
-//     .get(`http://localhost:5001/api/users/me`,{
-//       withCredentials: true,
-//     })
-//     .then((res)=> res.data)
-// };
-
-// export const userServiceForgotPassword = (userData) => {
-//   return axios
-//     .post(`http://localhost:5001/api/users/forgot-password`, userData, {
-//       withCredentials: true,
-//     })
-//     .then(() => {
-//       console.log(userData);
-//     })
-//     .catch(() => {
-//       console.log(
-//         "Error al Iniciar Sesion. Verifica tus datos e inténtalo nuevamente."
-//       );
-//     });
-// };
+export const userServiceForgotPassword = (userData) => {
+  return axios
+    .post(`http://localhost:5001/api/users/forgot-password`, userData, {
+      withCredentials: true,
+    })
+    .catch((error) => {
+      console.log(
+        "Error al solicitar la recuperacion de contraseña. Verifica tus datos e inténtalo nuevamente.",
+        error
+      );
+      throw error;
+    });
+};
