@@ -21,11 +21,11 @@ export const userServiceLogin = (userData) => {
     });
 };
 
-export const userServiceForgotPassword = (userData) => {
+export const userServiceForgotPassword = (email) => {
+  console.log(email);
   return axios
-    .post(`http://localhost:5001/api/users/forgot-password`, userData, {
-      withCredentials: true,
-    })
+    .put(`http://localhost:5001/api/users/restore-password`, { email })
+
     .catch((error) => {
       console.log(
         "Error al solicitar la recuperacion de contraseña. Verifica tus datos e inténtalo nuevamente.",
