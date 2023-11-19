@@ -23,13 +23,10 @@ const ForgotPassword = () => {
       setError("Por favor, llenar el campo Email.");
       return;
     }
-    console.log("EMAILLLLL???--->", email);
-    userServiceForgotPassword(email)
-      .then(() => {
-        console.log("EMAILLLLL???--->", email);
-        navigate.push("/forgot-password");
-      })
-      .catch((error) => setError("Verificar direccion de email"));
+
+    userServiceForgotPassword(email).catch((error) =>
+      setError("Verificar direccion de email")
+    );
   };
 
   return (
