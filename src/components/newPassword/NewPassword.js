@@ -1,8 +1,56 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import styles from "../../app/general.module.scss";
 import Link from "next/link";
+import { userServiceNewPassword } from "../../services/user.service";
+import { useParams, useRouter } from "next/navigation";
+import Image from "next/image";
+import EyeOpen from "../../../public/visibility_FILL0_wght400_GRAD0_opsz24.svg";
+import EyeClose from "../../../public/visibility_off_FILL0_wght400_GRAD0_opsz24.svg";
 
 const NewPassword = () => {
+  const { token } = useParams();
+  const [inputValue, setInputValue] = useState("");
+  const navigate = useRouter();
+  const [eye, setEye] = useState("password");
+  const [formData, setFormData] = useState({
+    password: "",
+    repPassword: "",
+  });
+  const handleEye = () => {
+    if (eye === "password") setEye("text");
+    else setEye("password");
+  };
+  const [error, setError] = useState(null);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => {
+      if (name === "password") setInputValue(e.target.value);
+      return { ...prevState, [name]: value };
+    });
+  };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setError(null);
+
+    if (!formData.password || !formData.repPassword) {
+      setError("Por favor, complete todos los campos.");
+      return;
+    }
+    if (formData.password !== formData.repPassword) {
+      setError("Las contraseñas no coinciden.");
+      return;
+    }
+    if (!/^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}$/.test(formData.password)) {
+      setError("La contraseña debe cumplir los requisitos.");
+      return;
+    }
+    let temp = formData.password;
+    userServiceNewPassword(temp, token).then(() => {
+      console.log("???--->", formData);
+      navigate.push("/login");
+    });
+  };
   return (
     <div className={styles.container}>
       <div className={styles.card}>
@@ -41,7 +89,7 @@ const NewPassword = () => {
           </Link>
         </div>
         <h1>Generar Nueva Contraseña</h1>
-        <form>
+        <form onSubmit={onSubmit}>
           <div className={styles.group}>
             <h2>Nueva Contraseña</h2>
             <div
@@ -53,9 +101,9 @@ const NewPassword = () => {
               }}
             >
               <input
-                // value={userData.password}
+                value={formData.password}
                 name="password"
-                // onChange={handleInputChange}
+                onChange={handleInputChange}
                 type="password"
                 style={{ width: "100%" }}
                 className={styles.innerInput}
@@ -87,9 +135,9 @@ const NewPassword = () => {
               }}
             >
               <input
-                // value={userData.password}
-                name="password"
-                // onChange={handleInputChange}
+                value={formData.repPassword}
+                name="repPassword"
+                onChange={handleInputChange}
                 type="password"
                 style={{ width: "100%" }}
                 className={styles.innerInput}
@@ -132,13 +180,6 @@ const NewPassword = () => {
                 Confirmar
               </button>
             </div>
-            <hr
-              style={{
-                border: "1px solid #ccc",
-                width: "100%",
-                margin: "8px 0",
-              }}
-            />
           </div>
         </form>
       </div>

@@ -36,7 +36,7 @@ const Login = () => {
       return;
     }
     let temp = { ...userData };
-    userServiceLogin(temp).then(() => navigate.push("/register"));
+    userServiceLogin(temp).then(() => navigate.push("/reserve"));
   };
 
   return (
@@ -106,7 +106,7 @@ const Login = () => {
               )}
             </div>
           </div>
-          <Link href="/forgot-password">
+          <Link style={{ textDecoration: "none" }} href="/forgot-password">
             <h4>¿Olvidaste tu contraseña?</h4>
           </Link>
 

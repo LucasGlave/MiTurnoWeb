@@ -2,35 +2,31 @@
 import React, { useState } from "react";
 import styles from "../../app/general.module.scss";
 import Link from "next/link";
-// import { userServiceForgotPassword } from "../../services/user.service";
+import { userServiceForgotPassword } from "../../services/user.service";
 import { useRouter } from "next/navigation";
+import useInput from "@/hooks/useInput";
 
 const ForgotPassword = () => {
   const navigate = useRouter();
 
-  const [userData, setUserData] = useState({
-    email: "",
-  });
+  const input = useInput();
 
   const [error, setError] = useState(null);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUserData({ ...userData, [name]: value });
-  };
 
   const onSubmit = (e) => {
     e.preventDefault();
     setError(null);
-    if (!userData.email) {
+
+    const email = input.value;
+
+    if (!email) {
       setError("Por favor, llenar el campo Email.");
       return;
     }
-    // let temp = { ...userData };
-    // userServiceForgotPassword(temp).then(() =>
-    //   navigate.push("/forgot-password")
-    // );
-    // console.log(userData);
+
+    userServiceForgotPassword(email).catch((error) =>
+      setError("Verificar direccion de email")
+    );
   };
 
   return (
@@ -75,9 +71,7 @@ const ForgotPassword = () => {
           <div className={styles.group}>
             <h2>Email</h2>
             <input
-              value={userData.email}
-              name="email"
-              onChange={handleInputChange}
+              {...input}
               type="text"
               style={{
                 width: "90.5%",

@@ -16,6 +16,7 @@ export default function Home() {
       .then((res) => res.data)
       .then((user) => {
         if (user) setUser(user);
+        console.log(user);
       });
   }, []);
 
