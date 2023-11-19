@@ -1,4 +1,6 @@
+"use client";
 import axios from "axios";
+import { useParams } from "next/navigation";
 
 export const userServiceRegister = (formData) => {
   return axios
@@ -32,5 +34,27 @@ export const userServiceForgotPassword = (email) => {
         error
       );
       throw error;
+    });
+};
+
+// export const userServiceGetToken = () => {
+//   const {token} = useParams()
+//   return axios
+//   .get(`http://localhost:5001/api/users/token-restore-password/${token}`, )
+
+// }
+
+export const userServiceNewPassword = (password, token) => {
+  return axios
+    .post(
+      `http://localhost:5001/api/users/overwrite-password/${token}`,
+      {
+        password,
+      },
+      {},
+      { withCredentials: true }
+    )
+    .catch((error) => {
+      console.error("Error al Iniciar Sesion: ", error);
     });
 };
