@@ -5,8 +5,10 @@ import Link from "next/link";
 import { userServiceNewPassword } from "../../services/user.service";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
-import EyeOpen from "../../../public/visibility_FILL0_wght400_GRAD0_opsz24.svg";
-import EyeClose from "../../../public/visibility_off_FILL0_wght400_GRAD0_opsz24.svg";
+// import EyeOpen from "../../../public/visibility_FILL0_wght400_GRAD0_opsz24.svg";
+import EyeOpen from "../../assets/visibility_FILL0_wght400_GRAD0_opsz24.svg";
+// import EyeClose from "../../../public/visibility_off_FILL0_wght400_GRAD0_opsz24.svg";
+import EyeClose from "../../assets/visibility_off_FILL0_wght400_GRAD0_opsz24.svg";
 
 const NewPassword = () => {
   const { token } = useParams();
