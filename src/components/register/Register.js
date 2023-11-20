@@ -5,13 +5,14 @@ import Link from "next/link";
 import { userServiceRegister } from "../../services/user.service";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import EyeOpen from "../../../public/visibility_FILL0_wght400_GRAD0_opsz24.svg";
-import EyeClose from "../../../public/visibility_off_FILL0_wght400_GRAD0_opsz24.svg";
+import EyeOpen from "../../assets/visibility_FILL0_wght400_GRAD0_opsz24.svg";
+import EyeClose from "../../assets/visibility_off_FILL0_wght400_GRAD0_opsz24.svg";
 
 const Register = () => {
   const [inputValue, setInputValue] = useState("");
   const navigate = useRouter();
-  const [eye, setEye] = useState("password");
+  const [eye1, setEye1] = useState("password");
+  const [eye2, setEye2] = useState("password");
   const [formData, setFormData] = useState({
     fullName: "",
     dni: "",
@@ -19,9 +20,13 @@ const Register = () => {
     password: "",
     repPassword: "",
   });
-  const handleEye = () => {
-    if (eye === "password") setEye("text");
-    else setEye("password");
+  const handleEye1 = () => {
+    if (eye1 === "password") setEye1("text");
+    else setEye1("password");
+  };
+  const handleEye2 = () => {
+    if (eye2 === "password") setEye2("text");
+    else setEye2("password");
   };
   const [error, setError] = useState(null);
   const handleKeyDown = (event) => {
@@ -132,8 +137,9 @@ const Register = () => {
             style={{
               marginBottom: "16px",
               gap: 5,
+              width: "50%",
               display: "flex",
-              alignItems: "flex-end",
+              justifyContent: "center",
             }}
           >
             <div
@@ -144,47 +150,86 @@ const Register = () => {
               }}
             >
               <p>Contraseña</p>
-              <input
-                value={formData.password}
-                name="password"
-                onChange={handleInputChange}
-                type={eye}
-              />
-            </div>
-            {eye === "password" ? (
-              <Image
-                src={EyeClose}
-                onClick={handleEye}
+              <div
                 style={{
-                  marginBottom: 7,
-                  opacity: "0.6",
-                  cursor: "pointer",
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  border: "1px solid #d7d7d7",
+                  borderRadius: "10px",
                 }}
-                width={23}
-                height={23}
-                alt="eye close"
-              />
-            ) : (
-              <Image
-                src={EyeOpen}
-                onClick={handleEye}
-                style={{ marginBottom: 7, opacity: "0.6", cursor: "pointer" }}
-                width={23}
-                height={23}
-                alt="eye open"
-              />
-            )}
+              >
+                <input
+                  value={formData.password}
+                  name="password"
+                  onChange={handleInputChange}
+                  type={eye1}
+                  className={styles.inputPassword}
+                />
+                {eye1 === "password" ? (
+                  <Image
+                    src={EyeClose}
+                    onClick={handleEye1}
+                    className={styles.inputEye}
+                    width={20}
+                    height={20}
+                    alt="eyeClose"
+                  />
+                ) : (
+                  <Image
+                    src={EyeOpen}
+                    onClick={handleEye1}
+                    className={styles.inputEye}
+                    width={20}
+                    height={20}
+                    alt="eyeOpen"
+                  />
+                )}
+              </div>
+            </div>
             <div
               className={styles.group}
               style={{ alignItems: "flex-start", display: "flex" }}
             >
               <p>Repetir Contraseña</p>
-              <input
-                value={formData.repPassword}
-                name="repPassword"
-                onChange={handleInputChange}
-                type={eye}
-              />
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  border: "1px solid #d7d7d7",
+                  borderRadius: "10px",
+                }}
+              >
+                <input
+                  value={formData.repPassword}
+                  name="repPassword"
+                  onChange={handleInputChange}
+                  type={eye2}
+                  className={styles.inputPassword}
+                />
+                {eye2 === "password" ? (
+                  <Image
+                    src={EyeClose}
+                    onClick={handleEye2}
+                    className={styles.inputEye}
+                    width={20}
+                    height={20}
+                    alt="eyeClose"
+                  />
+                ) : (
+                  <Image
+                    src={EyeOpen}
+                    onClick={handleEye2}
+                    className={styles.inputEye}
+                    width={20}
+                    height={20}
+                    alt="eyeOpen"
+                  />
+                )}
+              </div>
             </div>
           </div>
           <div
