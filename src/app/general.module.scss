@@ -99,12 +99,15 @@
           gap: 8px;
           align-self: stretch;
         }
-        .innerInput {
-          z-index: 0;
+        .inputPassword {
+          border: 0px;
+          width: 240px;
+          position: relative;
+          background: transparent;
         }
-        .image {
-          transform: translateX(-135%);
-          z-index: 1;
+        .inputEye {
+          position: relative;
+          margin: 0 5px 0 5px;
           cursor: pointer;
         }
       }
