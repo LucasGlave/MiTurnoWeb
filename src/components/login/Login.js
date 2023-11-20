@@ -36,7 +36,11 @@ const Login = () => {
       return;
     }
     let temp = { ...userData };
-    userServiceLogin(temp).then(() => navigate.push("/reserve"));
+    userServiceLogin(temp)
+      .then(() => navigate.push("/reserve"))
+      .catch(() => {
+        setError("Error al intentar loguearse.");
+      });
   };
 
   return (
@@ -52,9 +56,6 @@ const Login = () => {
               name="email"
               onChange={handleInputChange}
               type="text"
-              style={{
-                width: "90.5%",
-              }}
             />
           </div>
           <div className={styles.group}>
@@ -65,6 +66,8 @@ const Login = () => {
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
+                border: "1px solid #d7d7d7",
+                borderRadius: "10px",
               }}
             >
               <input
@@ -73,35 +76,25 @@ const Login = () => {
                 onChange={handleInputChange}
                 type={eye}
                 style={{ width: "100%" }}
-                className={styles.innerInput}
+                className={styles.inputPassword}
               />
               {eye === "password" ? (
                 <Image
-                  className="image"
+                  className={styles.inputEye}
                   onClick={handleEye}
                   src={EyeClose}
                   alt="eyeClose"
                   width={20}
                   height={20}
-                  style={{
-                    transform: "translateX(-135%)",
-                    zIndex: "1",
-                    cursor: "pointer",
-                  }}
                 />
               ) : (
                 <Image
-                  className="image"
+                  className={styles.inputEye}
                   onClick={handleEye}
                   src={EyeOpen}
                   alt="eyeOpen"
                   width={20}
                   height={20}
-                  style={{
-                    transform: "translateX(-135%)",
-                    zIndex: "1",
-                    cursor: "pointer",
-                  }}
                 />
               )}
             </div>
@@ -111,6 +104,7 @@ const Login = () => {
           </Link>
 
           <div className={styles.group}>
+            {error && <p className="error-message">{error}</p>}
             <button type="submit" className={styles.button}>
               Ingresar
             </button>

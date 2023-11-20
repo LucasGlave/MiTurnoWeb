@@ -25,7 +25,7 @@ const ForgotPassword = () => {
     }
 
     userServiceForgotPassword(email).catch((error) =>
-      setError("Verificar direccion de email")
+      setError("Verificar la direccion de email")
     );
   };
 
@@ -79,6 +79,11 @@ const ForgotPassword = () => {
             />
           </div>
           <div className={styles.group}>
+            {error && (
+              <p style={{ textAlign: "center" }} className="error-message">
+                {error}
+              </p>
+            )}
             <div
               style={{
                 marginBottom: "8px",
@@ -87,7 +92,6 @@ const ForgotPassword = () => {
                 justifyContent: "center",
               }}
             >
-              {/* {error && <p className="error-message">{error}</p>} */}
               <button
                 type="submit"
                 className={styles.button}
