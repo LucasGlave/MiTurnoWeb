@@ -14,27 +14,27 @@ export const userServiceRegister = (formData) => {
 };
 
 export const userServiceLogin = (userData) => {
-  return axios
-    .post(`http://localhost:5001/api/users/login`, userData, {
-      withCredentials: true,
-    })
-    .catch((error) => {
-      console.error("Error al Iniciar Sesion: ", error);
-    });
+  return axios.post(`http://localhost:5001/api/users/login`, userData, {
+    withCredentials: true,
+  });
+  // .catch((error) => {
+  //   console.error("Error al Iniciar Sesion: ", error);
+  // });
 };
 
 export const userServiceForgotPassword = (email) => {
   console.log(email);
-  return axios
-    .put(`http://localhost:5001/api/users/restore-password`, { email })
+  return axios.put(`http://localhost:5001/api/users/restore-password`, {
+    email,
+  });
 
-    .catch((error) => {
-      console.log(
-        "Error al solicitar la recuperacion de contraseña. Verifica tus datos e inténtalo nuevamente.",
-        error
-      );
-      throw error;
-    });
+  // .catch((error) => {
+  //   console.log(
+  //     "Error al solicitar la recuperacion de contraseña. Verifica tus datos e inténtalo nuevamente.",
+  //     error
+  //   );
+  //   throw error;
+  // });
 };
 
 // export const userServiceGetToken = () => {
@@ -45,16 +45,15 @@ export const userServiceForgotPassword = (email) => {
 // }
 
 export const userServiceNewPassword = (password, token) => {
-  return axios
-    .post(
-      `http://localhost:5001/api/users/overwrite-password/${token}`,
-      {
-        password,
-      },
-      {},
-      { withCredentials: true }
-    )
-    .catch((error) => {
-      console.error("Error al Iniciar Sesion: ", error);
-    });
+  return axios.post(
+    `http://localhost:5001/api/users/overwrite-password/${token}`,
+    {
+      password,
+    },
+    {},
+    { withCredentials: true }
+  );
+  // .catch((error) => {
+  //   console.error("Error al Iniciar Sesion: ", error);
+  // });
 };

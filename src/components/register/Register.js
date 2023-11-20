@@ -48,16 +48,25 @@ const Register = () => {
     e.preventDefault();
     setError(null);
 
-    if (
-      !formData.fullName ||
-      !formData.dni ||
-      !formData.email ||
-      !formData.password ||
-      !formData.repPassword
-    ) {
-      setError("Por favor, complete todos los campos.");
+    const frontNames = {
+      fullName: "Nombre y Apellido",
+      dni: "DNI",
+      email: "Email",
+      password: "Contraseña",
+      repPassword: "Repetir Contraseña",
+    };
+
+    const mustHave = ["fullName", "dni", "email", "password", "repPassword"];
+    const missing = mustHave.filter((e) => !formData[e]);
+
+    if (missing.length > 0) {
+      const message = `Completar los campos ${missing
+        .map((e) => ` ${frontNames[e]}`)
+        .join(" y ")}.`;
+      setError(message);
       return;
     }
+
     if (formData.password !== formData.repPassword) {
       setError("Las contraseñas no coinciden.");
       return;
