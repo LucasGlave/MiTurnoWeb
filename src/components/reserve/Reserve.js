@@ -37,7 +37,7 @@ const Reserve = () => {
   };
   return (
     <div className={styles.container}>
-      <Header />
+      <Header isLoggedIn={true} />
       <div className={styles.cardContainer}>
         <div className={styles.cardTop}>
           <h1>Hacer una reserva</h1>

@@ -38,7 +38,6 @@ export const userServiceMe = () => {
 };
 
 export const userServiceForgotPassword = (email) => {
-  console.log(email);
   return axios.put(`http://localhost:5001/api/users/restore-password`, {
     email,
   });
@@ -71,4 +70,12 @@ export const userServiceNewPassword = (password, token) => {
   // .catch((error) => {
   //   console.error("Error al Iniciar Sesion: ", error);
   // });
+};
+
+export const userServiceLogout = () => {
+  return axios.post(
+    `http://localhost:5001/api/users/logout`,
+    {},
+    { withCredentials: true }
+  );
 };
