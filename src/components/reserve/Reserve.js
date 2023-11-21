@@ -9,14 +9,17 @@ import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { StaticTimePicker } from "@mui/x-date-pickers/StaticTimePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
+import { useRouter } from "next/navigation";
 
 const Reserve = () => {
+  const navigate = useRouter();
   const sweetReserve = () => {
     Swal.fire({
       title: "Turno reservado con éxito",
       text: "Gracias por confiar en nuestro servicio",
       icon: "success",
     });
+    navigate.push("/reserve/id");
   };
   const sweetModified = () => {
     Swal.fire({

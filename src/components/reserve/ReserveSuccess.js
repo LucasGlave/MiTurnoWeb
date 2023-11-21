@@ -2,6 +2,7 @@ import React from "react";
 
 import styles from "../../app/general.module.scss";
 import Header from "../header/Header";
+import Link from "next/link";
 const ReserveSuccess = () => {
   //const {id} = useParams()
 
@@ -9,8 +10,16 @@ const ReserveSuccess = () => {
     <div className={styles.container}>
       <Header />
       <div
-        className={styles.card}
-        style={{ marginTop: "3rem", width: "44rem", height: "29rem" }}
+        style={{
+          marginTop: "3rem",
+          width: "44rem",
+          height: "29rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+          alignContent: "center",
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -36,6 +45,10 @@ const ReserveSuccess = () => {
           ¿Quéres imprimir tu comprobante?
         </button>
       </div>
+      <hr
+        style={{ width: "83.1%", margin: "-28px 0 3rem 0", color: "#c6c6c6" }}
+      />
+
       <div
         style={{
           display: "flex",
@@ -53,10 +66,7 @@ const ReserveSuccess = () => {
             gap: "2rem",
           }}
         >
-          <div
-            className="top"
-            style={{ display: "flex", flexDirection: "column" }}
-          >
+          <div style={{ display: "flex", flexDirection: "column" }}>
             <div
               style={{
                 display: "flex",
@@ -74,7 +84,6 @@ const ReserveSuccess = () => {
             </p>
           </div>
           <div
-            className="bottom"
             style={{
               display: "flex",
               flexDirection: "row",
@@ -148,7 +157,12 @@ const ReserveSuccess = () => {
                 fill="#E53939"
               />
             </svg>
-            <h3>Cancelar reserva</h3>
+            <Link
+              style={{ textDecoration: "none", color: "rgb(229, 57, 57)" }}
+              href="/cancelations"
+            >
+              <h3>Cancelar reserva</h3>
+            </Link>
           </div>
         </div>
       </div>
