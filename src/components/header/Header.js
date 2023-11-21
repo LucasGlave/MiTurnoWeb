@@ -1,8 +1,22 @@
+"use client";
 import React from "react";
 import styles from "../../app/general.module.scss";
 import Link from "next/link";
+import { userServiceLogout } from "../../services/user.service";
+import { useRouter } from "next/navigation";
 
-const Header = () => {
+const Header = ({ isLoggedIn }) => {
+  const navigate = useRouter();
+
+  const handleLogout = () => {
+    userServiceLogout()
+      .then(() => {
+        navigate.push("/login");
+      })
+      .catch(() => {
+        setError("Error al cerrar sesion");
+      });
+  };
   return (
     <div className={styles.header}>
       <Link
@@ -61,6 +75,17 @@ const Header = () => {
               fill="black"
             />
           </svg>
+          {isLoggedIn && (
+            <div className="logout" style={{ marginLeft: "15px" }}>
+              <Link style={{ textDecoration: "none" }} href="/login">
+                <button className={styles.headerLeft} onClick={handleLogout}>
+                  <h3 style={{ color: "#FF4C4C", cursor: "pointer" }}>
+                    Logout
+                  </h3>
+                </button>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../../app/general.module.scss";
 
-const HeaderOpeDetails = () => {
+const HeaderOpeDetails = ({ isLoggedIn }) => {
   return (
     <div className={styles.header}>
       <h3 style={{ color: "#a442f1" }}></h3>
