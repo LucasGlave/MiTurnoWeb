@@ -1,6 +1,7 @@
-"use client";
+// "use client";
 import axios from "axios";
 import { useParams } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
 
 export const userServiceRegister = (formData) => {
   return axios
@@ -20,6 +21,20 @@ export const userServiceLogin = (userData) => {
   // .catch((error) => {
   //   console.error("Error al Iniciar Sesion: ", error);
   // });
+};
+
+export const userServiceMe = () => {
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  return axios
+    .get(`http://localhost:5001/api/users/me`, {
+      withCredentials: true,
+    })
+    .then((res) => res.data)
+    .then((user) => {
+      if (user) dispatch(setUser(user));
+      console.log(user);
+    });
 };
 
 export const userServiceForgotPassword = (email) => {

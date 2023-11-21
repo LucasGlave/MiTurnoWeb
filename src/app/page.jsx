@@ -4,21 +4,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Reserve from "@/components/reserve/Reserve";
 import Login from "@/components/login/Login";
+import { useSelector } from "react-redux";
 
 export default function Home() {
   const navigate = useRouter();
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    axios
-      .get(`http://localhost:5001/api/users/me`, {
-        withCredentials: true,
-      })
-      .then((res) => res.data)
-      .then((user) => {
-        if (user) setUser(user);
-        console.log(user);
-      });
-  }, []);
+  const user = useSelector((state) => state.user);
 
   return <>{user.fullName ? <Reserve /> : <Login />}</>;
 }
