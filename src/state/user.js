@@ -1,15 +1,25 @@
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-export const setUser = createAction("SET_USER");
-
-const initialState = {
-  id: null,
-  fullName: null,
-  dni: null,
-  email: null,
-  role: null,
-};
-
-export default createReducer(initialState, {
-  [setUser]: (state, action) => action.payload,
+export const user = createSlice({
+  name: "user",
+  initialState: {
+    id: null,
+    fullName: "",
+    dni: "",
+    email: "",
+    role: "",
+  },
+  reducers: {
+    setUser: (state, action) => {
+      state.dni = action.payload.dni;
+      state.email = action.payload.email;
+      state.fullName = action.payload.fullName;
+      state.id = action.payload.id;
+      state.role = action.payload.role;
+    },
+  },
 });
+
+export const { setUser } = user.actions;
+
+export default user.reducer;
