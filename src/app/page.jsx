@@ -10,5 +10,5 @@ export default function Home() {
   const navigate = useRouter();
   const user = useSelector((state) => state.user);
 
-  return <>{user.fullName ? <Reserve /> : <Login />}</>;
+  return <>{user.fullName ? <Login /> : <Reserve />}</>;
 }
