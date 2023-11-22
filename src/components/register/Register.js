@@ -81,7 +81,9 @@ const Register = () => {
       return;
     }
     let temp = { ...formData };
-    userServiceRegister(temp).then(() => navigate.push("/login"));
+    userServiceRegister(temp)
+      .then(() => navigate.push("/login"))
+      .catch((error) => console.error(error));
   };
   return (
     <div className={styles.container}>

@@ -1,4 +1,5 @@
 // "use client";
+import { setUser } from "@/state/user";
 import axios from "axios";
 import { useParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,19 +14,19 @@ export const userServiceLogin = (userData) => {
   });
 };
 
-export const userServiceMe = () => {
-  const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-  return axios
-    .get(`http://localhost:5001/api/users/me`, {
-      withCredentials: true,
-    })
-    .then((res) => res.data)
-    .then((user) => {
-      if (user) dispatch(setUser(user));
-      console.log(user);
-    });
-};
+// export const userServiceMe = () => {
+//   // const user = useSelector((state) => state.user);
+//   const dispatch = useDispatch();
+//   return axios
+//     .get(`http://localhost:5001/api/users/me`, {
+//       withCredentials: true,
+//     })
+//     .then((res) => res.data)
+//     .then((user) => {
+//       if (user) dispatch(setUser(user));
+//       console.log("hoooolaaa", user);
+//     });
+// };
 
 export const userServiceForgotPassword = (email) => {
   return axios.put(`http://localhost:5001/api/users/restore-password`, {
