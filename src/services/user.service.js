@@ -53,3 +53,10 @@ export const userServiceAdmin = (formData) => {
     formData
   );
 };
+
+export const userServiceClient = (formData) => {
+  return axios.put(
+    `http://localhost:5001/api/users/editProfile/:userId`,
+    formData
+  );
+};
