@@ -7,7 +7,7 @@ import HeaderOpeDetails from "../header/HeaderOpeDetails";
 const OpeDetails = () => {
   return (
     <div className={styles.container}>
-      <HeaderOpeDetails />
+      <Header isPosition={"operator"} isLoggedIn={true} />
       <div className={styles.card}>
         <div style={{ width: "80%" }}>
           <h1
