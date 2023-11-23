@@ -14,7 +14,6 @@ const UserDetails = () => {
     fullName: user.fullName,
     dni: user.dni,
     email: user.email,
-    password: user.password,
   });
 
   const handleInputChange = (e) => {
@@ -42,12 +41,9 @@ const UserDetails = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     setError(null);
-    // if (!/^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}$/.test(formData.password)) {
-    //   setError("La contraseña debe cumplir los requisitos.");
-    //   return;
-    // }
+    const id = user.id;
     let temp = { ...formData };
-    userServiceClient(temp).then(() => navigate.push("/login"));
+    userServiceClient(temp, id).then(() => navigate.push("/reserve"));
   };
   return (
     <div className={styles.container}>
@@ -96,24 +92,31 @@ const UserDetails = () => {
           </div>
 
           <div className={styles.group}>
-            {error && <p className="error-message">{error}</p>}
+            <button className={styles.button} type="submit">
+              Aceptar
+            </button>
+          </div>
+
+          <hr
+            style={{
+              marginTop: "20px",
+              width: "80%",
+              border: " 1px solid lightgrey",
+            }}
+          />
+
+          <div className={styles.group}>
             <button
               type="submit"
               className={styles.button}
               style={{
-                marginBottom: "15px",
-                width: "50%",
+                marginTop: "15px",
+                width: "45%",
                 backgroundColor: "#a59b9b",
               }}
             >
-              Cambiar Contraseña
+              Cambiar contraseña
             </button>
-          </div>
-          {/* <div style={{ width: "80%" }}>
-            <h4>Editar Contraseña</h4>
-          </div> */}
-          <div className={styles.group}>
-            <button className={styles.button}>Aceptar</button>
           </div>
         </form>
       </div>
