@@ -3,16 +3,18 @@ import styles from "../../app/general.module.scss";
 import Header from "../header/Header";
 import { useRouter } from "next/navigation";
 import { userServiceClient } from "@/services/user.service";
+import { useSelector } from "react-redux";
 
 const UserDetails = () => {
   const navigate = useRouter();
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState(null);
+  const user = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
-    fullName: "",
-    dni: "",
-    email: "",
-    password: "",
+    fullName: user.fullName,
+    dni: user.dni,
+    email: user.email,
+    password: user.password,
   });
 
   const handleInputChange = (e) => {
@@ -98,7 +100,11 @@ const UserDetails = () => {
             <button
               type="submit"
               className={styles.button}
-              style={{ marginBottom: "15px", width: "50%" }}
+              style={{
+                marginBottom: "15px",
+                width: "50%",
+                backgroundColor: "#a59b9b",
+              }}
             >
               Cambiar Contraseña
             </button>
