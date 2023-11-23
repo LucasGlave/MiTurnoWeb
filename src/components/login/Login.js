@@ -3,14 +3,17 @@ import React, { useState } from "react";
 import styles from "../../app/general.module.scss";
 import Header from "../header/Header";
 import Link from "next/link";
-import { userServiceLogin, userServiceMe } from "../../services/user.service";
+import { userServiceLogin } from "../../services/user.service";
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import EyeOpen from "../../assets/visibility_FILL0_wght400_GRAD0_opsz24.svg";
 import EyeClose from "../../assets/visibility_off_FILL0_wght400_GRAD0_opsz24.svg";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/state/user";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const navigate = useRouter();
   const [eye, setEye] = useState("password");
   const [userData, setUserData] = useState({
@@ -38,6 +41,9 @@ const Login = () => {
     }
     let temp = { ...userData };
     userServiceLogin(temp)
+      .then((user) => {
+        dispatch(setUser(user.data));
+      })
       .then(() => navigate.push("/reserve"))
       .catch(() => {
         setError("Error al intentar loguearse.");
@@ -46,7 +52,6 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
-      <Header />
       <div className={styles.card}>
         <h1>Iniciar sesión</h1>
         <form onSubmit={onSubmit}>

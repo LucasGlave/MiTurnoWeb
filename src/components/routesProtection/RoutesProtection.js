@@ -1,4 +1,5 @@
 "use client";
+import { userServiceMe } from "@/services/user.service";
 import { setUser } from "@/state/user";
 import axios from "axios";
 import React, { useEffect } from "react";
@@ -8,15 +9,11 @@ const RoutesProtection = ({ children }) => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   useEffect(() => {
-    axios
-      .get(`http://localhost:5001/api/users/me`, {
-        withCredentials: true,
-      })
-      .then((res) => res.data)
+    userServiceMe()
       .then((User) => {
         if (User) dispatch(setUser(User));
       })
-      .catch((err) => console.error(err));
+      .catch(() => {});
   }, []);
   return <>{children}</>;
 };

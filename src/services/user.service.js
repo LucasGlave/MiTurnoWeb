@@ -14,19 +14,13 @@ export const userServiceLogin = (userData) => {
   });
 };
 
-// export const userServiceMe = () => {
-//   // const user = useSelector((state) => state.user);
-//   const dispatch = useDispatch();
-//   return axios
-//     .get(`http://localhost:5001/api/users/me`, {
-//       withCredentials: true,
-//     })
-//     .then((res) => res.data)
-//     .then((user) => {
-//       if (user) dispatch(setUser(user));
-//       console.log("hoooolaaa", user);
-//     });
-// };
+export const userServiceMe = () => {
+  return axios
+    .get(`http://localhost:5001/api/users/me`, {
+      withCredentials: true,
+    })
+    .then((res) => res.data);
+};
 
 export const userServiceForgotPassword = (email) => {
   return axios.put(`http://localhost:5001/api/users/restore-password`, {
@@ -53,9 +47,10 @@ export const userServiceLogout = () => {
   );
 };
 
-export const userServiceAdmin = (formData) => {
-  return axios.put(
-    `http://localhost:5001/api/users/editProfile/:userId`,
-    formData
-  );
+// export const userServiceAdmin = (formData, id) => {
+//   return axios.put(`http://localhost:5001/api/users/${id}`, formData);
+// };
+
+export const userServiceClient = (formData, id) => {
+  return axios.put(`http://localhost:5001/api/users/${id}`, { formData });
 };

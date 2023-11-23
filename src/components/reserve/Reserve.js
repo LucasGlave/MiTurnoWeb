@@ -15,7 +15,6 @@ import axios from "axios";
 import { reserveServiceGetAllBranchOffices } from "../../services/reserve.service";
 
 const Reserve = () => {
-  const user = useSelector((state) => state.user);
   const navigate = useRouter();
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const [isBranchOfficeSelected, setIsBranchOfficeSelected] = useState(false);
@@ -65,7 +64,7 @@ const Reserve = () => {
   };
   return (
     <div className={styles.container}>
-      <Header isLoggedIn={true} />
+      <Header isLoggedIn={true} isPosition={"client"} />
       <div className={styles.cardContainer}>
         <div className={styles.cardTop}>
           <h1>Hacer una reserva</h1>
