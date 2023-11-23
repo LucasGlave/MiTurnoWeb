@@ -4,6 +4,7 @@ import Header from "../header/Header";
 import { useRouter } from "next/navigation";
 import { userServiceClient } from "@/services/user.service";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 const OpeDetails = () => {
   const navigate = useRouter();
@@ -15,6 +16,12 @@ const OpeDetails = () => {
     dni: user.dni,
     email: user.email,
   });
+  const sweetEdit = () => {
+    Swal.fire({
+      title: "Cambios guardados con exito",
+      icon: "success",
+    });
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -42,8 +49,8 @@ const OpeDetails = () => {
     e.preventDefault();
     setError(null);
     const id = user.id;
-    let temp = { ...formData };
-    userServiceClient(temp, id).then(() => navigate.push("/operator-details"));
+    let temp = { dni: formData.dni, full_name: formData.fullName };
+    userServiceClient(temp, id).then(() => sweetEdit());
   };
 
   return (
@@ -76,6 +83,7 @@ const OpeDetails = () => {
               value={formData.email}
               name="email"
               onChange={handleInputChange}
+              disabled
               type="email"
             />
           </div>

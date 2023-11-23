@@ -4,6 +4,7 @@ import Header from "../header/Header";
 import { useRouter } from "next/navigation";
 import { userServiceClient } from "@/services/user.service";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 const UserDetails = () => {
   const navigate = useRouter();
@@ -15,6 +16,13 @@ const UserDetails = () => {
     dni: user.dni,
     email: user.email,
   });
+
+  const sweetEdit = () => {
+    Swal.fire({
+      title: "Cambios guardados con exito",
+      icon: "success",
+    });
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -42,8 +50,8 @@ const UserDetails = () => {
     e.preventDefault();
     setError(null);
     const id = user.id;
-    let temp = { ...formData };
-    userServiceClient(temp, id).then(() => navigate.push("/user-details"));
+    let temp = { dni: formData.dni, full_name: formData.fullName };
+    userServiceClient(temp, id).then(() => sweetEdit());
   };
   return (
     <div className={styles.container}>
@@ -75,6 +83,7 @@ const UserDetails = () => {
               value={formData.email}
               name="email"
               onChange={handleInputChange}
+              disabled
               type="email"
             />
           </div>
