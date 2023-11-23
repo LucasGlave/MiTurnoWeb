@@ -8,7 +8,7 @@ const ReservePanel = () => {
     <div className={styles.container}>
       <Header isLoggedIn={true} isPosition={"client"} color={"reserve-panel"} />
 
-      <div style={{ width: "80%" }}>
+      <div style={{ width: "80%", marginTop: "2rem" }}>
         <h1>Reservas</h1>
       </div>
       <div
@@ -16,7 +16,7 @@ const ReservePanel = () => {
           justifyContent: "center",
           display: "flex",
           width: "80%",
-          marginTop: "3rem",
+          marginTop: "1rem",
         }}
       >
         <TableReserve />
