@@ -50,7 +50,7 @@ const AdmDetails = () => {
 
   return (
     <div className={styles.container}>
-      <Header isPosition={"admin"} isLoggedIn={true} />
+      <Header isLoggedIn={true} isPosition={"admin"} />
       <div className={styles.card}>
         <div style={{ width: "80%" }}>
           <h1

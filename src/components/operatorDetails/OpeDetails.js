@@ -2,7 +2,7 @@ import React from "react";
 import { Roboto } from "next/font/google";
 import styles from "../../app/general.module.scss";
 import Header from "../header/Header";
-import HeaderOpeDetails from "../header/HeaderOpeDetails";
+import HeaderOpeDetails from "../header/HeaderOperator";
 
 const OpeDetails = () => {
   return (

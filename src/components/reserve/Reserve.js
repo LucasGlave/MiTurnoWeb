@@ -10,11 +10,8 @@ import { StaticTimePicker } from "@mui/x-date-pickers/StaticTimePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
-import Login from "../login/Login";
 
 const Reserve = () => {
-  const user = useSelector((state) => state.user);
   const navigate = useRouter();
   const sweetReserve = () => {
     Swal.fire({
@@ -40,7 +37,7 @@ const Reserve = () => {
   };
   return (
     <div className={styles.container}>
-      <Header isLoggedIn={true} />
+      <Header isLoggedIn={true} isPosition={"client"} />
       <div className={styles.cardContainer}>
         <div className={styles.cardTop}>
           <h1>Hacer una reserva</h1>

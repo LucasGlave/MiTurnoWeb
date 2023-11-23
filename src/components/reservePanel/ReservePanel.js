@@ -6,14 +6,15 @@ import TableReserve from "./TableReserve";
 const ReservePanel = () => {
   return (
     <div className={styles.container}>
-
-      <Header isLoggedIn={true} color={"reserve-panel"} />
+      <Header isLoggedIn={true} isPosition={"client"} color={"reserve-panel"} />
 
       <div style={{ width: "80%" }}>
         <h1>Reservas</h1>
       </div>
       <div
         style={{
+          justifyContent: "center",
+          display: "flex",
           width: "80%",
           marginTop: "3rem",
         }}
