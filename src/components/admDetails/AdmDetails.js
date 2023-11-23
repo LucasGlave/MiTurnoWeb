@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import styles from "../../app/general.module.scss";
 import Header from "../header/Header";
-import { userServiceAdmin } from "@/services/user.service";
+import { userServiceClient } from "@/services/user.service";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
 const AdmDetails = () => {
   const navigate = useRouter();
+  const user = useSelector((state) => state.user);
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
-    fullName: "",
-    dni: "",
-    email: "",
-    password: "",
+    fullName: user.fullName,
+    dni: user.dni,
+    email: user.email,
   });
 
   const handleInputChange = (e) => {
@@ -40,12 +41,9 @@ const AdmDetails = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     setError(null);
-    // if (!/^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}$/.test(formData.password)) {
-    //   setError("La contraseña debe cumplir los requisitos.");
-    //   return;
-    // }
+    const id = user.id;
     let temp = { ...formData };
-    userServiceAdmin(temp).then(() => navigate.push("/login"));
+    userServiceClient(temp, id).then(() => navigate.push("/adm-details"));
   };
 
   return (
@@ -90,24 +88,36 @@ const AdmDetails = () => {
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               type="text"
+              style={{ marginBottom: "20px" }}
             />
           </div>
 
-          <div className={styles.group} style={{ marginBottom: "18px" }}>
-            <h2>Contraseña</h2>
-            <input
-              value={formData.password}
-              name="password"
-              onChange={handleInputChange}
-              type="text"
-              className="input-with-icon"
-            />
-          </div>
-          {/* <div style={{ width: "80%" }}>
-            <h4>Editar Contraseña</h4>
-          </div> */}
           <div className={styles.group}>
-            <button className={styles.button}>Aceptar</button>
+            <button className={styles.button} type="submit">
+              Aceptar
+            </button>
+          </div>
+
+          <hr
+            style={{
+              marginTop: "20px",
+              width: "80%",
+              border: " 1px solid lightgrey",
+            }}
+          />
+
+          <div className={styles.group}>
+            <button
+              type="submit"
+              className={styles.button}
+              style={{
+                marginTop: "15px",
+                width: "45%",
+                backgroundColor: "#a59b9b",
+              }}
+            >
+              Cambiar contraseña
+            </button>
           </div>
         </form>
       </div>
