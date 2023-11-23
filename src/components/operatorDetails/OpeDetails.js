@@ -2,12 +2,12 @@ import React from "react";
 import { Roboto } from "next/font/google";
 import styles from "../../app/general.module.scss";
 import Header from "../header/Header";
-import HeaderOpeDetails from "../header/HeaderOpeDetails";
+import HeaderOpeDetails from "../header/HeaderOperator";
 
 const OpeDetails = () => {
   return (
     <div className={styles.container}>
-      <HeaderOpeDetails />
+      <Header isPosition={"operator"} />
       <div className={styles.card}>
         <div style={{ width: "80%" }}>
           <h1
