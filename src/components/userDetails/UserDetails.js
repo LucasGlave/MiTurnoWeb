@@ -43,7 +43,7 @@ const UserDetails = () => {
     setError(null);
     const id = user.id;
     let temp = { ...formData };
-    userServiceClient(temp, id).then(() => navigate.push("/reserve"));
+    userServiceClient(temp, id).then(() => navigate.push("/user-details"));
   };
   return (
     <div className={styles.container}>
@@ -93,7 +93,7 @@ const UserDetails = () => {
 
           <div className={styles.group}>
             <button className={styles.button} type="submit">
-              Aceptar
+              Guardar cambios
             </button>
           </div>
 
@@ -111,8 +111,9 @@ const UserDetails = () => {
               className={styles.button}
               style={{
                 marginTop: "15px",
-                width: "45%",
-                backgroundColor: "#a59b9b",
+                width: "100%",
+                backgroundColor: "rgba(164, 66, 241, 0.1)",
+                color: "#a442f1",
               }}
             >
               Cambiar contraseña

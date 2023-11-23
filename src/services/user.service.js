@@ -52,5 +52,7 @@ export const userServiceLogout = () => {
 // };
 
 export const userServiceClient = (formData, id) => {
-  return axios.put(`http://localhost:5001/api/users/${id}`, { formData });
+  return axios.put(`http://localhost:5001/api/users/edit-user/${id}`, {
+    formData,
+  });
 };

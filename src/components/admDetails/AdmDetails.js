@@ -94,7 +94,7 @@ const AdmDetails = () => {
 
           <div className={styles.group}>
             <button className={styles.button} type="submit">
-              Aceptar
+              Guardar cambios
             </button>
           </div>
 
@@ -112,8 +112,9 @@ const AdmDetails = () => {
               className={styles.button}
               style={{
                 marginTop: "15px",
-                width: "45%",
-                backgroundColor: "#a59b9b",
+                width: "100%",
+                backgroundColor: "rgba(164, 66, 241, 0.1)",
+                color: "#a442f1",
               }}
             >
               Cambiar contraseña
