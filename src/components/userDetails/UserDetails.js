@@ -1,12 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../app/general.module.scss";
 import Header from "../header/Header";
-import HeaderOpeDetails from "../header/HeaderOpeDetails";
+import { useRouter } from "next/navigation";
+import { userServiceClient } from "@/services/user.service";
 
 const UserDetails = () => {
+  const navigate = useRouter();
+  const [inputValue, setInputValue] = useState("");
+  const [error, setError] = useState(null);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    dni: "",
+    email: "",
+    password: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => {
+      setInputValue(e.target.value);
+      return { ...prevState, [name]: value };
+    });
+  };
+
+  const handleKeyDown = (event) => {
+    if (
+      !(
+        event.key === "Backspace" ||
+        event.key === "Delete" ||
+        event.key === "ArrowLeft" ||
+        event.key === "ArrowRight"
+      ) &&
+      isNaN(Number(event.key))
+    ) {
+      event.preventDefault();
+    }
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setError(null);
+    // if (!/^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}$/.test(formData.password)) {
+    //   setError("La contraseña debe cumplir los requisitos.");
+    //   return;
+    // }
+    let temp = { ...formData };
+    userServiceClient(temp).then(() => navigate.push("/login"));
+  };
   return (
     <div className={styles.container}>
-      <HeaderOpeDetails />
+      <Header isPosition={"client"} isLoggedIn={true} />
       <div className={styles.card}>
         <div style={{ width: "80%" }}>
           <h1
@@ -18,48 +61,51 @@ const UserDetails = () => {
             Mis datos
           </h1>
         </div>
-        <form>
+        <form onSubmit={onSubmit}>
           <div className={styles.group}>
             <h2>Nombre</h2>
-            <input type="text" />
+            <input
+              value={formData.fullName}
+              name="fullName"
+              onChange={handleInputChange}
+              type="text"
+            />
           </div>
           <div className={styles.group}>
-            <h2>Correo electrónico</h2>
-            <input type="text" />
+            <h2>Email</h2>
+            <input
+              value={formData.email}
+              name="email"
+              onChange={handleInputChange}
+              type="email"
+            />
           </div>
-          <div className={styles.twoForm}>
-            <div className={styles.group} style={{ marginRight: "16px" }}>
-              <p>DNI</p>
-              <input type="text" />
-            </div>
 
-            <div className={styles.group}>
-              <p>Sucursal</p>
-              <select
-                style={{
-                  borderRadius: "8px",
-                  border: "1px solid var(--Grey-3, #e1e1e1)",
-                  background: "var(--White, #fff)",
-                  display: "flex",
-                  padding: "12px 8px 12px 12px",
-                  alignItems: "center",
-                  gap: "8px",
-                  alignSelf: "stretch",
-                }}
-              >
-                <option value="sucursal1">Sucursal 1</option>
-                <option value="sucursal2">Sucursal 2</option>
-                <option value="sucursal3">Sucursal 3</option>
-              </select>
-            </div>
-          </div>
           <div className={styles.group}>
-            <h2>Contraseña</h2>
-            <input type="text" className="input-with-icon" />
+            <p>DNI</p>
+            <input
+              value={formData.dni}
+              name="dni"
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              type="text"
+              style={{ marginBottom: "20px" }}
+            />
           </div>
-          <div style={{ width: "80%" }}>
+
+          <div className={styles.group}>
+            {error && <p className="error-message">{error}</p>}
+            <button
+              type="submit"
+              className={styles.button}
+              style={{ marginBottom: "15px", width: "50%" }}
+            >
+              Cambiar Contraseña
+            </button>
+          </div>
+          {/* <div style={{ width: "80%" }}>
             <h4>Editar Contraseña</h4>
-          </div>
+          </div> */}
           <div className={styles.group}>
             <button className={styles.button}>Aceptar</button>
           </div>
