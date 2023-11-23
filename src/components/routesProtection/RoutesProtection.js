@@ -18,7 +18,6 @@ const RoutesProtection = ({ children }) => {
       })
       .catch((err) => console.error(err));
   }, []);
-  console.log("chaaauuuuu", user);
   return <>{children}</>;
 };
 

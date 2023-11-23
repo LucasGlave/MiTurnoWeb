@@ -6,9 +6,7 @@ import { useSelector } from "react-redux";
 
 const reserve = () => {
   const user = useSelector((state) => state.user);
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+
   return <>{user.fullName ? <Reserve /> : <Login />}</>;
 };
 
