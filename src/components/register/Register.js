@@ -83,7 +83,11 @@ const Register = () => {
     let temp = { ...formData };
     userServiceRegister(temp)
       .then(() => navigate.push("/login"))
-      .catch((error) => console.error(error));
+      .catch((err) => {
+        if (err.response.status === 409)
+          setError("Esta cuenta ya existe. Inicia sesión.");
+        else setError("Error al intentar registrarse.");
+      });
   };
   return (
     <div className={styles.container}>
