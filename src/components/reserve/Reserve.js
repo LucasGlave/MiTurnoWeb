@@ -12,7 +12,7 @@ import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { reserveServiceGetAllBranchOffices } from "../../services/reserve.service";
+import { getAllBranchOfficeService } from "../../services/branchOffice.service";
 
 const Reserve = () => {
   const navigate = useRouter();
@@ -25,7 +25,7 @@ const Reserve = () => {
   }); */
 
   useEffect(() => {
-    reserveServiceGetAllBranchOffices()
+    getAllBranchOfficeService()
       .then((branchOffices) => {
         setBranchOffices(branchOffices.data);
       })

@@ -69,7 +69,7 @@ const HeaderAdmin = ({ isLoggedIn, color }) => {
               flexDirection: "row",
               alignItems: "center",
             }}
-            href="/reserve-panel"
+            href="/branch-offices-panel"
           >
             <h3
               style={
@@ -100,7 +100,7 @@ const HeaderAdmin = ({ isLoggedIn, color }) => {
               display: "flex",
               alignItems: "center",
             }}
-            href="/operator-details"
+            href="/operators-panel"
           >
             <h3
               style={

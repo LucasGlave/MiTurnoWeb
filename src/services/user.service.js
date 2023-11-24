@@ -52,5 +52,9 @@ export const userServiceLogout = () => {
 // };
 
 export const userServiceClient = (formData, id) => {
-  return axios.put(`http://localhost:5001/api/users/${id}`, { formData });
+  return axios.put(`http://localhost:5001/api/users/edit/${id}`, { formData });
+};
+
+export const userServiceGetAllOperators = () => {
+  return axios.get("http://localhost:5001/api/users/operators");
 };
