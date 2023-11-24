@@ -55,7 +55,7 @@ const UserDetails = () => {
   };
   return (
     <div className={styles.container}>
-      <Header isPosition={"client"} isLoggedIn={true} />
+      <Header isPosition={"client"} isLoggedIn={true} color={"my-account"} />
       <div className={styles.card}>
         <div style={{ width: "80%" }}>
           <h1
