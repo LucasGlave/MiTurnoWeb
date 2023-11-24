@@ -45,8 +45,10 @@ const Login = () => {
         dispatch(setUser(user.data));
       })
       .then(() => navigate.push("/reserve"))
-      .catch(() => {
-        setError("Error al intentar loguearse.");
+      .catch((err) => {
+        if (err.response.status === 412)
+          setError("Esta cuenta todavía no es confirmada. Revise su correo.");
+        else setError("Error al intentar loguearse.");
       });
   };
 
