@@ -47,7 +47,7 @@ const Login = () => {
       .then(() => navigate.push("/reserve"))
       .catch((err) => {
         if (err.response.status === 412)
-          setError("Esta cuenta todavía no es confirmada. Revise su correo.");
+          setError("Esta cuenta todavía no está confirmada. Revise su correo.");
         else setError("Error al intentar loguearse.");
       });
   };
