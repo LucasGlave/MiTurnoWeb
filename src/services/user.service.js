@@ -56,3 +56,6 @@ export const userServiceClient = (formData, id) => {
     { withCredentials: true }
   );
 };
+export const userServiceConfirmation = (token) => {
+  return axios.put(`http://localhost:5001/api/users/confirm-email/${token}`);
+};
