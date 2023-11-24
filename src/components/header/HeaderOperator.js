@@ -2,8 +2,10 @@ import React from "react";
 import styles from "../../app/general.module.scss";
 import Link from "next/link";
 import { userServiceLogout } from "@/services/user.service";
+import { useRouter } from "next/navigation";
 
 const HeaderOperator = ({ isLoggedIn, color }) => {
+  const navigate = useRouter();
   const handleLogout = () => {
     userServiceLogout()
       .then(() => {

@@ -72,7 +72,7 @@ const ForgotPassword = () => {
             <h2>Email</h2>
             <input
               {...input}
-              type="text"
+              type="email"
               style={{
                 width: "90.5%",
               }}
