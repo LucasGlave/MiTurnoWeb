@@ -8,7 +8,7 @@ const ReserveSuccess = () => {
 
   return (
     <div className={styles.container}>
-      <Header />
+      <Header isPosition={"client"} isLoggedIn={true} />
       <div
         style={{
           marginTop: "3rem",

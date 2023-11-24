@@ -49,6 +49,9 @@ const Register = () => {
       return { ...prevState, [name]: value };
     });
   };
+  const handleBack = () => {
+    navigate.back();
+  };
   const onSubmit = (e) => {
     e.preventDefault();
     setError(null);
@@ -113,7 +116,13 @@ const Register = () => {
               fill="#A442F1"
             />
           </svg>
-          <h4 className={styles.back}> Atras</h4>
+          <h4
+            style={{ cursor: "pointer" }}
+            onClick={handleBack}
+            className={styles.back}
+          >
+            Atras
+          </h4>
         </div>
         <h1>Crear Cuenta</h1>
         <form onSubmit={onSubmit}>

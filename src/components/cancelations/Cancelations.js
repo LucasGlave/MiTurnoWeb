@@ -1,12 +1,18 @@
+"use client";
 import React from "react";
 import styles from "../../app/general.module.scss";
 import Header from "../header/Header";
 import { Checkbox } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 function Cancelations() {
+  const navigate = useRouter();
+  const handleBack = () => {
+    navigate.back();
+  };
   return (
     <div className={styles.container}>
-      <Header />
+      <Header isLoggedIn={true} isPosition={"client"} />
 
       <div className={styles.card} style={{ width: "90%", marginTop: "3rem" }}>
         <div
@@ -40,10 +46,16 @@ function Cancelations() {
                   fill="#A442F1"
                 />
               </svg>
-              <h4 className={styles.back}> Atras</h4>
+              <h4
+                onClick={handleBack}
+                style={{ cursor: "pointer" }}
+                className={styles.back}
+              >
+                Atras
+              </h4>
             </div>
             <h1 style={{ marginTop: "0px", marginBottom: "3rem" }}>
-              Cancelar Reserva
+              Cancelar reserva
             </h1>
 
             <p>Hola {"nombre"},</p>
