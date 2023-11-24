@@ -59,3 +59,7 @@ export const userServiceClient = (formData, id) => {
 export const userServiceConfirmation = (token) => {
   return axios.put(`http://localhost:5001/api/users/confirm-email/${token}`);
 };
+
+export const userServiceGetAllOperators = () => {
+  return axios.get("http://localhost:5001/api/users/operators");
+};

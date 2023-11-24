@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../app/general.module.scss";
 import Header from "../header/Header";
 import { Roboto } from "next/font/google";
@@ -10,9 +10,36 @@ import { StaticTimePicker } from "@mui/x-date-pickers/StaticTimePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { getAllBranchOfficeService } from "../../services/branchOffice.service";
 
 const Reserve = () => {
   const navigate = useRouter();
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+  const [isBranchOfficeSelected, setIsBranchOfficeSelected] = useState(false);
+  const [branchOffices, setBranchOffices] = useState([]);
+  const [branchOfficeId, setBranchOfficeId] = useState(null);
+  /*   const [formData, setFormData] = useState({
+    branchOffice: null,
+  }); */
+
+  useEffect(() => {
+    getAllBranchOfficeService()
+      .then((branchOffices) => {
+        setBranchOffices(branchOffices.data);
+      })
+      .then(() => console.log(branchOffices));
+  }, []);
+
+  const selectBranchOffice = (e) => {
+    setBranchOfficeId(e.target.value);
+    if (e.target.value !== "Seleccione una sucursal...") {
+      setIsBranchOfficeSelected(true);
+    } else {
+      setIsBranchOfficeSelected(false);
+    }
+  };
   const sweetReserve = () => {
     Swal.fire({
       title: "Turno reservado con éxito",
@@ -77,9 +104,25 @@ const Reserve = () => {
                   width: "100%",
                 }}
               >
-                <p className={styles.pVioleta} />
-                <div className={styles.circulo}>2</div>
-                <p className={styles.pVioleta} />
+                <p
+                  className={
+                    isBranchOfficeSelected ? styles.pVerde : styles.pVioleta
+                  }
+                />
+                <div
+                  className={
+                    isBranchOfficeSelected
+                      ? styles.circuloVerde
+                      : styles.circulo
+                  }
+                >
+                  2
+                </div>
+                <p
+                  className={
+                    isBranchOfficeSelected ? styles.pVerde : styles.pVioleta
+                  }
+                />
               </div>
               <div
                 style={{
@@ -90,9 +133,23 @@ const Reserve = () => {
                   width: "100%",
                 }}
               >
-                <p className={styles.pGris} />
-                <div className={styles.circuloGris}>3</div>
-                <p className={styles.pGris} />
+                <p
+                  className={
+                    isBranchOfficeSelected ? styles.pVioleta : styles.pGris
+                  }
+                />
+                <div
+                  className={
+                    isBranchOfficeSelected ? styles.circulo : styles.circuloGris
+                  }
+                >
+                  3
+                </div>
+                <p
+                  className={
+                    isBranchOfficeSelected ? styles.pVioleta : styles.pGris
+                  }
+                />
               </div>
             </div>
             <div
@@ -113,12 +170,29 @@ const Reserve = () => {
               </h3>
             </div>
             <h2>Sucursal</h2>
-            <input type="text" className={styles.dropdown}></input>
+
+            <select
+              name="branchOffices"
+              onChange={selectBranchOffice}
+              className={styles.dropdown}
+            >
+              <option value={null}>Seleccione una sucursal...</option>
+              {branchOffices.map((branchOffice) => (
+                <option key={branchOffice.id} value={branchOffice.id}>
+                  {branchOffice.name}
+                </option>
+              ))}
+            </select>
+
             <div className={styles.group}>
               <button
                 onClick={sweetReserve}
                 className={styles.button}
-                style={{ marginTop: "2rem" }}
+                style={{
+                  marginTop: "2rem",
+                  pointerEvents: isButtonEnabled ? "auto" : "none",
+                  opacity: isButtonEnabled ? "1" : "0.5",
+                }}
               >
                 Confirmar reserva
               </button>

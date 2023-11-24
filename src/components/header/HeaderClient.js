@@ -55,7 +55,7 @@ const HeaderClient = ({ isLoggedIn, color }) => {
                 alignItems: "center",
                 gap: "5px",
               }}
-              href={`/reserve-panel/${user.id}`}
+              href={`/reserves-panel-client/${user.id}`}
             >
               <h3
                 style={
