@@ -48,9 +48,9 @@ const HeaderAdmin = ({ isLoggedIn, color }) => {
               height: "0.8rem",
               alignSelf: "center",
             }}
-            href="/branch"
+            href="/create-operators"
           >
-            <h3 style={{ color: "#a442f1" }}>Sucursal</h3>
+            <h3 style={{ color: "#a442f1" }}>Creacion de operadores</h3>
           </Link>
         </div>
 
