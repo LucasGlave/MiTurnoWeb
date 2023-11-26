@@ -4,6 +4,7 @@ import styles from "../app/general.module.scss";
 import Header from "@/components/header/Header";
 
 const Table = ({ type, user, elements }) => {
+  const [headerType, setHeaderType] = useState("");
   const [labelTitle, setLabelTitle] = useState("Reservas");
   const [labelName, setLabelName] = useState("Nombre");
   const [labelReserveOrEmail, setLabelReserveOrEmail] = useState("Reservas");
@@ -30,19 +31,23 @@ const Table = ({ type, user, elements }) => {
 
   useEffect(() => {
     if (type === "ClientReserves") {
+      setHeaderType("client")
       setLabelName("Nombre y Apellido");
       setLabelReserveOrEmail("Reserva")
       setLabelButton("Cancelar");
     } else if (type === "AdminBranchOffices") {
+      setHeaderType("admin")
       setLabelTitle("Sucursales")
       setLabelReserveOrEmail("Email");
       setLabelReserveOrCapacityOrBranchOffice("Capacidad máxima");
       setLabelNumberReserveOrHorarysOrPhoneNumber("Horario de Inicio y Cierre");
     } else if (type === "AdminOperators") {
+      setHeaderType("admin")
       setLabelTitle("Operadores")
       setLabelReserveOrEmail("Email");
       setLabelNumberReserveOrHorarysOrPhoneNumber("Teléfono");
     } else if(type === "OperatorReserves"){
+      setHeaderType("operator")
       setLabelName("Nombre y Apellido");
       setLabelReserveOrEmail("Reserva")
       setLabelButton("Confirmación")
@@ -51,7 +56,7 @@ const Table = ({ type, user, elements }) => {
 
   return (
     <div className={styles.container}>
-    <Header isLoggedIn={true} isPosition={"admin"} color={"reserve-panel"} />
+    <Header isLoggedIn={true} isPosition={headerType} color={"reserve-panel"} />
 
     <div style={{ width: "80%", marginTop: "2rem" }}>
       <h1>{labelTitle}</h1>
