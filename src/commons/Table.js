@@ -1,8 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "../app/general.module.scss";
+import Header from "@/components/header/Header";
 
 const Table = ({ type, user, elements }) => {
+  const [labelTitle, setLabelTitle] = useState("Reservas");
   const [labelName, setLabelName] = useState("Nombre");
   const [labelReserveOrEmail, setLabelReserveOrEmail] = useState("Reservas");
   const [
@@ -29,12 +31,15 @@ const Table = ({ type, user, elements }) => {
   useEffect(() => {
     if (type === "ClientReserves") {
       setLabelName("Nombre y Apellido");
+      setLabelReserveOrEmail("Reserva")
       setLabelButton("Cancelar");
     } else if (type === "AdminBranchOffices") {
+      setLabelTitle("Sucursales")
       setLabelReserveOrEmail("Email");
       setLabelReserveOrCapacityOrBranchOffice("Capacidad máxima");
       setLabelNumberReserveOrHorarysOrPhoneNumber("Horario de Inicio y Cierre");
     } else if (type === "AdminOperators") {
+      setLabelTitle("Operadores")
       setLabelReserveOrEmail("Email");
       setLabelNumberReserveOrHorarysOrPhoneNumber("Teléfono");
     } else if(type === "OperatorReserves"){
@@ -45,6 +50,20 @@ const Table = ({ type, user, elements }) => {
   }, []);
 
   return (
+    <div className={styles.container}>
+    <Header isLoggedIn={true} isPosition={"admin"} color={"reserve-panel"} />
+
+    <div style={{ width: "80%", marginTop: "2rem" }}>
+      <h1>{labelTitle}</h1>
+    </div>
+    <div
+      style={{
+        justifyContent: "center",
+        display: "flex",
+        width: "80%",
+        marginTop: "1rem",
+      }}
+    >
     <div
       style={{
         display: "flex",
@@ -70,12 +89,12 @@ const Table = ({ type, user, elements }) => {
             <h3>
               {user
                 ? user.fullName
-                : element.user.full_name
-                ? element.user.full_name
-                : element.full_name
-                ? element.full_name
                 : element.name
                 ? element.name
+                : element.full_name
+                ? element.full_name
+                : element.user.full_name
+                ? element.user.full_name
                 : element.fullName
                 ? element.fullName
                 : null}
@@ -96,10 +115,10 @@ const Table = ({ type, user, elements }) => {
                 ? element.boxes *
                   (parseTimeToHours(element.closing_time) -
                     parseTimeToHours(element.opening_time))
+                    : element.branchOffice.name
+                    ? element.branchOffice.name
                 : element.reservation_date
                 ? element.reservation_date
-                : element.branchOffice.name
-                ? element.branchOffice.name
               : null}
             </h3>
           </div>
@@ -120,6 +139,8 @@ const Table = ({ type, user, elements }) => {
           </div>
         </div>
       ))}
+    </div>
+    </div>
     </div>
   );
 };
