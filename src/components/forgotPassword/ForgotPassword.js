@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import styles from "../../app/general.module.scss";
+import Swal from "sweetalert2";
 import Link from "next/link";
 import { userServiceForgotPassword } from "../../services/user.service";
 import { useRouter } from "next/navigation";
@@ -8,10 +9,16 @@ import useInput from "@/hooks/useInput";
 
 const ForgotPassword = () => {
   const navigate = useRouter();
-
   const input = useInput();
-
   const [error, setError] = useState(null);
+
+  const sweetAlert = () => {
+    Swal.fire({
+      title: "Envio de email exitoso",
+      text: "Revisa tu casilla de correo",
+      icon: "info",
+    });
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -94,6 +101,7 @@ const ForgotPassword = () => {
             >
               <button
                 type="submit"
+                onClick={sweetAlert}
                 className={styles.button}
                 style={{
                   width: "40%",
