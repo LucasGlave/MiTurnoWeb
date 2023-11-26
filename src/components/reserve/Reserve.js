@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { getAllBranchOfficeService } from "../../services/branchOffice.service";
+import Calendario from "./Calendario";
 
 const Reserve = () => {
   const navigate = useRouter();
@@ -199,13 +200,7 @@ const Reserve = () => {
             </div>
           </div>
           <div className={styles.calendario}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={["TimePicker", "StaticTimePicker"]}>
-                <DemoItem>
-                  <StaticTimePicker defaultValue={dayjs("2022-04-17T15:30")} />
-                </DemoItem>
-              </DemoContainer>
-            </LocalizationProvider>
+            <Calendario />
           </div>
         </div>
         <div
