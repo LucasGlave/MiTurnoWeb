@@ -2,18 +2,16 @@ import React, { useEffect, useState } from "react";
 import Header from "../header/Header";
 import styles from "../../app/general.module.scss";
 import Table from "../../commons/Table";
-import { userServiceGetSingle } from "@/services/user.service";
-import { useParams } from "next/navigation";
+import {turnServiceGetByConfirmationAndBranchOffice} from "@/services/turn.service"
+import { useSelector } from "react-redux";
 
-const ReservesPanelClient = () => {
-  const { id } = useParams();
-  const [user, setUser] = useState({});
+const ReservesPanelOperator = () => {
+  const user = useSelector((state) => state.user);
   const [turns, setTurns] = useState([]);
 
   useEffect(() => {
-    userServiceGetSingle(id).then((user) => {
-      setUser(user);
-      setTurns(user.turns);
+    turnServiceGetByConfirmationAndBranchOffice(user.branchOfficeId).then((turns) => {
+      setTurns(turns);
     });
   }, []);
 
@@ -32,10 +30,10 @@ const ReservesPanelClient = () => {
           marginTop: "1rem",
         }}
       >
-        <Table type="ClientReserves" user={user} elements={turns} />
+        <Table type="OperatorReserves" elements={turns} />
       </div>
     </div>
   );
 };
 
-export default ReservesPanelClient;
+export default ReservesPanelOperator;
