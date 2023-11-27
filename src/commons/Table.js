@@ -1,8 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "../app/general.module.scss";
+import Header from "@/components/header/Header";
 
 const Table = ({ type, user, elements }) => {
+  const [headerType, setHeaderType] = useState("");
+  const [labelTitle, setLabelTitle] = useState("Reservas");
   const [labelName, setLabelName] = useState("Nombre");
   const [labelReserveOrEmail, setLabelReserveOrEmail] = useState("Reservas");
   const [
@@ -10,8 +13,8 @@ const Table = ({ type, user, elements }) => {
     setLabelReserveOrCapacityOrBranchOffice,
   ] = useState("Sucursal");
   const [
-    labelNumberReserveOrHorarysOrPassword,
-    setLabelNumberReserveOrHorarysOrPassword,
+    labelNumberReserveOrHorarysOrPhoneNumber,
+    setLabelNumberReserveOrHorarysOrPhoneNumber,
   ] = useState("Nº de la reserva");
   const [labelButton, setLabelButton] = useState("Editar");
 
@@ -28,19 +31,44 @@ const Table = ({ type, user, elements }) => {
 
   useEffect(() => {
     if (type === "ClientReserves") {
+      setHeaderType("client")
       setLabelName("Nombre y Apellido");
+      setLabelReserveOrEmail("Reserva")
       setLabelButton("Cancelar");
     } else if (type === "AdminBranchOffices") {
+      setHeaderType("admin")
+      setLabelTitle("Sucursales")
       setLabelReserveOrEmail("Email");
       setLabelReserveOrCapacityOrBranchOffice("Capacidad máxima");
-      setLabelNumberReserveOrHorarysOrPassword("Horario de Inicio y Cierre");
+      setLabelNumberReserveOrHorarysOrPhoneNumber("Horario de Inicio y Cierre");
     } else if (type === "AdminOperators") {
+      setHeaderType("admin")
+      setLabelTitle("Operadores")
       setLabelReserveOrEmail("Email");
-      setLabelNumberReserveOrHorarysOrPassword("Contraseña");
+      setLabelNumberReserveOrHorarysOrPhoneNumber("Teléfono");
+    } else if(type === "OperatorReserves"){
+      setHeaderType("operator")
+      setLabelName("Nombre y Apellido");
+      setLabelReserveOrEmail("Reserva")
+      setLabelButton("Confirmación")
     }
   }, []);
 
   return (
+    <div className={styles.container}>
+    <Header isLoggedIn={true} isPosition={headerType} color={"reserve-panel"} />
+
+    <div style={{ width: "80%", marginTop: "2rem" }}>
+      <h1>{labelTitle}</h1>
+    </div>
+    <div
+      style={{
+        justifyContent: "center",
+        display: "flex",
+        width: "80%",
+        marginTop: "1rem",
+      }}
+    >
     <div
       style={{
         display: "flex",
@@ -66,10 +94,12 @@ const Table = ({ type, user, elements }) => {
             <h3>
               {user
                 ? user.fullName
-                : element.full_name
-                ? element.full_name
                 : element.name
                 ? element.name
+                : element.full_name
+                ? element.full_name
+                : element.user.full_name
+                ? element.user.full_name
                 : element.fullName
                 ? element.fullName
                 : null}
@@ -90,16 +120,20 @@ const Table = ({ type, user, elements }) => {
                 ? element.boxes *
                   (parseTimeToHours(element.closing_time) -
                     parseTimeToHours(element.opening_time))
-                : element.branchOffice.name}
+                    : element.branchOffice.name
+                    ? element.branchOffice.name
+                : element.reservation_date
+                ? element.reservation_date
+              : null}
             </h3>
           </div>
           <div>
-            <h2>{labelNumberReserveOrHorarysOrPassword}</h2>
+            <h2>{labelNumberReserveOrHorarysOrPhoneNumber}</h2>
             <h3>
               {element.opening_time
                 ? `${element.opening_time} - ${element.closing_time}`
-                : element.password
-                ? "**************"
+                : element.phone_number
+                ? element.phone_number
                 : element.id
                 ? element.id
                 : null}
@@ -110,6 +144,8 @@ const Table = ({ type, user, elements }) => {
           </div>
         </div>
       ))}
+    </div>
+    </div>
     </div>
   );
 };

@@ -7,15 +7,19 @@ export const user = createSlice({
     fullName: "",
     dni: "",
     email: "",
-    role: "",
+    roleId: "",
+    phoneNumber: "",
+    branchOfficeId:"",
   },
   reducers: {
     setUser: (state, action) => {
       state.dni = action.payload.dni;
       state.email = action.payload.email;
       state.fullName = action.payload.fullName;
+      state.phoneNumber = action.payload.phoneNumber;
       state.id = action.payload.id;
-      state.role = action.payload.role;
+      state.roleId = action.payload.roleId;
+      state.branchOfficeId=action.payload.branchOfficeId;
     },
   },
 });

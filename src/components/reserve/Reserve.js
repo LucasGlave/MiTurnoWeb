@@ -16,6 +16,7 @@ import { getAllBranchOfficeService } from "../../services/branchOffice.service";
 import Calendario from "./Calendario";
 
 const Reserve = () => {
+  const user = useSelector((state) => state.user);
   const navigate = useRouter();
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const [isBranchOfficeSelected, setIsBranchOfficeSelected] = useState(false);
@@ -26,6 +27,7 @@ const Reserve = () => {
   }); */
 
   useEffect(() => {
+    console.log(user)
     getAllBranchOfficeService()
       .then((branchOffices) => {
         setBranchOffices(branchOffices.data);
