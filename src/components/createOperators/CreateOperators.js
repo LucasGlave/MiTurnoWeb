@@ -16,13 +16,16 @@ const CreateOperators = () => {
   const [error, setError] = useState(null);
   const user = useSelector((state) => state.user);
   const [branchOffices, setBranchOffices] = useState([]);
+  const [branchOfficeId, setBranchOfficeId] = useState(null);
+  const [isBranchOfficeSelected, setIsBranchOfficeSelected] = useState(false);
   const [eye1, setEye1] = useState("password");
   const [eye2, setEye2] = useState("password");
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     dni: "",
-    branch_office_id: "",
+    phoneNumber: "",
+    branchOfficeId: "",
     password: "",
     repPassword: "",
   });
@@ -35,12 +38,6 @@ const CreateOperators = () => {
       .then(() => console.log(branchOffices));
   }, []);
 
-  useEffect(() => {
-    setFormData((prevState) => {
-      return { ...prevState, [formData.branch_office_id]: branchOffices };
-    });
-  }, [branchOffices]);
-
   const handleEye1 = () => {
     if (eye1 === "password") setEye1("text");
     else setEye1("password");
@@ -52,7 +49,6 @@ const CreateOperators = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setFormData((prevState) => {
       setInputValue(e.target.value);
       return { ...prevState, [name]: value };
@@ -74,12 +70,51 @@ const CreateOperators = () => {
   };
 
   const onSubmit = (e) => {
-    console.log(formData);
     e.preventDefault();
     setError(null);
 
+    const frontNames = {
+      fullName: "Nombre y Apellido",
+      dni: "DNI",
+      email: "Email",
+      phoneNumber: "Teléfono",
+      password: "Contraseña",
+      repPassword: "Repetir Contraseña",
+    };
+
+    const mustHave = [
+      "fullName",
+      "dni",
+      "email",
+      "phoneNumber",
+      "password",
+      "repPassword",
+    ];
+    const missing = mustHave.filter((e) => !formData[e]);
+
+    if (missing.length > 0) {
+      const message = `Completar los campos ${missing
+        .map((e) => ` ${frontNames[e]}`)
+        .join(" y ")}.`;
+      setError(message);
+      return;
+    }
+
+    if (formData.password !== formData.repPassword) {
+      setError("Las contraseñas no coinciden.");
+      return;
+    }
+    if (!/^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}$/.test(formData.password)) {
+      setError("La contraseña debe cumplir los requisitos.");
+      return;
+    }
     let temp = { ...formData };
-    userServiceCreateOperators(temp).then(navigate.push("/operators-panel"));
+    userServiceCreateOperators(temp)
+      .then(() => navigate.push("/operators-panel"))
+      .catch((err) => {
+        if (err.response.status === 409) setError("Este email ya existe.");
+        else setError("Error al intentar registrar operador.");
+      });
   };
 
   return (
@@ -115,6 +150,16 @@ const CreateOperators = () => {
               type="email"
             />
           </div>
+          <div className={styles.group}>
+            <h2>Teléfono</h2>
+            <input
+              value={formData.phoneNumber}
+              name="phoneNumber"
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              type="text"
+            />
+          </div>
           <div className={styles.twoForm}>
             <div className={styles.group} style={{ marginRight: "16px" }}>
               <p>DNI</p>
@@ -130,9 +175,10 @@ const CreateOperators = () => {
             <div className={styles.group}>
               <p>Sucursal</p>
               <select
-                value={formData.branch_office_id}
+                name="branchOfficeId"
                 onChange={handleInputChange}
-                name="branch_office_id"
+                className={styles.dropdown}
+                value={formData.branchOfficeId}
                 style={{
                   borderRadius: "8px",
                   border: "1px solid var(--Grey-3, #e1e1e1)",
@@ -144,9 +190,12 @@ const CreateOperators = () => {
                   alignSelf: "stretch",
                 }}
               >
-                <option value="1">Sucursal 1</option>
-                <option value="2">Sucursal 2</option>
-                <option value="3">Sucursal 3</option>
+                <option value={null}>Seleccione una sucursal...</option>
+                {branchOffices.map((branchOffice) => (
+                  <option key={branchOffice.id} value={branchOffice.id}>
+                    {branchOffice.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -251,19 +300,124 @@ const CreateOperators = () => {
             </div>
           </div>
 
-          <div className={styles.group}>
-            <button
-              type="submit"
-              className={styles.button}
+          <div
+            className={styles.group}
+            style={{
+              backgroundColor: "#fff",
+              marginBottom: "12px",
+              color: "#6e6e6e",
+              fontSize: "12px",
+              padding: "16px, 20px, 16px, 20px",
+              gap: "12px",
+              borderRadius: "8px",
+            }}
+          >
+            <div
               style={{
                 marginTop: "15px",
-                width: "100%",
-                backgroundColor: "rgba(164, 66, 241, 0.1)",
-                color: "#a442f1",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                fontWeight: "500",
+                gap: "12px",
               }}
             >
-              Enviar
-            </button>
+              La contraseña debe contener:
+            </div>
+            <hr
+              style={{
+                border: "1px solid #e1e1e1",
+                width: "100%",
+              }}
+            />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-around",
+              }}
+            >
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <p
+                  style={{
+                    color: /[A-Z]/.test(inputValue)
+                      ? "green"
+                      : inputValue
+                      ? "red"
+                      : "gray",
+                  }}
+                >
+                  ABC Una letra mayúscula
+                </p>
+                <p
+                  style={{
+                    color: /\d/.test(inputValue)
+                      ? "green"
+                      : inputValue
+                      ? "red"
+                      : "gray",
+                  }}
+                >
+                  123 Un número
+                </p>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <p
+                  style={{
+                    color: /[a-z]/.test(inputValue)
+                      ? "green"
+                      : inputValue
+                      ? "red"
+                      : "gray",
+                  }}
+                >
+                  Una letra minúscula
+                </p>
+                <p
+                  style={{
+                    color:
+                      inputValue.length >= 8
+                        ? "green"
+                        : inputValue
+                        ? "red"
+                        : "gray",
+                  }}
+                >
+                  *** Mínimo 8 caracteres
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.group}>
+            <div
+              style={{
+                marginBottom: "8px",
+              }}
+            >
+              {error && <p className="error-message">{error}</p>}
+              <button
+                type="submit"
+                className={styles.button}
+                style={{ width: "100%" }}
+              >
+                Enviar
+              </button>
+            </div>
+            <hr
+              style={{
+                border: "1px solid #ccc",
+                width: "100%",
+                margin: "8px 0",
+              }}
+            />
+            <div
+              style={{
+                width: "100%",
+                marginTop: "8px",
+              }}
+            ></div>
           </div>
         </form>
       </div>

@@ -17,6 +17,7 @@ const Register = () => {
     fullName: "",
     dni: "",
     email: "",
+    phoneNumber: "",
     password: "",
     repPassword: "",
   });
@@ -60,11 +61,19 @@ const Register = () => {
       fullName: "Nombre y Apellido",
       dni: "DNI",
       email: "Email",
+      phoneNumber: "Telefono",
       password: "Contraseña",
       repPassword: "Repetir Contraseña",
     };
 
-    const mustHave = ["fullName", "dni", "email", "password", "repPassword"];
+    const mustHave = [
+      "fullName",
+      "dni",
+      "email",
+      "phoneNumber",
+      "password",
+      "repPassword",
+    ];
     const missing = mustHave.filter((e) => !formData[e]);
 
     if (missing.length > 0) {
@@ -148,11 +157,21 @@ const Register = () => {
             </div>
           </div>
           <div className={styles.group}>
-            <p>Mail</p>
+            <p>Email</p>
             <input
               value={formData.email}
               name="email"
               onChange={handleInputChange}
+              type="text"
+            />
+          </div>
+          <div className={styles.group}>
+            <h2>Teléfono</h2>
+            <input
+              value={formData.phoneNumber}
+              name="phoneNumber"
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
               type="text"
             />
           </div>
