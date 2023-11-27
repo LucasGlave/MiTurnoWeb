@@ -63,3 +63,9 @@ export const userServiceConfirmation = (token) => {
 export const userServiceGetAllOperators = () => {
   return axios.get("http://localhost:5001/api/users/operators");
 };
+
+export const userServiceCreateOperators = (formData) => {
+  return axios.post(`http://localhost:5001/api/users/register-operator`, {
+    ...formData,
+  });
+};
