@@ -17,7 +17,7 @@ const NewPassword = () => {
 
   const [formData, setFormData] = useState({
     password: "",
-    repPassword: "",
+    rep_password: "",
   });
   const handleEye = () => {
     if (eye === "password") setEye("text");
@@ -40,11 +40,11 @@ const NewPassword = () => {
     e.preventDefault();
     setError(null);
 
-    if (!formData.password || !formData.repPassword) {
+    if (!formData.password || !formData.rep_password) {
       setError("Por favor, complete todos los campos.");
       return;
     }
-    if (formData.password !== formData.repPassword) {
+    if (formData.password !== formData.rep_password) {
       setError("Las contraseñas no coinciden.");
       return;
     }
@@ -150,8 +150,8 @@ const NewPassword = () => {
               }}
             >
               <input
-                value={formData.repPassword}
-                name="repPassword"
+                value={formData.rep_password}
+                name="rep_password"
                 onChange={handleInputChange}
                 type={eyeRepPassword}
                 style={{ width: "100%" }}

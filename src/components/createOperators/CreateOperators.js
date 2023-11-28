@@ -19,12 +19,12 @@ const CreateOperators = () => {
   const [eye1, setEye1] = useState("password");
   const [eye2, setEye2] = useState("password");
   const [formData, setFormData] = useState({
-    fullName: "",
+    full_name: "",
     email: "",
     dni: "",
     branch_office_id: "",
     password: "",
-    repPassword: "",
+    rep_password: "",
   });
 
   useEffect(() => {
@@ -100,8 +100,8 @@ const CreateOperators = () => {
           <div className={styles.group}>
             <h2>Nombre</h2>
             <input
-              value={formData.fullName}
-              name="fullName"
+              value={formData.full_name}
+              name="full_name"
               onChange={handleInputChange}
               type="text"
             />
@@ -222,8 +222,8 @@ const CreateOperators = () => {
                 }}
               >
                 <input
-                  value={formData.repPassword}
-                  name="repPassword"
+                  value={formData.rep_password}
+                  name="rep_password"
                   onChange={handleInputChange}
                   type={eye2}
                   className={styles.inputPassword}

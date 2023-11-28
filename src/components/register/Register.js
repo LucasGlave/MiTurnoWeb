@@ -14,11 +14,11 @@ const Register = () => {
   const [eye1, setEye1] = useState("password");
   const [eye2, setEye2] = useState("password");
   const [formData, setFormData] = useState({
-    fullName: "",
+    full_name: "",
     dni: "",
     email: "",
     password: "",
-    repPassword: "",
+    rep_password: "",
   });
   const handleEye1 = () => {
     if (eye1 === "password") setEye1("text");
@@ -57,14 +57,14 @@ const Register = () => {
     setError(null);
 
     const frontNames = {
-      fullName: "Nombre y Apellido",
+      full_name: "Nombre y Apellido",
       dni: "DNI",
       email: "Email",
       password: "Contraseña",
-      repPassword: "Repetir Contraseña",
+      rep_password: "Repetir Contraseña",
     };
 
-    const mustHave = ["fullName", "dni", "email", "password", "repPassword"];
+    const mustHave = ["full_name", "dni", "email", "password", "rep_password"];
     const missing = mustHave.filter((e) => !formData[e]);
 
     if (missing.length > 0) {
@@ -75,7 +75,7 @@ const Register = () => {
       return;
     }
 
-    if (formData.password !== formData.repPassword) {
+    if (formData.password !== formData.rep_password) {
       setError("Las contraseñas no coinciden.");
       return;
     }
@@ -130,8 +130,8 @@ const Register = () => {
             <div className={styles.group} style={{ marginRight: "8px" }}>
               <p>Nombre y Apellido</p>
               <input
-                value={formData.fullName}
-                name="fullName"
+                value={formData.full_name}
+                name="full_name"
                 onChange={handleInputChange}
                 type="text"
               />
@@ -228,8 +228,8 @@ const Register = () => {
                 }}
               >
                 <input
-                  value={formData.repPassword}
-                  name="repPassword"
+                  value={formData.rep_password}
+                  name="rep_password"
                   onChange={handleInputChange}
                   type={eye2}
                   className={styles.inputPassword}
