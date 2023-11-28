@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { userServiceClient } from "@/services/user.service";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import styles from "../app/general.module.scss";
 import Header from "../components/header/Header";
+import { getAllBranchOfficeService } from "@/services/branchOffice.service";
 
 const DataForm = ({ type }) => {
   //type=client,operator,admin
@@ -13,11 +14,19 @@ const DataForm = ({ type }) => {
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState(null);
   const user = useSelector((state) => state.user);
+  const [branchOffices, setBranchOffices] = useState([]);
   const [formData, setFormData] = useState({
     full_name: user.full_name,
     dni: user.dni,
     email: user.email,
+    branch_office_id: user.branch_office_id,
   });
+
+  useEffect(() => {
+    getAllBranchOfficeService().then((branchOffices) => {
+      setBranchOffices(branchOffices.data);
+    });
+  }, []);
 
   const sweetEdit = () => {
     Swal.fire({
@@ -52,7 +61,11 @@ const DataForm = ({ type }) => {
     e.preventDefault();
     setError(null);
     const id = user.id;
-    let temp = { dni: formData.dni, full_name: formData.full_name };
+    let temp = {
+      dni: formData.dni,
+      full_name: formData.full_name,
+      branch_office_id: formData.branch_office_id,
+    };
     userServiceClient(temp, id).then(() => sweetEdit());
   };
 
@@ -108,21 +121,17 @@ const DataForm = ({ type }) => {
               <div className={styles.group}>
                 <p>Sucursal</p>
                 <select
-                  style={{
-                    borderRadius: "8px",
-                    border: "1px solid var(--Grey-3, #e1e1e1)",
-                    background: "var(--White, #fff)",
-                    display: "flex",
-                    padding: "12px 8px 12px 12px",
-                    alignItems: "center",
-                    gap: "8px",
-                    alignSelf: "stretch",
-                    marginBottom: "20px",
-                  }}
+                  name="branch_office_id"
+                  onChange={handleInputChange}
+                  className={styles.dropdown}
+                  value={formData.branch_office_id}
                 >
-                  <option value="sucursal1">Sucursal 1</option>
-                  <option value="sucursal2">Sucursal 2</option>
-                  <option value="sucursal3">Sucursal 3</option>
+                  <option value={null}>Seleccione una sucursal...</option>
+                  {branchOffices.map((branch_office) => (
+                    <option key={branch_office.id} value={branch_office.id}>
+                      {branch_office.name}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>

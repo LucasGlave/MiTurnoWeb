@@ -28,18 +28,10 @@ const CreateOperators = () => {
   });
 
   useEffect(() => {
-    getAllBranchOfficeService()
-      .then((branchOffices) => {
-        setBranchOffices(branchOffices.data);
-      })
-      .then(() => console.log(branchOffices));
-  }, []);
-
-  useEffect(() => {
-    setFormData((prevState) => {
-      return { ...prevState, [formData.branch_office_id]: branchOffices };
+    getAllBranchOfficeService().then((branchOffices) => {
+      setBranchOffices(branchOffices.data);
     });
-  }, [branchOffices]);
+  }, []);
 
   const handleEye1 = () => {
     if (eye1 === "password") setEye1("text");
@@ -130,9 +122,9 @@ const CreateOperators = () => {
             <div className={styles.group}>
               <p>Sucursal</p>
               <select
-                value={formData.branch_office_id}
-                onChange={handleInputChange}
                 name="branch_office_id"
+                onChange={handleInputChange}
+                value={formData.branch_office_id}
                 style={{
                   borderRadius: "8px",
                   border: "1px solid var(--Grey-3, #e1e1e1)",
@@ -144,9 +136,12 @@ const CreateOperators = () => {
                   alignSelf: "stretch",
                 }}
               >
-                <option value="1">Sucursal 1</option>
-                <option value="2">Sucursal 2</option>
-                <option value="3">Sucursal 3</option>
+                <option value={null}>Seleccione una sucursal...</option>
+                {branchOffices.map((branch_office) => (
+                  <option key={branch_office.id} value={branch_office.id}>
+                    {branch_office.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>

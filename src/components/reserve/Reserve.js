@@ -27,12 +27,9 @@ const Reserve = () => {
   }); */
 
   useEffect(() => {
-    console.log(user)
-    getAllBranchOfficeService()
-      .then((branchOffices) => {
-        setBranchOffices(branchOffices.data);
-      })
-      .then(() => console.log(branchOffices));
+    getAllBranchOfficeService().then((branchOffices) => {
+      setBranchOffices(branchOffices.data);
+    });
   }, []);
 
   const selectBranchOffice = (e) => {
