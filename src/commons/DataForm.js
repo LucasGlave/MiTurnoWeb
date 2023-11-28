@@ -123,10 +123,22 @@ const DataForm = ({ type }) => {
                 <select
                   name="branch_office_id"
                   onChange={handleInputChange}
-                  className={styles.dropdown}
                   value={formData.branch_office_id}
+                  style={{
+                    borderRadius: "8px",
+                    border: "1px solid var(--Grey-3, #e1e1e1)",
+                    background: "var(--White, #fff)",
+                    display: "flex",
+                    padding: "12px 8px 12px 12px",
+                    alignItems: "center",
+                    gap: "8px",
+                    alignSelf: "stretch",
+                    marginBottom: "20px",
+                  }}
                 >
-                  <option value={null}>Seleccione una sucursal...</option>
+                  <option key={0} value={null}>
+                    Seleccione una sucursal...
+                  </option>
                   {branchOffices.map((branch_office) => (
                     <option key={branch_office.id} value={branch_office.id}>
                       {branch_office.name}
