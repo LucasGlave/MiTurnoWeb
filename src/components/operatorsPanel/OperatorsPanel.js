@@ -11,7 +11,13 @@ const OperatorsPanel = () => {
     });
   }, []);
 
-  return <Table type="AdminOperators" elements={operators} />;
+  return (
+    <Table
+      type="AdminOperators"
+      elements={operators}
+      color={"operators-panel"}
+    />
+  );
 };
 
 export default OperatorsPanel;

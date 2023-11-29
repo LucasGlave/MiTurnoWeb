@@ -10,8 +10,13 @@ const BranchOfficesPanel = () => {
       setBranchOffices(branchOffices.data);
     });
   }, []);
-
-  return <Table type="AdminBranchOffices" elements={branchOffices} />;
+  return (
+    <Table
+      color={"branch-office"}
+      type="AdminBranchOffices"
+      elements={branchOffices}
+    />
+  );
 };
 
 export default BranchOfficesPanel;
