@@ -19,6 +19,7 @@ const DataForm = ({ type }) => {
     full_name: user.full_name,
     dni: user.dni,
     email: user.email,
+    phone_number: user.phone_number,
     branch_office_id: user.branch_office_id,
   });
 
@@ -64,6 +65,7 @@ const DataForm = ({ type }) => {
     let temp = {
       dni: formData.dni,
       full_name: formData.full_name,
+      phone_number: formData.phone_number,
       branch_office_id: formData.branch_office_id,
     };
     userServiceClient(temp, id).then(() => sweetEdit());
@@ -101,6 +103,16 @@ const DataForm = ({ type }) => {
               onChange={handleInputChange}
               disabled
               type="email"
+            />
+          </div>
+          <div className={styles.group}>
+            <h2>Teléfono</h2>
+            <input
+              value={formData.phone_number}
+              name="phone_number"
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              type="text"
             />
           </div>
 
