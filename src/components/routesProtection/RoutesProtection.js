@@ -1,7 +1,6 @@
 "use client";
 import { userServiceMe } from "@/services/user.service";
 import { setUser } from "@/state/user";
-import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 

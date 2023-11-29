@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 const createOperators = () => {
   const user = useSelector((state) => state.user);
-  return <>{user.fullName ? <Login /> : <CreateOperators />}</>;
+  return <>{user.id ? <CreateOperators /> : <Login />}</>;
 };
 
 export default createOperators;

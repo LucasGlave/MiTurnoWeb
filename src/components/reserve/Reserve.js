@@ -4,64 +4,77 @@ import styles from "../../app/general.module.scss";
 import Header from "../header/Header";
 import { Roboto } from "next/font/google";
 import Swal from "sweetalert2";
-import dayjs from "dayjs";
-import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
-import { StaticTimePicker } from "@mui/x-date-pickers/StaticTimePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
+import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
-import axios from "axios";
-import { getAllBranchOfficeService } from "../../services/branchOffice.service";
-import Calendario from "./Calendario";
+import {
+  branchOfficeServiceAll,
+  branchOfficeServiceGetDates,
+} from "../../services/branchOffice.service";
+import Steps from "./Steps";
+import InputsReserve from "./formReserve";
+import FormReserve from "./formReserve";
+import { horaryServiceByDate } from "@/services/horary.service";
 
 const Reserve = () => {
-  const navigate = useRouter();
-  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const [isBranchOfficeSelected, setIsBranchOfficeSelected] = useState(false);
+  const [isDaySelected, setIsDaySelected] = useState(false);
+  const [isFormComplete, setIsFormComplete] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
   const [branchOffices, setBranchOffices] = useState([]);
   const [branchOfficeId, setBranchOfficeId] = useState(null);
-  /*   const [formData, setFormData] = useState({
-    branchOffice: null,
-  }); */
+  const [disabledDates, setDisabledDates] = useState([]);
+  const handleDateChange = (newDate) => {
+    setSelectedDate(newDate);
+  };
+
+  const changeSelect = (e) => {
+    if (e.target.value !== "placeholder") {
+      branchOfficeServiceGetDates(e.target.value)
+        .then((res) => setDisabledDates(res.data))
+        .catch(() => {});
+      selectBranchOffice(e);
+    }
+  };
+
+  const isDateDisabled = (dateObject) => {
+    const date = dateObject.$d;
+    if (!date) false;
+    const today = new Date();
+    if (date < today) {
+      return true;
+    }
+    return disabledDates.some(
+      (disabledDate) =>
+        date.toDateString() === new Date(disabledDate).toDateString()
+    );
+  };
+  if (selectedDate != null && !isDaySelected) setIsDaySelected(true);
 
   useEffect(() => {
-    getAllBranchOfficeService()
-      .then((branchOffices) => {
-        setBranchOffices(branchOffices.data);
-      })
-      .then(() => console.log(branchOffices));
+    if (!isBranchOfficeSelected) {
+      setSelectedDate(null);
+      setIsDaySelected(false);
+    }
+  }, [isBranchOfficeSelected]);
+
+  useEffect(() => {
+    branchOfficeServiceAll().then((branchOffices) => {
+      setBranchOffices(branchOffices.data);
+    });
   }, []);
 
   const selectBranchOffice = (e) => {
     setBranchOfficeId(e.target.value);
-    if (e.target.value !== "Seleccione una sucursal...") {
+    if (e.target.value !== "Seleccione una sucursal") {
       setIsBranchOfficeSelected(true);
     } else {
       setIsBranchOfficeSelected(false);
     }
   };
-  const sweetReserve = () => {
-    Swal.fire({
-      title: "Turno reservado con éxito",
-      text: "Gracias por confiar en nuestro servicio",
-      icon: "success",
-    });
-    navigate.push("/reserve/id");
-  };
-  const sweetModified = () => {
-    Swal.fire({
-      title: "Turno modificado con éxito",
-      text: "Gracias por confiar en nuestro servicio",
-      icon: "success",
-    });
-  };
-  const sweetError = () => {
-    Swal.fire({
-      title: "No se pudo realizar el cambio",
-      text: "Este turno ya fue ocupado, vuelve a intentarlo más tarde o modificando algún parámetro",
-      icon: "error",
-    });
+  const functionForm = (boole) => {
+    setIsFormComplete(boole);
   };
   return (
     <div className={styles.container}>
@@ -83,124 +96,48 @@ const Reserve = () => {
                 width: "100%",
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                  width: "100%",
-                }}
-              >
-                <p className={styles.pVerde} />
-                <div className={styles.circuloVerde}>1</div>
-                <p className={styles.pVerde} />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                  width: "100%",
-                }}
-              >
-                <p
-                  className={
-                    isBranchOfficeSelected ? styles.pVerde : styles.pVioleta
-                  }
-                />
-                <div
-                  className={
-                    isBranchOfficeSelected
-                      ? styles.circuloVerde
-                      : styles.circulo
-                  }
-                >
-                  2
-                </div>
-                <p
-                  className={
-                    isBranchOfficeSelected ? styles.pVerde : styles.pVioleta
-                  }
-                />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                  width: "100%",
-                }}
-              >
-                <p
-                  className={
-                    isBranchOfficeSelected ? styles.pVioleta : styles.pGris
-                  }
-                />
-                <div
-                  className={
-                    isBranchOfficeSelected ? styles.circulo : styles.circuloGris
-                  }
-                >
-                  3
-                </div>
-                <p
-                  className={
-                    isBranchOfficeSelected ? styles.pVioleta : styles.pGris
-                  }
-                />
-              </div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                width: "100%",
-                justifyContent: "space-around",
-              }}
-            >
-              <h3 style={{ color: "#a442f1", marginLeft: "1.2rem" }}>
-                Elegí tu sucursal
-              </h3>
-              <h3 style={{ color: "#a442f1", marginLeft: "2.6rem" }}>
-                Seleccioná el día
-              </h3>
-              <h3 style={{ color: "#a442f1", marginLeft: "1rem" }}>
-                Completá el formulario
-              </h3>
+              <Steps
+                isBranchOfficeSelected={isBranchOfficeSelected}
+                isDaySelected={isDaySelected}
+                isFormComplete={isFormComplete}
+              />
             </div>
             <h2>Sucursal</h2>
-
+            <h2>{selectedDate ? selectedDate.toString() : "Ninguna"}</h2>
             <select
               name="branchOffices"
-              onChange={selectBranchOffice}
+              onChange={changeSelect}
               className={styles.dropdown}
             >
-              <option value={null}>Seleccione una sucursal...</option>
+              <option value={"placeholder"}>Seleccione una sucursal</option>
               {branchOffices.map((branchOffice) => (
                 <option key={branchOffice.id} value={branchOffice.id}>
                   {branchOffice.name}
                 </option>
               ))}
             </select>
-
-            <div className={styles.group}>
-              <button
-                onClick={sweetReserve}
-                className={styles.button}
-                style={{
-                  marginTop: "2rem",
-                  pointerEvents: isButtonEnabled ? "auto" : "none",
-                  opacity: isButtonEnabled ? "1" : "0.5",
-                }}
-              >
-                Confirmar reserva
-              </button>
-            </div>
+            {isBranchOfficeSelected && isDaySelected && (
+              <FormReserve
+                functionForm={functionForm}
+                isFormComplete={isFormComplete}
+                date={selectedDate}
+                branchOfficeId={branchOfficeId}
+              />
+            )}
           </div>
           <div className={styles.calendario}>
-            <Calendario />
+            {branchOfficeId ? (
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateCalendar
+                  disabled={!isBranchOfficeSelected}
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  shouldDisableDate={isDateDisabled}
+                />
+              </LocalizationProvider>
+            ) : (
+              []
+            )}
           </div>
         </div>
         <div

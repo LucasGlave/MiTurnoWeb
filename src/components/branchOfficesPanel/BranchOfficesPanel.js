@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import Header from "../header/Header";
 import styles from "../../app/general.module.scss";
 import Table from "../../commons/Table";
-import { getAllBranchOfficeService } from "@/services/branchOffice.service";
+import { branchOfficeServiceAll } from "@/services/branchOffice.service";
 
 const BranchOfficesPanel = () => {
   const [branchOffices, setBranchOffices] = useState([]);
 
   useEffect(() => {
-    getAllBranchOfficeService().then((branchOffices) => {
+    branchOfficeServiceAll().then((branchOffices) => {
       setBranchOffices(branchOffices.data);
     });
   }, []);
