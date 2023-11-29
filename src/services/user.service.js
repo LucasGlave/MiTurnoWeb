@@ -22,6 +22,12 @@ export const userServiceMe = () => {
     .then((res) => res.data);
 };
 
+export const userServiceGetSingle = (id) => {
+  return axios
+    .get(`http://localhost:5001/api/users/single/${id}`)
+    .then((res) => res.data);
+};
+
 export const userServiceForgotPassword = (email) => {
   return axios.put(`http://localhost:5001/api/users/restore-password`, {
     email,
@@ -62,4 +68,10 @@ export const userServiceConfirmation = (token) => {
 
 export const userServiceGetAllOperators = () => {
   return axios.get("http://localhost:5001/api/users/operators");
+};
+
+export const userServiceCreateOperators = (formData) => {
+  return axios.post(`http://localhost:5001/api/users/register-operator`, {
+    ...formData,
+  });
 };

@@ -9,8 +9,8 @@ const RoutesProtection = ({ children }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     userServiceMe()
-      .then((User) => {
-        if (User) dispatch(setUser(User));
+      .then((user) => {
+        if (user) dispatch(setUser(user));
       })
       .catch(() => {});
   }, []);
