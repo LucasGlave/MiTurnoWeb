@@ -38,7 +38,7 @@ const HeaderAdmin = ({ isLoggedIn, color }) => {
               height: "0.8rem",
               alignSelf: "center",
             }}
-            href="/create-branch"
+            href="/create-branches"
           >
             <h3 style={{ color: "#a442f1" }}>Crear sucursal</h3>
           </Link>
