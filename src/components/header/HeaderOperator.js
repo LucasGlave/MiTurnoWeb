@@ -32,7 +32,7 @@ const HeaderOperator = ({ isLoggedIn, color }) => {
           flexDirection: "row",
           alignItems: "center",
         }}
-        href="/reserve-panel"
+        href="/reserves-panel-operator"
       >
         <h3
           style={
