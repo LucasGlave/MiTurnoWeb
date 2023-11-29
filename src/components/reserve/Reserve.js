@@ -12,7 +12,7 @@ import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { getAllBranchOfficeService } from "../../services/branchOffice.service";
+import { getAllBranchOfficesService } from "../../services/branchOffice.service";
 import Calendario from "./Calendario";
 
 const Reserve = () => {
@@ -27,7 +27,7 @@ const Reserve = () => {
   }); */
 
   useEffect(() => {
-    getAllBranchOfficeService().then((branchOffices) => {
+    getAllBranchOfficesService().then((branchOffices) => {
       setBranchOffices(branchOffices.data);
     });
   }, []);
