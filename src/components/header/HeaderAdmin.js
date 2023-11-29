@@ -76,8 +76,8 @@ const HeaderAdmin = ({ isLoggedIn, color }) => {
             <h3
               style={
                 color === "reserve-panel"
-                  ? { color: "#a442f1" }
-                  : { color: "#000" }
+                  ? { color: "#000" }
+                  : { color: "#a442f1" }
               }
             >
               Sucursales
@@ -138,8 +138,8 @@ const HeaderAdmin = ({ isLoggedIn, color }) => {
             <h3
               style={
                 color === "reserve-panel"
-                  ? { color: "#a442f1" }
-                  : { color: "#000" }
+                  ? { color: "#000" }
+                  : { color: "#a442f1" }
               }
             >
               Reportes
