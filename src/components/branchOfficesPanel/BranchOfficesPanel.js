@@ -12,7 +12,11 @@ const BranchOfficesPanel = () => {
   }, []);
 
   return (
-        <Table type="AdminBranchOffices" elements={branchOffices} />
+    <Table
+      color={"branch-office"}
+      type="AdminBranchOffices"
+      elements={branchOffices}
+    />
   );
 };
 

@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import styles from "../app/general.module.scss";
 import Header from "../components/header/Header";
 
-const DataForm = ({ type }) => {
+const DataForm = ({ type, color }) => {
   //type=client,operator,admin
   const navigate = useRouter();
   const [inputValue, setInputValue] = useState("");
@@ -58,7 +58,7 @@ const DataForm = ({ type }) => {
 
   return (
     <div className={styles.container}>
-      <Header isPosition={type} isLoggedIn={true} color={"my-account"} />
+      <Header isPosition={type} isLoggedIn={true} color={color} />
       <div className={styles.card}>
         <div style={{ width: "80%" }}>
           <h1
