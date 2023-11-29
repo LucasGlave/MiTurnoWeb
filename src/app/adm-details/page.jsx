@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 const admDetails = () => {
   const user = useSelector((state) => state.user);
 
-  return <>{user.fullName ? <AdmDetails /> : <Login />}</>;
+  return <>{user.full_name ? <AdmDetails /> : <Login />}</>;
 };
 
 export default admDetails;

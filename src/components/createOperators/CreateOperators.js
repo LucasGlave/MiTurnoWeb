@@ -8,7 +8,7 @@ import Image from "next/image";
 import EyeOpen from "../../assets/visibility_FILL0_wght400_GRAD0_opsz24.svg";
 import EyeClose from "../../assets/visibility_off_FILL0_wght400_GRAD0_opsz24.svg";
 import { userServiceCreateOperators } from "@/services/user.service";
-import { getAllBranchOfficeService } from "@/services/branchOffice.service";
+import { getAllBranchOfficesService } from "@/services/branchOffice.service";
 
 const CreateOperators = () => {
   const navigate = useRouter();
@@ -21,21 +21,19 @@ const CreateOperators = () => {
   const [eye1, setEye1] = useState("password");
   const [eye2, setEye2] = useState("password");
   const [formData, setFormData] = useState({
-    fullName: "",
+    full_name: "",
     email: "",
     dni: "",
-    phoneNumber: "",
-    branchOfficeId: "",
+    phone_number: "",
+    branch_office_id: "",
     password: "",
-    repPassword: "",
+    rep_password: "",
   });
 
   useEffect(() => {
-    getAllBranchOfficeService()
-      .then((branchOffices) => {
-        setBranchOffices(branchOffices.data);
-      })
-      .then(() => console.log(branchOffices));
+    getAllBranchOfficesService().then((branchOffices) => {
+      setBranchOffices(branchOffices.data);
+    });
   }, []);
 
   const handleEye1 = () => {
@@ -74,21 +72,21 @@ const CreateOperators = () => {
     setError(null);
 
     const frontNames = {
-      fullName: "Nombre y Apellido",
+      full_name: "Nombre y Apellido",
       dni: "DNI",
       email: "Email",
-      phoneNumber: "Teléfono",
+      phone_number: "Teléfono",
       password: "Contraseña",
-      repPassword: "Repetir Contraseña",
+      rep_password: "Repetir Contraseña",
     };
 
     const mustHave = [
-      "fullName",
+      "full_name",
       "dni",
       "email",
-      "phoneNumber",
+      "phone_number",
       "password",
-      "repPassword",
+      "rep_rassword",
     ];
     const missing = mustHave.filter((e) => !formData[e]);
 
@@ -100,7 +98,7 @@ const CreateOperators = () => {
       return;
     }
 
-    if (formData.password !== formData.repPassword) {
+    if (formData.password !== formData.rep_password) {
       setError("Las contraseñas no coinciden.");
       return;
     }
@@ -133,10 +131,10 @@ const CreateOperators = () => {
         </div>
         <form onSubmit={onSubmit}>
           <div className={styles.group}>
-            <h2>Nombre</h2>
+            <h2>Nombre y Apellido</h2>
             <input
-              value={formData.fullName}
-              name="fullName"
+              value={formData.full_name}
+              name="full_name"
               onChange={handleInputChange}
               type="text"
             />
@@ -153,8 +151,8 @@ const CreateOperators = () => {
           <div className={styles.group}>
             <h2>Teléfono</h2>
             <input
-              value={formData.phoneNumber}
-              name="phoneNumber"
+              value={formData.phone_number}
+              name="phone_number"
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               type="text"
@@ -175,10 +173,9 @@ const CreateOperators = () => {
             <div className={styles.group}>
               <p>Sucursal</p>
               <select
-                name="branchOfficeId"
+                name="branch_office_id"
                 onChange={handleInputChange}
-                className={styles.dropdown}
-                value={formData.branchOfficeId}
+                value={formData.branch_office_id}
                 style={{
                   borderRadius: "8px",
                   border: "1px solid var(--Grey-3, #e1e1e1)",
@@ -191,9 +188,9 @@ const CreateOperators = () => {
                 }}
               >
                 <option value={null}>Seleccione una sucursal...</option>
-                {branchOffices.map((branchOffice) => (
-                  <option key={branchOffice.id} value={branchOffice.id}>
-                    {branchOffice.name}
+                {branchOffices.map((branch_office) => (
+                  <option key={branch_office.id} value={branch_office.id}>
+                    {branch_office.name}
                   </option>
                 ))}
               </select>
@@ -271,8 +268,8 @@ const CreateOperators = () => {
                 }}
               >
                 <input
-                  value={formData.repPassword}
-                  name="repPassword"
+                  value={formData.rep_password}
+                  name="rep_password"
                   onChange={handleInputChange}
                   type={eye2}
                   className={styles.inputPassword}

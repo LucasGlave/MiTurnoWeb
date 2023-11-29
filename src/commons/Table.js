@@ -57,7 +57,6 @@ const Table = ({ type, user, elements, color }) => {
   return (
     <div className={styles.container}>
       <Header isLoggedIn={true} isPosition={headerType} color={color} />
-
       <div style={{ width: "80%", marginTop: "2rem" }}>
         <h1>{labelTitle}</h1>
       </div>

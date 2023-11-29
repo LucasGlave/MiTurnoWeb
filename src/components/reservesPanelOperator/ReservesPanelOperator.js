@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Table from "../../commons/Table";
-import {turnServiceGetByConfirmationAndBranchOffice} from "@/services/turn.service"
+import { turnServiceGetByConfirmationAndBranchOffice } from "@/services/turn.service";
 import { useSelector } from "react-redux";
 
 const ReservesPanelOperator = () => {
@@ -8,14 +8,14 @@ const ReservesPanelOperator = () => {
   const [turns, setTurns] = useState([]);
 
   useEffect(() => {
-    turnServiceGetByConfirmationAndBranchOffice(user.branchOfficeId).then((turns) => {
-      setTurns(turns);
-    });
+    turnServiceGetByConfirmationAndBranchOffice(user.branch_office_id).then(
+      (turns) => {
+        setTurns(turns);
+      }
+    );
   }, []);
 
-  return (
-        <Table type="OperatorReserves" elements={turns} />
-  );
+  return <Table type="OperatorReserves" elements={turns} />;
 };
 
 export default ReservesPanelOperator;
