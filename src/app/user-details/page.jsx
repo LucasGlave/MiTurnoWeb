@@ -8,7 +8,7 @@ import UserDetails from "@/components/userDetails/UserDetails";
 const userDetails = () => {
   const user = useSelector((state) => state.user);
 
-  return <>{user.full_name ? <UserDetails /> : <Login />}</>;
+  return <>{user.id ? <UserDetails /> : <Login />}</>;
 };
 
 export default userDetails;

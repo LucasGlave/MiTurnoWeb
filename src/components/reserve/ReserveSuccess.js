@@ -1,10 +1,18 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import styles from "../../app/general.module.scss";
 import Header from "../header/Header";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { turnServiceById } from "@/services/turn.service";
+import { useParams } from "next/navigation";
 const ReserveSuccess = () => {
-  //const {id} = useParams()
-
+  const { id } = useParams();
+  const [turn, setTurn] = useState({});
+  useEffect(() => {
+    turnServiceById(id).then((turn) => setTurn(turn.data));
+    console.log(turn);
+  }, []);
   return (
     <div className={styles.container}>
       <Header isPosition={"client"} isLoggedIn={true} />
@@ -36,9 +44,9 @@ const ReserveSuccess = () => {
         </svg>
         <h1 style={{ color: "#a442f1" }}>¡Gracias por tu reserva!</h1>
         <p style={{ textAlign: "center" }}>
-          En hasta 5 minutos, recibirás un correo electrónico en
-          {"nombre"} con todos los detalles de tu reservación. Recordá revisar
-          tu buzón de correo no deseado o promociones.
+          En hasta 5 minutos, recibirás un correo electrónico en {} con todos
+          los detalles de tu reserva. Recordá revisar tu buzón de correo no
+          deseado o promociones.
         </p>
         <button className={styles.button}>
           ¿Quéres imprimir tu comprobante?

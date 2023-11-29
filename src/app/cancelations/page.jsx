@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 function cancelations() {
   const user = useSelector((state) => state.user);
-  return <>{user.full_name ? <Cancelations /> : <Login />}</>;
+  return <>{user.id ? <Cancelations /> : <Login />}</>;
 }
 
 export default cancelations;

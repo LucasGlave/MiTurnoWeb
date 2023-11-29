@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 const page = () => {
   const user = useSelector((state) => state.user);
 
-  return <>{user.full_name ? <BranchOfficesPanel /> : <Login />}</>;
-};
+  return <>{user.id ? <BranchOfficesPanel /> : <Login />}</>;
 
 export default page;
