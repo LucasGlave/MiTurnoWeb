@@ -73,43 +73,43 @@
     border-radius: 12px;
     background: var(--White, #fff);
     box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.12);
-    form {
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    .twoForm {
+      display: flex;
+      flex-direction: row;
+      width: 80%;
+    }
+    .group {
+      width: 80%;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      width: 100%;
-      .twoForm {
+      input {
+        border-radius: 8px;
+        border: 1px solid var(--Grey-3, #e1e1e1);
+        background: var(--White, #fff);
         display: flex;
-        flex-direction: row;
-        width: 80%;
+        padding: 12px 8px 12px 12px;
+        align-items: center;
+        gap: 8px;
+        align-self: stretch;
       }
-      .group {
-        width: 80%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        input {
-          border-radius: 8px;
-          border: 1px solid var(--Grey-3, #e1e1e1);
-          background: var(--White, #fff);
-          display: flex;
-          padding: 12px 8px 12px 12px;
-          align-items: center;
-          gap: 8px;
-          align-self: stretch;
-        }
-        .inputPassword {
-          border: 0px;
-          width: 240px;
-          position: relative;
-          background: transparent;
-        }
-        .inputEye {
-          position: relative;
-          margin: 0 5px 0 5px;
-          cursor: pointer;
-        }
+      .inputPassword {
+        border: 0px;
+        width: 240px;
+        position: relative;
+        background: transparent;
+      }
+      .inputEye {
+        position: relative;
+        margin: 0 5px 0 5px;
+        cursor: pointer;
       }
     }
   }
@@ -132,7 +132,7 @@
         display: flex;
         width: 679px;
         height: 362px;
-        padding: 32px 53px;
+        padding: 0px 53px;
         flex-direction: column;
         align-items: flex-start;
         flex-shrink: 0;
@@ -196,16 +196,19 @@
           border-radius: 8px;
           border: 1px solid var(--Grey-3, #c6c6c6);
           background: var(--White, #fff);
+          option {
+            border-radius: 5px;
+          }
         }
       }
       .calendario {
         display: flex;
         border-radius: 30px;
-        border: 1px solid #a442f1;
         width: 457px;
         padding: 32px;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
         gap: 10px;
       }
     }
