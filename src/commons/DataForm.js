@@ -87,7 +87,7 @@ const DataForm = ({ type }) => {
         </div>
         <form onSubmit={onSubmit}>
           <div className={styles.group}>
-            <h2>Nombre</h2>
+            <h2>Nombre y Apellido</h2>
             <input
               value={formData.full_name}
               name="full_name"
