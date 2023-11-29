@@ -8,7 +8,7 @@ import Image from "next/image";
 import EyeOpen from "../../assets/visibility_FILL0_wght400_GRAD0_opsz24.svg";
 import EyeClose from "../../assets/visibility_off_FILL0_wght400_GRAD0_opsz24.svg";
 import { userServiceCreateOperators } from "@/services/user.service";
-import { getAllBranchOfficesService } from "@/services/branchOffice.service";
+import { branchOfficeServiceAll } from "@/services/branchOffice.service";
 
 const CreateOperators = () => {
   const navigate = useRouter();
@@ -31,7 +31,7 @@ const CreateOperators = () => {
   });
 
   useEffect(() => {
-    getAllBranchOfficesService().then((branchOffices) => {
+    branchOfficeServiceAll().then((branchOffices) => {
       setBranchOffices(branchOffices.data);
     });
   }, []);

@@ -99,8 +99,6 @@ const Table = ({ type, user, elements, color }) => {
                     ? element.full_name
                     : element.user.full_name
                     ? element.user.full_name
-                    : element.full_name
-                    ? element.full_name
                     : null}
                 </h3>
               </div>
@@ -115,9 +113,15 @@ const Table = ({ type, user, elements, color }) => {
               <div>
                 <h2>{labelReserveOrCapacityOrBranchOffice}</h2>
                 <h3>
-                {element.boxes
-                  ? element.boxes
-                  : element.branch_office.name}
+                  {element.boxes
+                    ? element.boxes *
+                      (parseTimeToHours(element.closing_time) -
+                        parseTimeToHours(element.opening_time))
+                    : element.branch_office.name
+                    ? element.branch_office.name
+                    : element.reservation_date
+                    ? element.reservation_date
+                    : null}
                 </h3>
               </div>
               <div>

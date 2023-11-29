@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Table from "../../commons/Table";
 import { branchOfficeServiceAll } from "@/services/branchOffice.service";
 
-
 const BranchOfficesPanel = () => {
   const [branchOffices, setBranchOffices] = useState([]);
 
