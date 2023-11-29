@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const id = () => {
   const user = useSelector((state) => state.user);
 
-  return <>{user.fullName ? <ReserveSuccess /> : <Login />}</>;
+  return <>{user.full_name ? <ReserveSuccess /> : <Login />}</>;
 };
 
 export default id;

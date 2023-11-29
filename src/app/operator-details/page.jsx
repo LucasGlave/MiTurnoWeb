@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const operatorDetails = () => {
   const user = useSelector((state) => state.user);
 
-  return <>{user.fullName ? <OpeDetails /> : <Login />}</>;
+  return <>{user.full_name ? <OpeDetails /> : <Login />}</>;
 };
 
 export default operatorDetails;

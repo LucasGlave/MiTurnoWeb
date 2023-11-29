@@ -8,7 +8,7 @@ import Image from "next/image";
 import EyeOpen from "../../assets/visibility_FILL0_wght400_GRAD0_opsz24.svg";
 import EyeClose from "../../assets/visibility_off_FILL0_wght400_GRAD0_opsz24.svg";
 import { userServiceCreateOperators } from "@/services/user.service";
-import { getAllBranchOfficeService } from "@/services/branchOffice.service";
+import { getAllBranchOfficesService } from "@/services/branchOffice.service";
 
 const CreateOperators = () => {
   const navigate = useRouter();
@@ -21,21 +21,18 @@ const CreateOperators = () => {
   const [eye1, setEye1] = useState("password");
   const [eye2, setEye2] = useState("password");
   const [formData, setFormData] = useState({
-    fullName: "",
+    full_name: "",
     email: "",
     dni: "",
-    phoneNumber: "",
-    branchOfficeId: "",
+    branch_office_id: "",
     password: "",
-    repPassword: "",
+    rep_password: "",
   });
 
   useEffect(() => {
-    getAllBranchOfficeService()
-      .then((branchOffices) => {
-        setBranchOffices(branchOffices.data);
-      })
-      .then(() => console.log(branchOffices));
+    getAllBranchOfficeService().then((branchOffices) => {
+      setBranchOffices(branchOffices.data);
+    });
   }, []);
 
   const handleEye1 = () => {
@@ -135,8 +132,8 @@ const CreateOperators = () => {
           <div className={styles.group}>
             <h2>Nombre</h2>
             <input
-              value={formData.fullName}
-              name="fullName"
+              value={formData.full_name}
+              name="full_name"
               onChange={handleInputChange}
               type="text"
             />
@@ -148,16 +145,6 @@ const CreateOperators = () => {
               name="email"
               onChange={handleInputChange}
               type="email"
-            />
-          </div>
-          <div className={styles.group}>
-            <h2>Teléfono</h2>
-            <input
-              value={formData.phoneNumber}
-              name="phoneNumber"
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-              type="text"
             />
           </div>
           <div className={styles.twoForm}>
@@ -175,10 +162,9 @@ const CreateOperators = () => {
             <div className={styles.group}>
               <p>Sucursal</p>
               <select
-                name="branchOfficeId"
+                name="branch_office_id"
                 onChange={handleInputChange}
-                className={styles.dropdown}
-                value={formData.branchOfficeId}
+                value={formData.branch_office_id}
                 style={{
                   borderRadius: "8px",
                   border: "1px solid var(--Grey-3, #e1e1e1)",
@@ -191,9 +177,9 @@ const CreateOperators = () => {
                 }}
               >
                 <option value={null}>Seleccione una sucursal...</option>
-                {branchOffices.map((branchOffice) => (
-                  <option key={branchOffice.id} value={branchOffice.id}>
-                    {branchOffice.name}
+                {branchOffices.map((branch_office) => (
+                  <option key={branch_office.id} value={branch_office.id}>
+                    {branch_office.name}
                   </option>
                 ))}
               </select>
@@ -271,8 +257,8 @@ const CreateOperators = () => {
                 }}
               >
                 <input
-                  value={formData.repPassword}
-                  name="repPassword"
+                  value={formData.rep_password}
+                  name="rep_password"
                   onChange={handleInputChange}
                   type={eye2}
                   className={styles.inputPassword}

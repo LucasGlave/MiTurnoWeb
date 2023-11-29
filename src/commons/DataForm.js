@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { userServiceClient } from "@/services/user.service";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import styles from "../app/general.module.scss";
 import Header from "../components/header/Header";
+import { getAllBranchOfficeService } from "@/services/branchOffice.service";
 
 const DataForm = ({ type }) => {
   //type=client,operator,admin
@@ -13,11 +14,20 @@ const DataForm = ({ type }) => {
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState(null);
   const user = useSelector((state) => state.user);
+  const [branchOffices, setBranchOffices] = useState([]);
   const [formData, setFormData] = useState({
-    fullName: user.fullName,
+    full_name: user.full_name,
     dni: user.dni,
     email: user.email,
+    phone_number: user.phone_number,
+    branch_office_id: user.branch_office_id,
   });
+
+  useEffect(() => {
+    getAllBranchOfficeService().then((branchOffices) => {
+      setBranchOffices(branchOffices.data);
+    });
+  }, []);
 
   const sweetEdit = () => {
     Swal.fire({
@@ -52,7 +62,12 @@ const DataForm = ({ type }) => {
     e.preventDefault();
     setError(null);
     const id = user.id;
-    let temp = { dni: formData.dni, full_name: formData.fullName };
+    let temp = {
+      dni: formData.dni,
+      full_name: formData.full_name,
+      phone_number: formData.phone_number,
+      branch_office_id: formData.branch_office_id,
+    };
     userServiceClient(temp, id).then(() => sweetEdit());
   };
 
@@ -74,8 +89,8 @@ const DataForm = ({ type }) => {
           <div className={styles.group}>
             <h2>Nombre</h2>
             <input
-              value={formData.fullName}
-              name="fullName"
+              value={formData.full_name}
+              name="full_name"
               onChange={handleInputChange}
               type="text"
             />
@@ -88,6 +103,16 @@ const DataForm = ({ type }) => {
               onChange={handleInputChange}
               disabled
               type="email"
+            />
+          </div>
+          <div className={styles.group}>
+            <h2>Teléfono</h2>
+            <input
+              value={formData.phone_number}
+              name="phone_number"
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              type="text"
             />
           </div>
 
@@ -108,6 +133,9 @@ const DataForm = ({ type }) => {
               <div className={styles.group}>
                 <p>Sucursal</p>
                 <select
+                  name="branch_office_id"
+                  onChange={handleInputChange}
+                  value={formData.branch_office_id}
                   style={{
                     borderRadius: "8px",
                     border: "1px solid var(--Grey-3, #e1e1e1)",
@@ -120,9 +148,14 @@ const DataForm = ({ type }) => {
                     marginBottom: "20px",
                   }}
                 >
-                  <option value="sucursal1">Sucursal 1</option>
-                  <option value="sucursal2">Sucursal 2</option>
-                  <option value="sucursal3">Sucursal 3</option>
+                  <option key={0} value={null}>
+                    Seleccione una sucursal...
+                  </option>
+                  {branchOffices.map((branch_office) => (
+                    <option key={branch_office.id} value={branch_office.id}>
+                      {branch_office.name}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
