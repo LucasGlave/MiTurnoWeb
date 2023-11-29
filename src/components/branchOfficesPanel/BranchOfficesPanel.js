@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Table from "../../commons/Table";
-import { getAllBranchOfficeService } from "@/services/branchOffice.service";
+import { getAllBranchOfficesService } from "@/services/branchOffice.service";
 
 const BranchOfficesPanel = () => {
   const [branchOffices, setBranchOffices] = useState([]);
 
   useEffect(() => {
-    getAllBranchOfficeService().then((branchOffices) => {
+    getAllBranchOfficesService().then((branchOffices) => {
       setBranchOffices(branchOffices.data);
     });
   }, []);
 
-  return (
-        <Table type="AdminBranchOffices" elements={branchOffices} />
-  );
+  return <Table type="AdminBranchOffices" elements={branchOffices} />;
 };
 
 export default BranchOfficesPanel;

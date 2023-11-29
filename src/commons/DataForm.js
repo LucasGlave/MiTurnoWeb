@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import styles from "../app/general.module.scss";
 import Header from "../components/header/Header";
-import { getAllBranchOfficeService } from "@/services/branchOffice.service";
+import { getAllBranchOfficesService } from "@/services/branchOffice.service";
 
 const DataForm = ({ type }) => {
   //type=client,operator,admin
@@ -24,7 +24,7 @@ const DataForm = ({ type }) => {
   });
 
   useEffect(() => {
-    getAllBranchOfficeService().then((branchOffices) => {
+    getAllBranchOfficesService().then((branchOffices) => {
       setBranchOffices(branchOffices.data);
     });
   }, []);

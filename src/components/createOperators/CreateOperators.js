@@ -24,13 +24,14 @@ const CreateOperators = () => {
     full_name: "",
     email: "",
     dni: "",
+    phone_number: "",
     branch_office_id: "",
     password: "",
     rep_password: "",
   });
 
   useEffect(() => {
-    getAllBranchOfficeService().then((branchOffices) => {
+    getAllBranchOfficesService().then((branchOffices) => {
       setBranchOffices(branchOffices.data);
     });
   }, []);
@@ -71,21 +72,21 @@ const CreateOperators = () => {
     setError(null);
 
     const frontNames = {
-      fullName: "Nombre y Apellido",
+      full_name: "Nombre y Apellido",
       dni: "DNI",
       email: "Email",
-      phoneNumber: "Teléfono",
+      phone_number: "Teléfono",
       password: "Contraseña",
-      repPassword: "Repetir Contraseña",
+      rep_password: "Repetir Contraseña",
     };
 
     const mustHave = [
-      "fullName",
+      "full_name",
       "dni",
       "email",
-      "phoneNumber",
+      "phone_number",
       "password",
-      "repPassword",
+      "rep_rassword",
     ];
     const missing = mustHave.filter((e) => !formData[e]);
 
@@ -97,7 +98,7 @@ const CreateOperators = () => {
       return;
     }
 
-    if (formData.password !== formData.repPassword) {
+    if (formData.password !== formData.rep_password) {
       setError("Las contraseñas no coinciden.");
       return;
     }
@@ -145,6 +146,16 @@ const CreateOperators = () => {
               name="email"
               onChange={handleInputChange}
               type="email"
+            />
+          </div>
+          <div className={styles.group}>
+            <h2>Teléfono</h2>
+            <input
+              value={formData.phone_number}
+              name="phone_number"
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              type="text"
             />
           </div>
           <div className={styles.twoForm}>
