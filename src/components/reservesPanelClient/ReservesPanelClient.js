@@ -9,14 +9,21 @@ const ReservesPanelClient = () => {
   const [turns, setTurns] = useState([]);
 
   useEffect(() => {
-    userServiceGetSingle(id).then((user) => {
-      setUser(user);
-      setTurns(user.turns);
-    });
+    userServiceGetSingle(id)
+      .then((user) => {
+        setUser(user);
+        setTurns(user.turns);
+      })
+      .catch(() => {});
   }, []);
 
   return (
-        <Table type="ClientReserves" user={user} elements={turns} />
+    <Table
+      type="ClientReserves"
+      user={user}
+      elements={turns}
+      color={"reserve-panel"}
+    />
   );
 };
 

@@ -1,6 +1,13 @@
 "use client";
 import axios from "axios";
 
+export const turnServiceCreate = (formData, userId) => {
+  console.log(formData, userId);
+  return axios.post(`http://localhost:5001/api/turns/${userId}`, {
+    ...formData,
+  });
+};
+
 export const turnServiceGetByConfirmationAndBranchOffice = (branchOfficeId) => {
   return axios
     .get(

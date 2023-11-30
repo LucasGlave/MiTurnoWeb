@@ -34,8 +34,8 @@ const Reserve = () => {
       branchOfficeServiceGetDates(e.target.value)
         .then((res) => setDisabledDates(res.data))
         .catch(() => {});
-      selectBranchOffice(e);
     }
+    selectBranchOffice(e);
   };
 
   const isDateDisabled = (dateObject) => {
@@ -60,14 +60,18 @@ const Reserve = () => {
   }, [isBranchOfficeSelected]);
 
   useEffect(() => {
-    branchOfficeServiceAll().then((branchOffices) => {
-      setBranchOffices(branchOffices.data);
-    });
+    branchOfficeServiceAll()
+      .then((branchOffices) => {
+        if (branchOffices) {
+          setBranchOffices(branchOffices.data);
+        }
+      })
+      .catch(() => {});
   }, []);
 
   const selectBranchOffice = (e) => {
-    setBranchOfficeId(e.target.value);
-    if (e.target.value !== "Seleccione una sucursal") {
+    setBranchOfficeId(parseInt(e.target.value));
+    if (e.target.value !== "placeholder") {
       setIsBranchOfficeSelected(true);
     } else {
       setIsBranchOfficeSelected(false);
@@ -103,7 +107,6 @@ const Reserve = () => {
               />
             </div>
             <h2>Sucursal</h2>
-            <h2>{selectedDate ? selectedDate.toString() : "Ninguna"}</h2>
             <select
               name="branchOffices"
               onChange={changeSelect}
@@ -116,17 +119,19 @@ const Reserve = () => {
                 </option>
               ))}
             </select>
-            {isBranchOfficeSelected && isDaySelected && (
+            {isBranchOfficeSelected && isDaySelected ? (
               <FormReserve
                 functionForm={functionForm}
                 isFormComplete={isFormComplete}
                 date={selectedDate}
                 branchOfficeId={branchOfficeId}
               />
+            ) : (
+              []
             )}
           </div>
           <div className={styles.calendario}>
-            {branchOfficeId ? (
+            {isBranchOfficeSelected && (
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateCalendar
                   disabled={!isBranchOfficeSelected}
@@ -135,8 +140,6 @@ const Reserve = () => {
                   shouldDisableDate={isDateDisabled}
                 />
               </LocalizationProvider>
-            ) : (
-              []
             )}
           </div>
         </div>

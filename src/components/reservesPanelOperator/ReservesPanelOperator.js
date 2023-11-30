@@ -15,7 +15,9 @@ const ReservesPanelOperator = () => {
     );
   }, []);
 
-  return <Table type="OperatorReserves" elements={turns} />;
+  return (
+    <Table type="OperatorReserves" elements={turns} color={"reserve-panel"} />
+  );
 };
 
 export default ReservesPanelOperator;

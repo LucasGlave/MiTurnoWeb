@@ -8,7 +8,10 @@ import Image from "next/image";
 import EyeOpen from "../../assets/visibility_FILL0_wght400_GRAD0_opsz24.svg";
 import EyeClose from "../../assets/visibility_off_FILL0_wght400_GRAD0_opsz24.svg";
 import { userServiceCreateOperators } from "@/services/user.service";
-import { getAllBranchOfficesService } from "@/services/branchOffice.service";
+import {
+  branchOfficeServiceAll,
+  getAllBranchOfficesService,
+} from "@/services/branchOffice.service";
 
 const CreateOperators = () => {
   const navigate = useRouter();
@@ -31,7 +34,7 @@ const CreateOperators = () => {
   });
 
   useEffect(() => {
-    getAllBranchOfficesService().then((branchOffices) => {
+    branchOfficeServiceAll().then((branchOffices) => {
       setBranchOffices(branchOffices.data);
     });
   }, []);
@@ -48,7 +51,8 @@ const CreateOperators = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => {
-      setInputValue(e.target.value);
+      if (name === "password" || name === "rep_password")
+        setInputValue(e.target.value);
       return { ...prevState, [name]: value };
     });
   };
@@ -76,6 +80,7 @@ const CreateOperators = () => {
       dni: "DNI",
       email: "Email",
       phone_number: "Teléfono",
+      branch_office_id: "Sucursal",
       password: "Contraseña",
       rep_password: "Repetir Contraseña",
     };
@@ -85,10 +90,14 @@ const CreateOperators = () => {
       "dni",
       "email",
       "phone_number",
+      "branch_office_id",
       "password",
-      "rep_rassword",
+      "rep_password",
     ];
-    const missing = mustHave.filter((e) => !formData[e]);
+    const missing = mustHave.filter((e) => {
+      console.log(e);
+      !formData[e];
+    });
 
     if (missing.length > 0) {
       const message = `Completar los campos ${missing

@@ -8,5 +8,5 @@ const page = () => {
   const user = useSelector((state) => state.user);
 
   return <>{user.id ? <BranchOfficesPanel /> : <Login />}</>;
-
+};
 export default page;
