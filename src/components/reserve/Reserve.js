@@ -25,6 +25,30 @@ const Reserve = () => {
   const [branchOffices, setBranchOffices] = useState([]);
   const [branchOfficeId, setBranchOfficeId] = useState(null);
   const [disabledDates, setDisabledDates] = useState([]);
+  const [timer, setTimer] = useState(120);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((prevTimer) => prevTimer - 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (timer === 0) {
+      window.location.reload();
+    }
+  }, [timer]);
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const leftSeconds = seconds % 60;
+    return `${String(minutes).padStart(2, "0")}:${String(leftSeconds).padStart(
+      2,
+      "0"
+    )}`;
+  };
+
   const handleDateChange = (newDate) => {
     setSelectedDate(newDate);
   };
@@ -148,7 +172,7 @@ const Reserve = () => {
           style={{
             display: "flex",
             width: "100%",
-            marginTop: "5rem",
+            marginTop: "10rem",
             placeContent: "space-between space-around",
             flexFlow: "column",
             flexDirection: "row",
@@ -156,7 +180,7 @@ const Reserve = () => {
             marginRight: "2rem",
           }}
         >
-          <div className={styles.button}>04:45</div>
+          <div className={styles.button}>{formatTime(timer)}</div>
         </div>
       </div>
     </div>
