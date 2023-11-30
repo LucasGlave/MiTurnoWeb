@@ -49,7 +49,7 @@ MiTurnoWeb is a web application that allows the reservation of appointments for 
 
 ### Prerequisites
 
--Make sure you have Node.js and npm (or yarn) installed on your machine.
+-Make sure you have [Nodejs](https://nodejs.org/en/download/) v18.18.2. and [npm](https://www.npmjs.com/package/download) (or yarn) installed on your machine.
 
 ### Installation
 
@@ -87,6 +87,6 @@ Thanks again!
 - Fabiola Lutrario » [Email](mailto:fabiolalutrario@gmail.com) - [LinkedIn](https://www.linkedin.com/in/fabiolalutrario/)
 - Juan Arismendi Diaz» [Email](mailto:juanarismendidiaz@gmail.com) - [LinkedIn](https://www.linkedin.com/in/juan-arismendi-diaz/)
 - Lucas Glave » [Email](mailto:lucasglave@gmail.com) - [LinkedIn](https://www.linkedin.com/in/lucasglave/)
-- Juan Pablo Lezcano » [Email](mailto:jplezcano75@gmail.com) - [LinkedIn](https://www.linkedin.com/in/juan-pablo-lezcano/)
+- Juan Pablo Lezcano » [Email](mailto:jplezcano75@gmail.com) - [LinkedIn](https://www.linkedin.com/in/juan-pablo-lezcano-02529a214/)
 
 Project Link: [https://github.com/LucasGlave/MiTurnoWeb.git](https://https://github.com/LucasGlave/MiTurnoWeb)
