@@ -46,7 +46,8 @@ const Register = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => {
-      if (name === "password") setInputValue(e.target.value);
+      if (name === "password" || name === "rep_password")
+        setInputValue(e.target.value);
       return { ...prevState, [name]: value };
     });
   };

@@ -91,12 +91,10 @@ const Table = ({ type, user, elements, color }) => {
               <div>
                 <h2>{labelName}</h2>
                 <h3>
-                  {user
-                    ? user.full_name
+                  {element.full_name
+                    ? element.full_name
                     : element.name
                     ? element.name
-                    : element.full_name
-                    ? element.full_name
                     : element.user.full_name
                     ? element.user.full_name
                     : null}
@@ -114,9 +112,7 @@ const Table = ({ type, user, elements, color }) => {
                 <h2>{labelReserveOrCapacityOrBranchOffice}</h2>
                 <h3>
                   {element.boxes
-                    ? element.boxes *
-                      (parseTimeToHours(element.closing_time) -
-                        parseTimeToHours(element.opening_time))
+                    ? element.boxes
                     : element.branch_office.name
                     ? element.branch_office.name
                     : element.reservation_date
@@ -127,10 +123,10 @@ const Table = ({ type, user, elements, color }) => {
               <div>
                 <h2>{labelNumberReserveOrHorarysOrPhoneNumber}</h2>
                 <h3>
-                  {element.opening_time
-                    ? `${element.opening_time} - ${element.closing_time}`
-                    : element.phone_number
+                  {type === "AdminOperators"
                     ? element.phone_number
+                    : element.opening_time
+                    ? `${element.opening_time} - ${element.closing_time}`
                     : element.id
                     ? element.id
                     : null}

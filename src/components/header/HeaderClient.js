@@ -4,8 +4,10 @@ import React from "react";
 import styles from "../../app/general.module.scss";
 import { userServiceLogout } from "@/services/user.service";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 const HeaderClient = ({ isLoggedIn, color }) => {
+  const navigate = useRouter();
   const user = useSelector((state) => state.user);
   const handleLogout = () => {
     userServiceLogout()

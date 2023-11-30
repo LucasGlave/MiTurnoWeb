@@ -6,7 +6,10 @@ import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import styles from "../app/general.module.scss";
 import Header from "../components/header/Header";
-import { branchOfficeServiceAll } from "@/services/branchOffice.service";
+import {
+  branchOfficeServiceAll,
+  getAllBranchOfficesService,
+} from "@/services/branchOffice.service";
 
 const DataForm = ({ type, color }) => {
   //type=client,operator,admin

@@ -6,9 +6,11 @@ const BranchOfficesPanel = () => {
   const [branchOffices, setBranchOffices] = useState([]);
 
   useEffect(() => {
-    branchOfficeServiceAll().then((branchOffices) => {
-      setBranchOffices(branchOffices.data);
-    });
+    branchOfficeServiceAll()
+      .then((branchOffices) => {
+        setBranchOffices(branchOffices.data);
+      })
+      .catch(() => {});
   }, []);
   return (
     <Table

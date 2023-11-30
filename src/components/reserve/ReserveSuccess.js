@@ -11,7 +11,6 @@ const ReserveSuccess = () => {
   const [turn, setTurn] = useState({});
   useEffect(() => {
     turnServiceById(id).then((turn) => setTurn(turn.data));
-    console.log(turn);
   }, []);
   return (
     <div className={styles.container}>
