@@ -15,6 +15,7 @@ const FormReserve = ({
   const user = useSelector((state) => state.user);
   const [error, setError] = useState(null);
   const [horaries, setHoraries] = useState([]);
+  const [availability, setAvailability] = useState("");
   const [userData, setUserData] = useState({
     horary_id: "placeholder",
     full_name: "",
@@ -78,6 +79,15 @@ const FormReserve = ({
   useEffect(() => {
     horaryServiceByDate(date, branchOfficeId).then((horaries) => {
       horaries.data.pop(1);
+      console.log(horaries.data.length);
+      if (horaries.data.length <= 3) {
+        if (horaries.data.length === 1)
+          setAvailability(`Último turno para este día!`);
+        else
+          setAvailability(
+            `Últimos ${horaries.data.length} turnos para este día!`
+          );
+      }
       setHoraries(horaries.data);
     });
   }, [branchOfficeId]);
@@ -126,6 +136,7 @@ const FormReserve = ({
           />
         </div> */}
       </form>
+      {availability && <p>{availability}</p>}
       <div style={{ marginTop: "2rem" }}>
         <button
           type="submit"
