@@ -1,27 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Table from "../../commons/Table";
-import { userServiceGetSingle } from "@/services/user.service";
 import { useParams } from "next/navigation";
+import { turnServiceGetByConfirmationAndUser } from "@/services/turn.service";
+import { useDispatch } from "react-redux";
+import { setElements } from "@/state/elements";
+import { useRouter } from "next/navigation";
 
 const ReservesPanelClient = () => {
   const { id } = useParams();
-  const [user, setUser] = useState({});
-  const [turns, setTurns] = useState([]);
+  const navigate = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    userServiceGetSingle(id)
-      .then((user) => {
-        setUser(user);
-        setTurns(user.turns);
-      })
-      .catch(() => {});
+    turnServiceGetByConfirmationAndUser(id).then((turns) => {
+      dispatch(setElements(turns));
+    });
   }, []);
+
+  const onExecute = (id) => {
+    navigate.push(`/cancelations/${id}`);
+  };
 
   return (
     <Table
       type="ClientReserves"
-      user={user}
-      elements={turns}
+      onExecute={onExecute}
       color={"reserve-panel"}
     />
   );

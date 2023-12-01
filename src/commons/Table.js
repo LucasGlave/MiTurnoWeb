@@ -2,8 +2,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "../app/general.module.scss";
 import Header from "@/components/header/Header";
+import { useSelector } from "react-redux";
 
-const Table = ({ type, user, elements, color }) => {
+const Table = ({ type, onExecute, color }) => {
+  const elements = useSelector((state) => state.elements);
   const [headerType, setHeaderType] = useState("");
   const [labelTitle, setLabelTitle] = useState("Reservas");
   const [labelName, setLabelName] = useState("Nombre");
@@ -17,17 +19,6 @@ const Table = ({ type, user, elements, color }) => {
     setLabelNumberReserveOrHorarysOrPhoneNumber,
   ] = useState("Nº de la reserva");
   const [labelButton, setLabelButton] = useState("Editar");
-
-  const parseTimeToHours = (timeString) => {
-    const timeParts = timeString.split(":");
-    const hours = parseInt(timeParts[0], 10); // Obtener las horas y convertirlas a número
-    const minutes = parseInt(timeParts[1], 10); // Obtener los minutos y convertirlos a número
-    const seconds = parseInt(timeParts[2], 10); // Obtener los segundos y convertirlos a número
-
-    // Calcular la cantidad total de horas
-    const totalHours = hours + minutes / 60 + seconds / 3600;
-    return totalHours;
-  };
 
   useEffect(() => {
     if (type === "ClientReserves") {
@@ -136,7 +127,14 @@ const Table = ({ type, user, elements, color }) => {
                 </h3>
               </div>
               <div>
-                <div className={styles.button}>{labelButton}</div>
+                <div
+                  onClick={() => {
+                    onExecute(element.id);
+                  }}
+                  className={styles.button}
+                >
+                  {labelButton}
+                </div>
               </div>
             </div>
           ))}

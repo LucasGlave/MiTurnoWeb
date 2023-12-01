@@ -15,3 +15,11 @@ export const branchOfficeServiceGetDates = (id) => {
     `http://localhost:5001/api/branch-offices/unavailable-days/${id}`
   );
 };
+
+export const branchOfficeServiceGetSingle = (id) => {
+  return axios.get(`http://localhost:5001/api/branch-offices/single/${id}`);
+};
+
+export const branchOfficeServiceGetEdit = (id, data) => {
+  return axios.put(`http://localhost:5001/api/branch-offices/edit/${id}`, data);
+};

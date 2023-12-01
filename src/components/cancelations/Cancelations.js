@@ -1,12 +1,120 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../app/general.module.scss";
 import Header from "../header/Header";
-import { Checkbox } from "@mui/material";
+import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
+import { turnServiceById, turnServiceCancel } from "@/services/turn.service";
+import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 function Cancelations() {
+  const user = useSelector((state) => state.user);
+  const { id } = useParams();
   const navigate = useRouter();
+  const [turn, setTurn] = useState({});
+  const [branchOffice, setBranchOffice] = useState("");
+  const [checked1, setChecked1] = useState(false);
+  const [checked2, setChecked2] = useState(false);
+  const [checked3, setChecked3] = useState(false);
+  const [checked4, setChecked4] = useState(false);
+  const [checked5, setChecked5] = useState(false);
+
+  useEffect(() => {
+    turnServiceById(id).then((turn) => {
+      if (
+        turn.confirmation_id === "cancelled" ||
+        turn.confirmation_id === "confirmed"
+      ) {
+        navigate.push(`/reserves-panel-client/${user.id}`);
+      } else {
+        setTurn(turn);
+        setBranchOffice(turn.branch_office.name);
+      }
+    });
+  }, []);
+
+  const handleChange1 = (event) => {
+    setChecked1(event.target.checked);
+  };
+
+  const handleChange2 = (event) => {
+    setChecked2(event.target.checked);
+  };
+
+  const handleChange3 = (event) => {
+    setChecked3(event.target.checked);
+  };
+
+  const handleChange4 = (event) => {
+    setChecked4(event.target.checked);
+  };
+
+  const handleChange5 = (event) => {
+    setChecked5(event.target.checked);
+  };
+
+  const executeFunction = () => {
+    let reason_cancellation = "";
+    if (checked1 === true) {
+      reason_cancellation = "Ya no quiero ir";
+    } else if (checked2 === true) {
+      reason_cancellation = "Me equivoqué de horario";
+    } else if (checked3 === true) {
+      reason_cancellation = "Encontré un lugar mejor";
+    } else if (checked4 === true) {
+      reason_cancellation = "Me cancelaron";
+    } else {
+      reason_cancellation = "Otro";
+    }
+    turnServiceCancel(turn.id, reason_cancellation).then(() => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "El turno ha sido cancelado",
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => {
+        navigate.push(`/reserves-panel-client/${user.id}`);
+      });
+    });
+  };
+
+  const handleCancellation = (isChecked) => {
+    if (isChecked) {
+      return (
+        <>
+          <div
+            style={{
+              backgroundColor: "#ede4ed",
+              paddingTop: "10px",
+              marginTop: "20px",
+              paddingLeft: "20px",
+              paddingRight: "20px",
+              paddingBottom: "20px",
+            }}
+          >
+            <div>
+              <p>Su reserva actual será cancelada</p>
+              <p>La cancelación no puede ser revertida</p>
+            </div>
+          </div>
+          <div
+            onClick={() => {
+              executeFunction();
+            }}
+            className={styles.button}
+            style={{ marginTop: "30px", backgroundColor: "#d33" }}
+          >
+            Confirmar cancelación
+          </div>
+        </>
+      );
+    }
+    return null;
+  };
+
   const handleBack = () => {
     navigate.back();
   };
@@ -58,76 +166,137 @@ function Cancelations() {
               Cancelar reserva
             </h1>
 
-            <p>Hola {"nombre"},</p>
+            <p>Hola {user.full_name},</p>
             <h3>¿Por que desea cancelar su reserva?</h3>
             <hr />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Checkbox />
-              <h2>Ya no quiero ir</h2>
-            </div>
-            <hr />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Checkbox />
-              <h2>Me equivoque de horario</h2>
-            </div>
-            <hr />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Checkbox />
-              <h2>Encontre un lugar mejor</h2>
-            </div>
-            <hr />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Checkbox />
-              <h2>Me cancelaron</h2>
-            </div>
-            <hr />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Checkbox />
-              <h2>Otro</h2>
-            </div>
+            <FormGroup>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FormControlLabel
+                  disabled={checked2 || checked3 || checked4 || checked5}
+                  control={
+                    <Checkbox checked={checked1} onChange={handleChange1} />
+                  }
+                  label={
+                    <span style={checked1 ? { fontWeight: "bold" } : null}>
+                      Ya no quiero ir
+                    </span>
+                  }
+                />
+              </div>
+              {handleCancellation(checked1)}
+              <hr />
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FormControlLabel
+                  disabled={checked1 || checked3 || checked4 || checked5}
+                  control={
+                    <Checkbox checked={checked2} onChange={handleChange2} />
+                  }
+                  label={
+                    <span style={checked2 ? { fontWeight: "bold" } : null}>
+                      Me equivoqué de horario
+                    </span>
+                  }
+                />
+              </div>
+              {handleCancellation(checked2)}
+              <hr />
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FormControlLabel
+                  disabled={checked1 || checked2 || checked4 || checked5}
+                  control={
+                    <Checkbox checked={checked3} onChange={handleChange3} />
+                  }
+                  label={
+                    <span style={checked3 ? { fontWeight: "bold" } : null}>
+                      Encontré un lugar mejor
+                    </span>
+                  }
+                />
+              </div>
+              {handleCancellation(checked3)}
+              <hr />
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FormControlLabel
+                  disabled={checked1 || checked2 || checked3 || checked5}
+                  control={
+                    <Checkbox checked={checked4} onChange={handleChange4} />
+                  }
+                  label={
+                    <span style={checked4 ? { fontWeight: "bold" } : null}>
+                      Me cancelaron
+                    </span>
+                  }
+                />
+              </div>
+              {handleCancellation(checked4)}
+              <hr />
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FormControlLabel
+                  disabled={checked1 || checked2 || checked3 || checked4}
+                  control={
+                    <Checkbox checked={checked5} onChange={handleChange5} />
+                  }
+                  label={
+                    <span style={checked5 ? { fontWeight: "bold" } : null}>
+                      Otro
+                    </span>
+                  }
+                />
+              </div>
+              {handleCancellation(checked5)}
+            </FormGroup>
           </div>
 
           <div
             className={styles.group}
             style={{ width: "30%", marginTop: "3rem" }}
           >
-            <p>informacion de la reserva</p>
-            <h2>Ivan Cruce</h2>
+            <p>Información de la reserva</p>
+            <h2>
+              <strong>{turn.full_name}</strong>
+            </h2>
             <hr />
-            <p>Dia: {"dia.de.turno"}</p>
-            <p>Horario: {"Horario.de.turno"}</p>
-            <p>Sucursal: {"Sucursal"}</p>
+            <p>
+              <strong>Dia:</strong> {turn.turn_date}
+            </p>
+            <p>
+              <strong>Horario:</strong> {turn.horary_id}
+            </p>
+            <p>
+              <strong>Sucursal:</strong> {branchOffice}
+            </p>
           </div>
+          <div></div>
         </div>
       </div>
     </div>
