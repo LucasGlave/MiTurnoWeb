@@ -53,7 +53,7 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={{ justifyContent: "center" }}>
       <div className={styles.card}>
         <h1>Iniciar sesión</h1>
         <form onSubmit={onSubmit}>

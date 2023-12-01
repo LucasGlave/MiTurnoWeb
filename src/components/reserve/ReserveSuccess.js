@@ -73,7 +73,7 @@ const ReserveSuccess = () => {
           style={{
             display: "flex",
             flexDirection: "column",
-            width: "50%",
+            width: "100%",
             marginLeft: "10rem",
             gap: "2rem",
           }}
@@ -100,7 +100,7 @@ const ReserveSuccess = () => {
             style={{
               display: "flex",
               flexDirection: "row",
-              width: "50%",
+              width: "100%",
               gap: "3rem",
             }}
           >

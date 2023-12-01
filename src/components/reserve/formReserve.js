@@ -65,20 +65,19 @@ const FormReserve = ({
     });
     navigate.push("/reserve/id");
   };
-  // const sweetModified = () => {
-  //   Swal.fire({
-  //     title: "Turno modificado con éxito",
-  //     text: "Gracias por confiar en nuestro servicio",
-  //     icon: "success",
-  //   });
-  // };
-  // const sweetError = () => {
-  //   Swal.fire({
-  //     title: "No se pudo realizar el cambio",
-  //     text: "Este turno ya fue ocupado, vuelve a intentarlo más tarde o modificando algún parámetro",
-  //     icon: "error",
-  //   });
-  // };
+  const handleKeyDown = (event) => {
+    if (
+      !(
+        event.key === "Backspace" ||
+        event.key === "Delete" ||
+        event.key === "ArrowLeft" ||
+        event.key === "ArrowRight"
+      ) &&
+      isNaN(Number(event.key))
+    ) {
+      event.preventDefault();
+    }
+  };
   useEffect(() => {
     horaryServiceByDate(date, branchOfficeId).then((horaries) => {
       horaries.data.pop(1);
@@ -126,6 +125,7 @@ const FormReserve = ({
               value={userData.phone_number}
               name="phone_number"
               onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
             />
           </div>
         </div>
