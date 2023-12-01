@@ -95,7 +95,6 @@ const CreateOperators = () => {
       "rep_password",
     ];
     const missing = mustHave.filter((e) => {
-      console.log(e);
       !formData[e];
     });
 
@@ -411,13 +410,6 @@ const CreateOperators = () => {
                 Enviar
               </button>
             </div>
-            <hr
-              style={{
-                border: "1px solid #ccc",
-                width: "100%",
-                margin: "8px 0",
-              }}
-            />
             <div
               style={{
                 width: "100%",

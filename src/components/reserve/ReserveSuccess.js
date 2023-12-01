@@ -7,17 +7,23 @@ import { useSelector } from "react-redux";
 import { turnServiceById } from "@/services/turn.service";
 import { useParams } from "next/navigation";
 const ReserveSuccess = () => {
+  const user = useSelector((state) => state.user);
   const { id } = useParams();
-  const [turn, setTurn] = useState({});
+  const [turn, setTurn] = useState({
+    reservation_time: "",
+    horary_id: "",
+    branch_office: { name: "" },
+  });
   useEffect(() => {
     turnServiceById(id).then((turn) => setTurn(turn.data));
   }, []);
+  console.log(turn, id);
+
   return (
     <div className={styles.container}>
       <Header isPosition={"client"} isLoggedIn={true} />
       <div
         style={{
-          marginTop: "3rem",
           width: "44rem",
           height: "29rem",
           display: "flex",
@@ -43,9 +49,9 @@ const ReserveSuccess = () => {
         </svg>
         <h1 style={{ color: "#a442f1" }}>¡Gracias por tu reserva!</h1>
         <p style={{ textAlign: "center" }}>
-          En hasta 5 minutos, recibirás un correo electrónico en {} con todos
-          los detalles de tu reserva. Recordá revisar tu buzón de correo no
-          deseado o promociones.
+          En hasta 5 minutos, recibirás un correo electrónico en {user.email}{" "}
+          con todos los detalles de tu reserva. Recordá revisar tu buzón de
+          correo no deseado o promociones.
         </p>
         <button className={styles.button}>
           ¿Quéres imprimir tu comprobante?
@@ -82,11 +88,12 @@ const ReserveSuccess = () => {
               }}
             >
               <h1>Reserva</h1>
-              <h1 style={{ color: "#a442f1" }}>#{"numero de reserva"}</h1>
+              <h1 style={{ color: "#a442f1" }}>#{turn.id}</h1>
             </div>
             <p>
-              Hecho el {"fecha"} a las {"hora"} hs para el {"fecha"} a las{" "}
-              {"hora"} hs
+              Tramitada el {turn.reservation_date} a las{" "}
+              {turn.reservation_time.slice(0, 5)} para el {turn.turn_date} a las{" "}
+              {turn.horary_id.slice(0, 5)} hs.
             </p>
           </div>
           <div
@@ -98,14 +105,16 @@ const ReserveSuccess = () => {
             }}
           >
             <div>
-              <h3>{"nombre de persona"}</h3>
-              <h2>Mail: {"email de persona"}</h2>
-              <h2>Teléfono: {"teléfono de persona"}</h2>
+              <h3>Cliente</h3>
+              <h2>Nombre: {turn.full_name}</h2>
+              <h2>Mail: {user.email}</h2>
+              <h2>Teléfono: {turn.phone_number}</h2>
             </div>
             <div>
               <h3>Reserva</h3>
-              <h2>Sucursal: {"nombre de sucursal"}</h2>
-              <h2>Horario: {"horario de turno"}</h2>
+              <h2>Sucursal: {turn.branch_office.name}</h2>
+              <h2>Día: {turn.turn_date}</h2>
+              <h2>Horario: {turn.horary_id.slice(0, 5)}</h2>
             </div>
           </div>
         </div>

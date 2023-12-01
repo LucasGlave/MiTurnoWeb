@@ -88,7 +88,7 @@ const Table = ({ type, user, elements, color }) => {
               }}
               className={styles.card}
             >
-              <div>
+              <div className={styles.element}>
                 <h2>{labelName}</h2>
                 <h3>
                   {element.full_name
@@ -100,15 +100,15 @@ const Table = ({ type, user, elements, color }) => {
                     : null}
                 </h3>
               </div>
-              <div>
+              <div className={styles.element}>
                 <h2>{labelReserveOrEmail}</h2>
                 <h3>
                   {element.email
                     ? element.email
-                    : `${element.turn_date} - ${element.horary_id}`}
+                    : `${element.turn_date} - ${element.horary_id.slice(0, 5)}`}
                 </h3>
               </div>
-              <div>
+              <div className={styles.element}>
                 <h2>{labelReserveOrCapacityOrBranchOffice}</h2>
                 <h3>
                   {element.boxes
@@ -120,13 +120,16 @@ const Table = ({ type, user, elements, color }) => {
                     : null}
                 </h3>
               </div>
-              <div>
+              <div className={styles.element}>
                 <h2>{labelNumberReserveOrHorarysOrPhoneNumber}</h2>
                 <h3>
                   {type === "AdminOperators"
                     ? element.phone_number
                     : element.opening_time
-                    ? `${element.opening_time} - ${element.closing_time}`
+                    ? `${element.opening_time.slice(
+                        0,
+                        5
+                      )} - ${element.closing_time.slice(0, 5)}`
                     : element.id
                     ? element.id
                     : null}
