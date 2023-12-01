@@ -98,7 +98,7 @@ const CreateBranch = () => {
     <div className={styles.container}>
       <Header isPosition={"admin"} />
 
-      <div style={{ marginTop: "8rem", width: "60%" }} className={styles.card}>
+      <div style={{ marginTop: "4rem", width: "60%" }} className={styles.card}>
         <div
           style={{
             width: "95%",
