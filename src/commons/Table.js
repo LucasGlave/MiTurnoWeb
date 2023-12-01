@@ -2,8 +2,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "../app/general.module.scss";
 import Header from "@/components/header/Header";
+import { useSelector } from "react-redux";
 
-const Table = ({ type, user, elements, color }) => {
+const Table = ({ type, onExecute, color }) => {
+  const elements = useSelector((state) => state.elements);
   const [headerType, setHeaderType] = useState("");
   const [labelTitle, setLabelTitle] = useState("Reservas");
   const [labelName, setLabelName] = useState("Nombre");
@@ -17,17 +19,6 @@ const Table = ({ type, user, elements, color }) => {
     setLabelNumberReserveOrHorarysOrPhoneNumber,
   ] = useState("Nº de la reserva");
   const [labelButton, setLabelButton] = useState("Editar");
-
-  const parseTimeToHours = (timeString) => {
-    const timeParts = timeString.split(":");
-    const hours = parseInt(timeParts[0], 10); // Obtener las horas y convertirlas a número
-    const minutes = parseInt(timeParts[1], 10); // Obtener los minutos y convertirlos a número
-    const seconds = parseInt(timeParts[2], 10); // Obtener los segundos y convertirlos a número
-
-    // Calcular la cantidad total de horas
-    const totalHours = hours + minutes / 60 + seconds / 3600;
-    return totalHours;
-  };
 
   useEffect(() => {
     if (type === "ClientReserves") {
@@ -91,12 +82,10 @@ const Table = ({ type, user, elements, color }) => {
               <div>
                 <h2>{labelName}</h2>
                 <h3>
-                  {user
-                    ? user.full_name
+                  {element.full_name
+                    ? element.full_name
                     : element.name
                     ? element.name
-                    : element.full_name
-                    ? element.full_name
                     : element.user.full_name
                     ? element.user.full_name
                     : null}
@@ -114,9 +103,7 @@ const Table = ({ type, user, elements, color }) => {
                 <h2>{labelReserveOrCapacityOrBranchOffice}</h2>
                 <h3>
                   {element.boxes
-                    ? element.boxes *
-                      (parseTimeToHours(element.closing_time) -
-                        parseTimeToHours(element.opening_time))
+                    ? element.boxes
                     : element.branch_office.name
                     ? element.branch_office.name
                     : element.reservation_date
@@ -127,17 +114,24 @@ const Table = ({ type, user, elements, color }) => {
               <div>
                 <h2>{labelNumberReserveOrHorarysOrPhoneNumber}</h2>
                 <h3>
-                  {element.opening_time
-                    ? `${element.opening_time} - ${element.closing_time}`
-                    : element.phone_number
+                  {type === "AdminOperators"
                     ? element.phone_number
+                    : element.opening_time
+                    ? `${element.opening_time} - ${element.closing_time}`
                     : element.id
                     ? element.id
                     : null}
                 </h3>
               </div>
               <div>
-                <div className={styles.button}>{labelButton}</div>
+                <div
+                  onClick={() => {
+                    onExecute(element.id);
+                  }}
+                  className={styles.button}
+                >
+                  {labelButton}
+                </div>
               </div>
             </div>
           ))}
