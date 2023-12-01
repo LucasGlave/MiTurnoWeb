@@ -13,7 +13,9 @@ function Cancelations() {
   const user = useSelector((state) => state.user);
   const { id } = useParams();
   const navigate = useRouter();
-  const [turn, setTurn] = useState({});
+  const [turn, setTurn] = useState({
+    horary_id: "",
+  });
   const [branchOffice, setBranchOffice] = useState("");
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
@@ -290,7 +292,7 @@ function Cancelations() {
               <strong>Dia:</strong> {turn.turn_date}
             </p>
             <p>
-              <strong>Horario:</strong> {turn.horary_id}
+              <strong>Horario:</strong> {turn.horary_id.slice(0, 5)}
             </p>
             <p>
               <strong>Sucursal:</strong> {branchOffice}
