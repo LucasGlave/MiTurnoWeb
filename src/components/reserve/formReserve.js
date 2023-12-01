@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { horaryServiceByDate } from "@/services/horary.service";
 import { turnServiceCreate } from "@/services/turn.service";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 const FormReserve = ({
   functionForm,
@@ -12,6 +13,7 @@ const FormReserve = ({
   date,
   branchOfficeId,
 }) => {
+  const navigate = useRouter();
   const user = useSelector((state) => state.user);
   const [error, setError] = useState(null);
   const [horaries, setHoraries] = useState([]);
@@ -51,8 +53,9 @@ const FormReserve = ({
       setError("Por favor, complete todos los campos.");
       return;
     }
-    turnServiceCreate(userData, user.id).then((res) => res.data);
-    // mandar a url "reserve/:turnId" que en realidad es unicamente id
+    turnServiceCreate(userData, user.id)
+      .then((res) => res.data)
+      .then((turn) => navigate.push(`reserve/${turn.id}`));
   };
   const sweetReserve = () => {
     Swal.fire({
@@ -79,7 +82,6 @@ const FormReserve = ({
   useEffect(() => {
     horaryServiceByDate(date, branchOfficeId).then((horaries) => {
       horaries.data.pop(1);
-      console.log(horaries.data.length);
       if (horaries.data.length <= 3) {
         if (horaries.data.length === 1)
           setAvailability(`Último turno para este día!`);
