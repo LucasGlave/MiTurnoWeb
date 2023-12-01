@@ -50,7 +50,7 @@ const HeaderAdmin = ({ isLoggedIn, color }) => {
             }}
             href="/create-operators"
           >
-            <h3 style={{ color: "#a442f1" }}>Creacion de operadores</h3>
+            <h3 style={{ color: "#a442f1" }}>Crear operador</h3>
           </Link>
         </div>
 

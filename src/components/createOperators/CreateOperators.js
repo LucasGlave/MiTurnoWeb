@@ -126,7 +126,7 @@ const CreateOperators = () => {
   return (
     <div className={styles.container}>
       <Header isLoggedIn={true} isPosition={"admin"} />
-      <div className={styles.card}>
+      <div className={styles.card} style={{ marginTop: "1rem" }}>
         <div style={{ width: "80%" }}>
           <h1
             style={{
