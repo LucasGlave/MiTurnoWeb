@@ -104,7 +104,7 @@ const Register = () => {
   };
   return (
     <div className={styles.container}>
-      <div style={{ marginTop: "8rem" }} className={styles.card}>
+      <div className={styles.card}>
         <div
           style={{
             width: "80%",
@@ -112,7 +112,9 @@ const Register = () => {
             flexDirection: "row",
             alignItems: "center",
             gap: "5px",
+            cursor: "pointer",
           }}
+          onClick={handleBack}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -126,11 +128,7 @@ const Register = () => {
               fill="#A442F1"
             />
           </svg>
-          <h4
-            style={{ cursor: "pointer" }}
-            onClick={handleBack}
-            className={styles.back}
-          >
+          <h4 style={{ cursor: "pointer" }} className={styles.back}>
             Atras
           </h4>
         </div>
