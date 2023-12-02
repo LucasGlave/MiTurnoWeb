@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { horaryServiceAll } from "@/services/horary.service";
 import { branchOfficeServiceCreate } from "@/services/branchOffice.service";
 import Header from "../header/Header";
+import Swal from "sweetalert2";
 
 const CreateBranch = () => {
   const navigate = useRouter();
@@ -66,6 +67,15 @@ const CreateBranch = () => {
     navigate.back();
   };
 
+  const sweetReserve = () => {
+    Swal.fire({
+      position: "top",
+      title: "Sucursal creada con éxito",
+      text: "Gracias por confiar en nuestro servicio",
+      icon: "success",
+    });
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     setError(null);
@@ -98,14 +108,14 @@ const CreateBranch = () => {
     }
     let temp = { ...formData };
     branchOfficeServiceCreate(temp)
-      .then(() => {})
+      .then(() => sweetReserve())
       .catch((error) => console.error(error));
   };
   return (
     <div className={styles.container}>
       <Header isPosition={"admin"} />
 
-      <div style={{ marginTop: "8rem", width: "60%" }} className={styles.card}>
+      <div style={{ marginTop: "4rem", width: "60%" }} className={styles.card}>
         <div
           style={{
             width: "95%",

@@ -12,9 +12,13 @@ const ReservesPanelClient = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    turnServiceGetByConfirmationAndUser(id).then((turns) => {
-      dispatch(setElements(turns));
-    });
+    turnServiceGetByConfirmationAndUser(id)
+      .then((turns) => {
+        dispatch(setElements(turns));
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }, []);
 
   const onExecute = (id) => {

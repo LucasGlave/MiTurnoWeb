@@ -15,7 +15,7 @@ const OperatorsPanel = () => {
   }, []);
 
   const onExecute = (id) => {
-    //navigate.push(`/branch-office-details/${id}`);
+    //navigate.push(/branch-office-details/${id});
   };
 
   return (

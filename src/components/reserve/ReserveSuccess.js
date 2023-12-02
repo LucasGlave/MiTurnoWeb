@@ -10,6 +10,7 @@ const ReserveSuccess = () => {
   const user = useSelector((state) => state.user);
   const { id } = useParams();
   const [turn, setTurn] = useState({
+    id: "",
     reservation_time: "",
     horary_id: "",
     branch_office: { name: "" },
@@ -174,7 +175,7 @@ const ReserveSuccess = () => {
             </svg>
             <Link
               style={{ textDecoration: "none", color: "rgb(229, 57, 57)" }}
-              href="/cancelations"
+              href={`/cancelations/${turn.id}`}
             >
               <h3>Cancelar reserva</h3>
             </Link>

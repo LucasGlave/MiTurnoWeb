@@ -65,8 +65,9 @@ const Reserve = () => {
   const isDateDisabled = (dateObject) => {
     const date = dateObject.$d;
     if (!date) false;
+
     const today = new Date();
-    if (date < today) {
+    if (date < today || date.getDay() === 0 || date.getDay() === 6) {
       return true;
     }
     return disabledDates.some(

@@ -12,6 +12,7 @@ import {
   branchOfficeServiceAll,
   getAllBranchOfficesService,
 } from "@/services/branchOffice.service";
+import Swal from "sweetalert2";
 
 const CreateOperators = () => {
   const navigate = useRouter();
@@ -70,7 +71,14 @@ const CreateOperators = () => {
       event.preventDefault();
     }
   };
-
+  const sweetReserve = () => {
+    Swal.fire({
+      position: "top",
+      title: "Operador creado con éxito",
+      text: "Gracias por confiar en nuestro servicio",
+      icon: "success",
+    });
+  };
   const onSubmit = (e) => {
     e.preventDefault();
     setError(null);
@@ -116,7 +124,10 @@ const CreateOperators = () => {
     }
     let temp = { ...formData };
     userServiceCreateOperators(temp)
-      .then(() => navigate.push("/operators-panel"))
+      .then(() => {
+        sweetReserve();
+        navigate.push("/operators-panel");
+      })
       .catch((err) => {
         if (err.response.status === 409) setError("Este email ya existe.");
         else setError("Error al intentar registrar operador.");
@@ -126,7 +137,7 @@ const CreateOperators = () => {
   return (
     <div className={styles.container}>
       <Header isLoggedIn={true} isPosition={"admin"} />
-      <div className={styles.card}>
+      <div className={styles.card} style={{ marginTop: "1rem" }}>
         <div style={{ width: "80%" }}>
           <h1
             style={{
