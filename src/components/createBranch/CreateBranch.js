@@ -73,7 +73,8 @@ const CreateBranch = () => {
       title: "Sucursal creada con éxito",
       text: "Gracias por confiar en nuestro servicio",
       icon: "success",
-    });
+    })
+    .then(()=>navigate.push("/branch-offices-panel"))
   };
 
   const onSubmit = (e) => {

@@ -67,7 +67,7 @@ const Table = ({ type, onExecute, color }) => {
             width: "100%",
           }}
         >
-          {elements.map((element) => (
+          {elements ? elements.map((element) => (
             <div
               key={element.id}
               style={{
@@ -137,7 +137,10 @@ const Table = ({ type, onExecute, color }) => {
                 </div>
               </div>
             </div>
-          ))}
+          )):
+          <div>
+            No hay {labelTitle} para mostrar
+            </div>}
         </div>
       </div>
     </div>
