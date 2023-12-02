@@ -15,7 +15,7 @@ const ReserveSuccess = () => {
     branch_office: { name: "" },
   });
   useEffect(() => {
-    turnServiceById(id).then((turn) => setTurn(turn.data));
+    turnServiceById(id).then((turn) => setTurn(turn));
   }, []);
   console.log(turn, id);
 
