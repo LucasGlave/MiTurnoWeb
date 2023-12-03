@@ -82,12 +82,12 @@ const CreateBranch = () => {
     setError(null);
 
     const frontNames = {
-      name: "nombre",
-      boxes: "boxes",
-      email: "email",
-      phone_number: "phone_number",
-      opening_time: "horario de inicio",
-      closing_time: "horario de cierre",
+      name: "Nombre",
+      boxes: "Capacidad máxima",
+      email: "Email",
+      phone_number: "Número de teléfono",
+      opening_time: "Horario de inicio",
+      closing_time: "Horario de cierre",
     };
 
     const mustHave = [

@@ -36,7 +36,16 @@ const DataForm = ({ type, color }) => {
     Swal.fire({
       title: "Cambios guardados con exito",
       icon: "success",
-    });
+    })
+    .then(()=>{
+      if(type==="operator"){
+        navigate.push("/reserves-panel-operator")
+      }else if(type==="admin"){
+        navigate.push("/branch-offices-panel")
+      }else{
+        navigate.push(`/reserves-panel-client/${user.id}`)
+      }
+    })
   };
 
   const handleInputChange = (e) => {
@@ -64,6 +73,33 @@ const DataForm = ({ type, color }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     setError(null);
+
+    const frontNames = {
+      full_name: "Nombre y apellido",
+      dni: "Dni",
+      email: "Email",
+      phone_number: "Número de teléfono",
+    };
+
+    const mustHave = [
+      "full_name",
+      "dni",
+      "email",
+      "phone_number",
+    ];
+    const missing = mustHave.filter((e) => !formData[e]);
+
+    if (missing.length > 0) {
+      const message = `Completar los campos ${missing
+        .map((e) => ` ${frontNames[e]}`)
+        .join(" y ")}.`;
+      setError(message);
+      return;
+    }
+    if (type==="operator" && formData.branch_office_id==="Seleccione una sucursal..."){
+      setError("Elija una sucursal válida!")
+      return;
+    }
     const id = user.id;
     let temp = {
       dni: formData.dni,
@@ -177,6 +213,7 @@ const DataForm = ({ type, color }) => {
           )}
 
           <div className={styles.group}>
+          {error && <p className="error-message">{error}</p>}
             <button className={styles.button} type="submit">
               Guardar cambios
             </button>

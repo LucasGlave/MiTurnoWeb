@@ -60,6 +60,17 @@
     line-height: 20px;
     cursor: pointer;
   }
+
+  .buttonsContainer {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .deleteButton {
+    background-color: #d33;
+    color: white;
+  }
+
   .card {
     display: flex;
     align-items: center;

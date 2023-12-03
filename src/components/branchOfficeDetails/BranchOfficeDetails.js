@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import styles from "../../app/general.module.scss";
 import { useParams } from "next/navigation";
 import {
-  branchOfficeServiceGetEdit,
+  branchOfficeServiceEdit,
   branchOfficeServiceGetSingle,
 } from "@/services/branchOffice.service";
 import { horaryServiceAll } from "@/services/horary.service";
@@ -36,7 +36,6 @@ const BranchOfficeDetails = () => {
       .then((res) => setHoraries(res.data))
       .catch((err) => console.error(err));
   }, []);
-  console.log(branchOffice);
 
   const sweetEdit = () => {
     Swal.fire({
@@ -75,17 +74,31 @@ const BranchOfficeDetails = () => {
     navigate.back();
   };
 
+  const handleKeyDown = (event) => {
+    if (
+      !(
+        event.key === "Backspace" ||
+        event.key === "Delete" ||
+        event.key === "ArrowLeft" ||
+        event.key === "ArrowRight"
+      ) &&
+      isNaN(Number(event.key))
+    ) {
+      event.preventDefault();
+    }
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     setError(null);
 
     const frontNames = {
-      name: "nombre",
-      boxes: "boxes",
-      email: "email",
-      phone_number: "phone_number",
-      opening_time: "horario de inicio",
-      closing_time: "horario de cierre",
+      name: "Nombre",
+      boxes: "Capacidad máxima",
+      email: "Email",
+      phone_number: "Número de teléfono",
+      opening_time: "Horario de inicio",
+      closing_time: "Horario de cierre",
     };
 
     const mustHave = [
@@ -114,25 +127,11 @@ const BranchOfficeDetails = () => {
       opening_time: formData.opening_time,
       closing_time: formData.closing_time,
     };
-    branchOfficeServiceGetEdit(id, temp)
+    branchOfficeServiceEdit(id, temp)
       .then(() => {
         sweetEdit();
       })
       .catch((error) => console.error(error));
-  };
-
-  const handleKeyDown = (event) => {
-    if (
-      !(
-        event.key === "Backspace" ||
-        event.key === "Delete" ||
-        event.key === "ArrowLeft" ||
-        event.key === "ArrowRight"
-      ) &&
-      isNaN(Number(event.key))
-    ) {
-      event.preventDefault();
-    }
   };
 
   return (
@@ -295,6 +294,7 @@ const BranchOfficeDetails = () => {
             </div>
           </div>
           <div className={styles.group}>
+          {error && <p className="error-message">{error}</p>}
             <button className={styles.button} type="submit">
               Guardar cambios
             </button>

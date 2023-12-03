@@ -75,3 +75,7 @@ export const userServiceCreateOperators = (formData) => {
     ...formData,
   });
 };
+
+export const userServiceDelete = (id) => {
+  return axios.delete(`http://localhost:5001/api/users/${id}`);
+};

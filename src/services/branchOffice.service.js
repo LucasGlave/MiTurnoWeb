@@ -20,6 +20,10 @@ export const branchOfficeServiceGetSingle = (id) => {
   return axios.get(`http://localhost:5001/api/branch-offices/single/${id}`);
 };
 
-export const branchOfficeServiceGetEdit = (id, data) => {
+export const branchOfficeServiceEdit = (id, data) => {
   return axios.put(`http://localhost:5001/api/branch-offices/edit/${id}`, data);
+};
+
+export const branchOfficeServiceDelete = (id) => {
+  return axios.delete(`http://localhost:5001/api/branch-offices/${id}`);
 };

@@ -4,7 +4,8 @@ import styles from "../app/general.module.scss";
 import Header from "@/components/header/Header";
 import { useSelector } from "react-redux";
 
-const Table = ({ type, onExecute, color }) => {
+const Table = ({ type, onExecute, onDelete, color }) => {
+  //type = AdminBranchOffices || AdminOperators || ClientReserves || OperatorReserves
   const elements = useSelector((state) => state.elements);
   const [headerType, setHeaderType] = useState("");
   const [labelTitle, setLabelTitle] = useState("Reservas");
@@ -67,7 +68,7 @@ const Table = ({ type, onExecute, color }) => {
             width: "100%",
           }}
         >
-          {elements ? elements.map((element) => (
+          {elements.length ? (elements.map((element) => (
             <div
               key={element.id}
               style={{
@@ -127,20 +128,33 @@ const Table = ({ type, onExecute, color }) => {
                 </h3>
               </div>
               <div>
-                <div
+                {type==="AdminBranchOffices" || type==="AdminOperators" ? 
+                (<div className={styles.buttonsContainer}>
+                  <div onClick={() => {onExecute(element.id);}} className={styles.button}>
+                    {labelButton}
+                    </div>
+                    <div
+                    onClick={() => {
+                      onDelete(element.id);}}
+                      className={`${styles.button} ${styles.deleteButton}`}>
+                        Eliminar
+                        </div>
+                        </div>)
+                        :
+                (<div
                   onClick={() => {
                     onExecute(element.id);
                   }}
                   className={styles.button}
                 >
                   {labelButton}
-                </div>
+                </div>)}
               </div>
             </div>
-          )):
-          <div>
-            No hay {labelTitle} para mostrar
-            </div>}
+          ))):
+          (<div>
+            <p>No hay {labelTitle} para mostrar.</p>
+            </div>)}
         </div>
       </div>
     </div>
