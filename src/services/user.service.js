@@ -1,6 +1,6 @@
-// "use client";
 import { setUser } from "@/state/user";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 import { useParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 
