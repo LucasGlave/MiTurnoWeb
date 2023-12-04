@@ -1,8 +1,6 @@
 // "use client";
-import { setUser } from "@/state/user";
 import axios from "axios";
-import { useParams } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
+axios.defaults.withCredentials = true;
 
 export const userServiceRegister = (formData) => {
   return axios.post(`http://localhost:5001/api/users/register`, formData);

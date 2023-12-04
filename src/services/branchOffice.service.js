@@ -1,4 +1,5 @@
 import axios from "axios";
+axios.defaults.withCredentials = true;
 
 export const branchOfficeServiceAll = () => {
   return axios.get("http://localhost:5001/api/branch-offices");

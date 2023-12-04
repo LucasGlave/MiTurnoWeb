@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 
 export const turnServiceCreate = (formData, userId) => {
   return axios.post(`http://localhost:5001/api/turns/${userId}`, {
