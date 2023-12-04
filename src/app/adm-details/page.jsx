@@ -7,7 +7,20 @@ import { useSelector } from "react-redux";
 
 const admDetails = () => {
   const user = useSelector((state) => state.user);
-  return <>{user.id ? <AdmDetails /> : <Login />}</>;
+
+  return (
+    <>
+      {!user.id ? (
+        <Login />
+      ) : user.role_id === "super admin" || user.role_id === "admin" ? (
+        <AdmDetails />
+      ) : user.role_id === "operator" ? (
+        <ReservesPanelOperator />
+      ) : (
+        <Reserve />
+      )}
+    </>
+  );
 };
 
 export default admDetails;

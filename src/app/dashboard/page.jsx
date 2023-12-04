@@ -1,10 +1,10 @@
 "use client";
-import React from "react";
+import Dashboard from "@/components/dashboard/Dashboard";
 import Login from "@/components/login/Login";
-import CreateOperators from "@/components/createOperators/CreateOperators";
+import React from "react";
 import { useSelector } from "react-redux";
 
-const createOperators = () => {
+const page = () => {
   const user = useSelector((state) => state.user);
 
   return (
@@ -12,7 +12,7 @@ const createOperators = () => {
       {!user.id ? (
         <Login />
       ) : user.role_id === "super admin" || user.role_id === "admin" ? (
-        <CreateOperators />
+        <Dashboard />
       ) : user.role_id === "operator" ? (
         <ReservesPanelOperator />
       ) : (
@@ -22,4 +22,4 @@ const createOperators = () => {
   );
 };
 
-export default createOperators;
+export default page;
