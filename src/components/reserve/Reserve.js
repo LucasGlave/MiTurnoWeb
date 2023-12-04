@@ -16,6 +16,8 @@ import Steps from "./Steps";
 import InputsReserve from "./formReserve";
 import FormReserve from "./formReserve";
 import { horaryServiceByDate } from "@/services/horary.service";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Reserve = () => {
   const [isBranchOfficeSelected, setIsBranchOfficeSelected] = useState(false);
@@ -25,14 +27,17 @@ const Reserve = () => {
   const [branchOffices, setBranchOffices] = useState([]);
   const [branchOfficeId, setBranchOfficeId] = useState(null);
   const [disabledDates, setDisabledDates] = useState([]);
-  const [timer, setTimer] = useState(120);
+  const [timer, setTimer] = useState(60);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setTimer((prevTimer) => prevTimer - 1);
+      if (timer === 15) {
+        notify();
+      }
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [timer]);
 
   useEffect(() => {
     if (timer === 0) {
@@ -48,6 +53,8 @@ const Reserve = () => {
       "0"
     )}`;
   };
+
+  const notify = () => toast("Quedan 15 segundos!");
 
   const handleDateChange = (newDate) => {
     setSelectedDate(newDate);
@@ -184,6 +191,7 @@ const Reserve = () => {
           <div className={styles.button}>{formatTime(timer)}</div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
