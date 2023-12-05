@@ -79,9 +79,15 @@ const Register = () => {
     const missing = mustHave.filter((e) => !formData[e]);
 
     if (missing.length > 0) {
-      const message = `Completar los campos ${missing
-        .map((e) => ` ${frontNames[e]}`)
-        .join(" y ")}.`;
+      const message =
+        missing.length === 1
+          ? `Completar el campo ${frontNames[missing[0]]}.`
+          : `Completar los campos ${missing
+              .slice(0, -1)
+              .map((e) => ` ${frontNames[e]}`)
+              .join(",")}${missing.length > 1 ? " y" : ""} ${
+              frontNames[missing[missing.length - 1]]
+            }.`;
       setError(message);
       return;
     }
