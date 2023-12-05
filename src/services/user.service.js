@@ -77,3 +77,11 @@ export const userServiceCreateOperators = (formData) => {
 export const userServiceDelete = (id) => {
   return axios.delete(`http://localhost:5001/api/users/${id}`);
 };
+
+export const userServiceChangePassword = (formData, userId) => {
+  return axios.put(
+    `http://localhost:5001/api/users/change-password/${userId}`,
+    formData,
+    { withCredentials: true }
+  );
+};

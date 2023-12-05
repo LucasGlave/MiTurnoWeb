@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Table from "../../commons/Table";
-import { branchOfficeServiceAll, branchOfficeServiceDelete } from "@/services/branchOffice.service";
+import {
+  branchOfficeServiceAll,
+  branchOfficeServiceDelete,
+} from "@/services/branchOffice.service";
 import { removeElement, setElements } from "@/state/elements";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
@@ -31,14 +34,26 @@ const BranchOfficesPanel = () => {
       cancelButtonText: "Salir",
     }).then((result) => {
       if (result.isConfirmed) {
-        branchOfficeServiceDelete(id).then(() => {
-          dispatch(removeElement(id));
-          Swal.fire({
-            title: "¡Sucursal eliminada!",
-            text: "La sucursal ha sido confirmado con éxito.",
-            icon: "success",
+        branchOfficeServiceDelete(id)
+          .then(() => {
+            dispatch(removeElement(id));
+            Swal.fire({
+              title: "¡Sucursal eliminada!",
+              text: "La sucursal ha sido confirmado con éxito.",
+              icon: "success",
+            });
+          })
+          .catch((err) => {
+            if (err.response.status === 409) {
+              Swal.fire({
+                title: "No se pudo eliminar la sucursal",
+                text: "Esta sucursal aún tiene turnos asignados.",
+                icon: "warning",
+                confirmButtonColor: "#7066e0",
+                confirmButtonText: "Aceptar",
+              });
+            }
           });
-        });
       }
     });
   };
@@ -47,7 +62,8 @@ const BranchOfficesPanel = () => {
     <Table
       color={"branch-office"}
       type="AdminBranchOffices"
-      onExecute={onExecute} onDelete={onDelete}
+      onExecute={onExecute}
+      onDelete={onDelete}
     />
   );
 };
