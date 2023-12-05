@@ -8,6 +8,7 @@ import styles from "../app/general.module.scss";
 import Header from "../components/header/Header";
 import {
   branchOfficeServiceAll,
+  branchOfficeServiceGetSingle,
   getAllBranchOfficesService,
 } from "@/services/branchOffice.service";
 
@@ -24,28 +25,38 @@ const DataForm = ({ type, color }) => {
     email: user.email,
     phone_number: user.phone_number,
     branch_office_id: user.branch_office_id,
+    branch_office_name: "",
   });
 
   useEffect(() => {
-    branchOfficeServiceAll().then((branchOffices) => {
-      setBranchOffices(branchOffices.data);
-    });
-  }, []);
+    if (formData.branch_office_id) {
+      branchOfficeServiceGetSingle(formData.branch_office_id).then(
+        (branchOffice) => {
+          setBranchOffices(branchOffice.data);
+          setFormData((prevState) => {
+            return {
+              ...prevState,
+              branch_office_name: branchOffice.data.name,
+            };
+          });
+        }
+      );
+    }
+  }, [formData]);
 
   const sweetEdit = () => {
     Swal.fire({
       title: "Cambios guardados con exito",
       icon: "success",
-    })
-    .then(()=>{
-      if(type==="operator"){
-        navigate.push("/reserves-panel-operator")
-      }else if(type==="admin"){
-        navigate.push("/branch-offices-panel")
-      }else{
-        navigate.push(`/reserves-panel-client/${user.id}`)
+    }).then(() => {
+      if (type === "operator") {
+        navigate.push("/reserves-panel-operator");
+      } else if (type === "admin") {
+        navigate.push("/branch-offices-panel");
+      } else {
+        navigate.push(`/reserves-panel-client/${user.id}`);
       }
-    })
+    });
   };
 
   const handleInputChange = (e) => {
@@ -81,12 +92,7 @@ const DataForm = ({ type, color }) => {
       phone_number: "Número de teléfono",
     };
 
-    const mustHave = [
-      "full_name",
-      "dni",
-      "email",
-      "phone_number",
-    ];
+    const mustHave = ["full_name", "dni", "email", "phone_number"];
     const missing = mustHave.filter((e) => !formData[e]);
 
     if (missing.length > 0) {
@@ -96,8 +102,11 @@ const DataForm = ({ type, color }) => {
       setError(message);
       return;
     }
-    if (type==="operator" && formData.branch_office_id==="Seleccione una sucursal..."){
-      setError("Elija una sucursal válida!")
+    if (
+      type === "operator" &&
+      formData.branch_office_id === "Seleccione una sucursal..."
+    ) {
+      setError("Elija una sucursal válida!");
       return;
     }
     const id = user.id;
@@ -171,31 +180,17 @@ const DataForm = ({ type, color }) => {
 
               <div className={styles.group}>
                 <p>Sucursal</p>
-                <select
-                  name="branch_office_id"
+                <input
+                  value={formData.branch_office_name}
+                  name="branch_office_name"
                   onChange={handleInputChange}
-                  value={formData.branch_office_id}
+                  disabled
+                  type="text"
                   style={{
-                    borderRadius: "8px",
-                    border: "1px solid var(--Grey-3, #e1e1e1)",
-                    background: "var(--White, #fff)",
-                    display: "flex",
-                    padding: "12px 8px 12px 12px",
                     alignItems: "center",
-                    gap: "8px",
-                    alignSelf: "stretch",
                     marginBottom: "20px",
                   }}
-                >
-                  <option key={0} value={null}>
-                    Seleccione una sucursal...
-                  </option>
-                  {branchOffices.map((branch_office) => (
-                    <option key={branch_office.id} value={branch_office.id}>
-                      {branch_office.name}
-                    </option>
-                  ))}
-                </select>
+                />
               </div>
             </div>
           ) : (
@@ -213,7 +208,7 @@ const DataForm = ({ type, color }) => {
           )}
 
           <div className={styles.group}>
-          {error && <p className="error-message">{error}</p>}
+            {error && <p className="error-message">{error}</p>}
             <button className={styles.button} type="submit">
               Guardar cambios
             </button>

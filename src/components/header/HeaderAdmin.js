@@ -133,7 +133,7 @@ const HeaderAdmin = ({ isLoggedIn, color }) => {
               display: "flex",
               alignItems: "center",
             }}
-            href="#"
+            href="/dashboard"
           >
             <h3
               style={

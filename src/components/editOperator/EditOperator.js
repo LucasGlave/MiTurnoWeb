@@ -5,114 +5,122 @@ import Header from "../header/Header";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import Swal from "sweetalert2";
-import { userServiceClient, userServiceGetSingle } from "@/services/user.service";
+import {
+  userServiceClient,
+  userServiceGetSingle,
+} from "@/services/user.service";
 import { branchOfficeServiceAll } from "@/services/branchOffice.service";
 
 const EditOperator = () => {
-    const { id } = useParams();
-    const navigate = useRouter();
-    const [inputValue, setInputValue] = useState("");
-    const [error, setError] = useState(null);
-    const [operator, setOperator] = useState({});
-    const [branchOffices, setBranchOffices] = useState([]);
-    const [formData, setFormData] = useState({
-        full_name: operator.full_name,
-        dni: operator.dni,
-        email: operator.email,
-        phone_number: operator.phone_number,
-        branch_office_id: operator.branch_office_id,
+  const { id } = useParams();
+  const navigate = useRouter();
+  const [inputValue, setInputValue] = useState("");
+  const [error, setError] = useState(null);
+  const [operator, setOperator] = useState({
+    full_name: "",
+    dni: "",
+    email: "",
+    phone_number: "",
+    branch_office_id: "",
+  });
+  const [branchOffices, setBranchOffices] = useState([]);
+  const [formData, setFormData] = useState({
+    full_name: operator.full_name,
+    dni: operator.dni,
+    email: operator.email,
+    phone_number: operator.phone_number,
+    branch_office_id: operator.branch_office_id,
+  });
+
+  useEffect(() => {
+    userServiceGetSingle(id).then((operator) => {
+      setOperator(operator);
+      setFormData(operator);
+      branchOfficeServiceAll().then((branchOffices) => {
+        setBranchOffices(branchOffices.data);
       });
+    });
+  }, []);
 
-    useEffect(() => {
-        userServiceGetSingle(id).then((operator) => {
-          setOperator(operator)
-          setFormData(operator)
-          branchOfficeServiceAll().then((branchOffices) => {
-            setBranchOffices(branchOffices.data);
-          });
-        });
-      }, []);
+  const handleBack = () => {
+    navigate.back();
+  };
 
-      const handleBack = () => {
-        navigate.back();
-      };
+  const sweetEdit = () => {
+    Swal.fire({
+      title: "Cambios guardados con exito",
+      icon: "success",
+    }).then(() => navigate.push("/operators-panel"));
+  };
 
-      const sweetEdit = () => {
-        Swal.fire({
-          title: "Cambios guardados con exito",
-          icon: "success",
-        })
-        .then(()=>navigate.push("/operators-panel"))
-      };
-    
-      const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevState) => {
-          setInputValue(e.target.value);
-          return { ...prevState, [name]: value };
-        });
-      };
-    
-      const handleKeyDown = (event) => {
-        if (
-          !(
-            event.key === "Backspace" ||
-            event.key === "Delete" ||
-            event.key === "ArrowLeft" ||
-            event.key === "ArrowRight"
-          ) &&
-          isNaN(Number(event.key))
-        ) {
-          event.preventDefault();
-        }
-      };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => {
+      setInputValue(e.target.value);
+      return { ...prevState, [name]: value };
+    });
+  };
 
-      const onSubmit = (e) => {
-        e.preventDefault();
-        setError(null);
-        const frontNames = {
-            full_name: "Nombre y apellido",
-            dni: "Dni",
-            email: "Email",
-            phone_number: "Número de teléfono",
-            branch_office_id:"Sucursal"
-          };
-      
-          const mustHave = [
-            "full_name",
-            "dni",
-            "email",
-            "phone_number",
-            "branch_office_id"
-          ];
-          const missing = mustHave.filter((e) => !formData[e]);
-      
-          if (missing.length > 0) {
-            const message = `Completar los campos ${missing
-              .map((e) => ` ${frontNames[e]}`)
-              .join(" y ")}.`;
-            setError(message);
-            return;
-          }
-          if (formData.branch_office_id==="Seleccione una sucursal..."){
-            setError("Elija una sucursal válida!")
-            return;
-          }
-        const id = operator.id;
-        let temp = {
-          dni: operator.dni,
-          full_name: operator.full_name,
-          phone_number: operator.phone_number,
-          branch_office_id: operator.branch_office_id,
-        };
-        userServiceClient(temp, id).then(() => sweetEdit());
-      };
+  const handleKeyDown = (event) => {
+    if (
+      !(
+        event.key === "Backspace" ||
+        event.key === "Delete" ||
+        event.key === "ArrowLeft" ||
+        event.key === "ArrowRight"
+      ) &&
+      isNaN(Number(event.key))
+    ) {
+      event.preventDefault();
+    }
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setError(null);
+    const frontNames = {
+      full_name: "Nombre y apellido",
+      dni: "Dni",
+      email: "Email",
+      phone_number: "Número de teléfono",
+      branch_office_id: "Sucursal",
+    };
+
+    const mustHave = [
+      "full_name",
+      "dni",
+      "email",
+      "phone_number",
+      "branch_office_id",
+    ];
+    const missing = mustHave.filter((e) => !formData[e]);
+
+    if (missing.length > 0) {
+      const message = `Completar los campos ${missing
+        .map((e) => ` ${frontNames[e]}`)
+        .join(" y ")}.`;
+      setError(message);
+      return;
+    }
+    if (formData.branch_office_id === "Seleccione una sucursal...") {
+      setError("Elija una sucursal válida!");
+      return;
+    }
+    const id = operator.id;
+    let temp = {
+      dni: operator.dni,
+      full_name: operator.full_name,
+      phone_number: operator.phone_number,
+      branch_office_id: operator.branch_office_id,
+    };
+    userServiceClient(temp, id).then(() => sweetEdit());
+  };
 
   return (
     <div className={styles.container}>
-    <Header isPosition="operator" isLoggedIn={true} />
-    <div className={styles.card}>
-    <div
+      <Header isPosition="admin" isLoggedIn={true} />
+      <div className={styles.card}>
+        <div
           style={{
             width: "80%",
             display: "flex",
@@ -141,46 +149,46 @@ const EditOperator = () => {
             Atras
           </h4>
         </div>
-      <div style={{ width: "80%" }}>
-        <h1
-          style={{
-            fontSize: "20px",
-            fontWeight: "600",
-          }}
-        >
-          Datos Operador
-        </h1>
-      </div>
-      <form onSubmit={onSubmit}>
-        <div className={styles.group}>
-          <h2>Nombre y Apellido</h2>
-          <input
-            value={formData.full_name}
-            name="full_name"
-            onChange={handleInputChange}
-            type="text"
-          />
+        <div style={{ width: "80%" }}>
+          <h1
+            style={{
+              fontSize: "20px",
+              fontWeight: "600",
+            }}
+          >
+            Datos Operador
+          </h1>
         </div>
-        <div className={styles.group}>
-          <h2>Email</h2>
-          <input
-            value={formData.email}
-            name="email"
-            onChange={handleInputChange}
-            disabled
-            type="email"
-          />
-        </div>
-        <div className={styles.group}>
-          <h2>Teléfono</h2>
-          <input
-            value={formData.phone_number}
-            name="phone_number"
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            type="text"
-          />
-        </div>
+        <form onSubmit={onSubmit}>
+          <div className={styles.group}>
+            <h2>Nombre y Apellido</h2>
+            <input
+              value={formData.full_name}
+              name="full_name"
+              onChange={handleInputChange}
+              type="text"
+            />
+          </div>
+          <div className={styles.group}>
+            <h2>Email</h2>
+            <input
+              value={formData.email}
+              name="email"
+              onChange={handleInputChange}
+              disabled
+              type="email"
+            />
+          </div>
+          <div className={styles.group}>
+            <h2>Teléfono</h2>
+            <input
+              value={formData.phone_number}
+              name="phone_number"
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              type="text"
+            />
+          </div>
 
           <div className={styles.twoForm}>
             <div className={styles.group} style={{ marginRight: "16px" }}>
@@ -225,38 +233,38 @@ const EditOperator = () => {
             </div>
           </div>
 
-        <div className={styles.group}>
-        {error && <p className="error-message">{error}</p>}
-          <button className={styles.button} type="submit">
-            Guardar cambios
-          </button>
-        </div>
+          <div className={styles.group}>
+            {error && <p className="error-message">{error}</p>}
+            <button className={styles.button} type="submit">
+              Guardar cambios
+            </button>
+          </div>
 
-        <hr
-          style={{
-            marginTop: "20px",
-            width: "80%",
-            border: " 1px solid lightgrey",
-          }}
-        />
-
-        <div className={styles.group}>
-          <button
-            type="submit"
-            className={styles.button}
+          <hr
             style={{
-              marginTop: "15px",
-              width: "100%",
-              backgroundColor: "rgba(164, 66, 241, 0.1)",
-              color: "#a442f1",
+              marginTop: "20px",
+              width: "80%",
+              border: " 1px solid lightgrey",
             }}
-          >
-            Cambiar contraseña
-          </button>
-        </div>
-      </form>
+          />
+
+          <div className={styles.group}>
+            <button
+              type="submit"
+              className={styles.button}
+              style={{
+                marginTop: "15px",
+                width: "100%",
+                backgroundColor: "rgba(164, 66, 241, 0.1)",
+                color: "#a442f1",
+              }}
+            >
+              Cambiar contraseña
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
   );
 };
 
