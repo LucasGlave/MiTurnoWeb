@@ -60,6 +60,14 @@ export const userServiceClient = (formData, id) => {
     { withCredentials: true }
   );
 };
+
+export const userServiceEditFromAdmin = (id, formData) => {
+  return axios.put(
+    `http://localhost:5001/api/users/edit-user-from-admin/${id}`,
+    formData
+  );
+};
+
 export const userServiceConfirmation = (token) => {
   return axios.put(`http://localhost:5001/api/users/confirm-email/${token}`);
 };
