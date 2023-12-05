@@ -27,12 +27,12 @@ const Reserve = () => {
   const [branchOffices, setBranchOffices] = useState([]);
   const [branchOfficeId, setBranchOfficeId] = useState(null);
   const [disabledDates, setDisabledDates] = useState([]);
-  const [timer, setTimer] = useState(60);
+  const [timer, setTimer] = useState(30);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setTimer((prevTimer) => prevTimer - 1);
-      if (timer === 15) {
+      if (timer === 3) {
         notify();
       }
     }, 1000);
@@ -54,7 +54,7 @@ const Reserve = () => {
     )}`;
   };
 
-  const notify = () => toast("Quedan 15 segundos!");
+  const notify = () => toast.error("Se termino el tiempo!");
 
   const handleDateChange = (newDate) => {
     setSelectedDate(newDate);
@@ -191,7 +191,12 @@ const Reserve = () => {
           <div className={styles.button}>{formatTime(timer)}</div>
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={true}
+        theme="colored"
+      />
     </div>
   );
 };
