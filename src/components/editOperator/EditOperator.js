@@ -221,7 +221,7 @@ const EditOperator = () => {
                   marginBottom: "20px",
                 }}
               >
-                <option key={0} value={null}>
+                <option key={0} value={""}>
                   Seleccione una sucursal...
                 </option>
                 {branchOffices.map((branch_office) => (
