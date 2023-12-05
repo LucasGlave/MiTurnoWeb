@@ -44,13 +44,14 @@ const Login = () => {
     userServiceLogin(temp)
       .then((user) => {
         dispatch(setUser(user.data));
+        return user.data;
       })
-      .then(() => {
+      .then((user) => {
         if (user.role_id === "admin" || user.role_id === "super admin") {
           navigate.push("/branch-offices-panel");
         } else if (user.role_id === "operator") {
           navigate.push("/reserves-panel-operator");
-        } else {
+        } else if (user.role_id === "customer") {
           navigate.push("/reserve");
         }
       })
