@@ -6,7 +6,8 @@ import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import Swal from "sweetalert2";
 import {
-  userServiceClient,
+  userServiceChangeRole,
+  userServiceEditFromAdmin,
   userServiceGetSingle,
 } from "@/services/user.service";
 import { branchOfficeServiceAll } from "@/services/branchOffice.service";
@@ -21,6 +22,7 @@ const EditOperator = () => {
     dni: "",
     email: "",
     phone_number: "",
+    role_id: "",
     branch_office_id: "",
   });
   const [branchOffices, setBranchOffices] = useState([]);
@@ -29,6 +31,7 @@ const EditOperator = () => {
     dni: operator.dni,
     email: operator.email,
     phone_number: operator.phone_number,
+    role_id: operator.role_id,
     branch_office_id: operator.branch_office_id,
   });
 
@@ -83,6 +86,7 @@ const EditOperator = () => {
       dni: "Dni",
       email: "Email",
       phone_number: "Número de teléfono",
+      role_id: "Rol",
       branch_office_id: "Sucursal",
     };
 
@@ -91,6 +95,7 @@ const EditOperator = () => {
       "dni",
       "email",
       "phone_number",
+      "role_id",
       "branch_office_id",
     ];
     const missing = mustHave.filter((e) => !formData[e]);
@@ -106,14 +111,12 @@ const EditOperator = () => {
       setError("Elija una sucursal válida!");
       return;
     }
+    if (formData.role_id === "") {
+      setError("Elija un rol!");
+      return;
+    }
     const id = operator.id;
-    let temp = {
-      dni: operator.dni,
-      full_name: operator.full_name,
-      phone_number: operator.phone_number,
-      branch_office_id: operator.branch_office_id,
-    };
-    userServiceClient(temp, id).then(() => sweetEdit());
+    userServiceEditFromAdmin(id, formData).then(() => sweetEdit());
   };
 
   return (
@@ -189,18 +192,46 @@ const EditOperator = () => {
               type="text"
             />
           </div>
+          <div className={styles.group}>
+            <p>DNI</p>
+            <input
+              value={formData.dni}
+              name="dni"
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              type="text"
+            />
+          </div>
 
           <div className={styles.twoForm}>
             <div className={styles.group} style={{ marginRight: "16px" }}>
-              <p>DNI</p>
-              <input
-                value={formData.dni}
-                name="dni"
+              <p>Rol</p>
+              <select
+                name="role_id"
                 onChange={handleInputChange}
-                onKeyDown={handleKeyDown}
-                type="text"
-                style={{ marginBottom: "20px" }}
-              />
+                value={formData.role_id}
+                style={{
+                  borderRadius: "8px",
+                  border: "1px solid var(--Grey-3, #e1e1e1)",
+                  background: "var(--White, #fff)",
+                  display: "flex",
+                  padding: "12px 8px 12px 12px",
+                  alignItems: "center",
+                  gap: "8px",
+                  alignSelf: "stretch",
+                  marginBottom: "20px",
+                }}
+              >
+                <option key={0} value={""}>
+                  Seleccione un rol...
+                </option>
+                <option key={1} value={"operator"}>
+                  Operador
+                </option>
+                <option key={2} value={"admin"}>
+                  Administrador
+                </option>
+              </select>
             </div>
 
             <div className={styles.group}>
