@@ -1,6 +1,7 @@
 "use client";
 import Login from "@/components/login/Login";
 import OperatorsPanel from "@/components/operatorsPanel/OperatorsPanel";
+import Reserve from "@/components/reserve/Reserve";
 import React from "react";
 import { useSelector } from "react-redux";
 

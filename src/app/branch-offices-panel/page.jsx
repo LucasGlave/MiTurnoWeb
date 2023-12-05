@@ -3,6 +3,8 @@ import Login from "@/components/login/Login";
 import BranchOfficesPanel from "@/components/branchOfficesPanel/BranchOfficesPanel";
 import React from "react";
 import { useSelector } from "react-redux";
+import Reserve from "@/components/reserve/Reserve";
+import ReservesPanelOperator from "@/components/reservesPanelOperator/ReservesPanelOperator";
 
 const page = () => {
   const user = useSelector((state) => state.user);
