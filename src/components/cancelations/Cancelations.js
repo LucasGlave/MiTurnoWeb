@@ -60,15 +60,15 @@ function Cancelations() {
   const executeFunction = () => {
     let reason_cancellation = "";
     if (checked1 === true) {
-      reason_cancellation = "Ya no quiero ir";
+      reason_cancellation = 1;
     } else if (checked2 === true) {
-      reason_cancellation = "Me equivoqué de horario";
+      reason_cancellation = 2;
     } else if (checked3 === true) {
-      reason_cancellation = "Encontré un lugar mejor";
+      reason_cancellation = 3;
     } else if (checked4 === true) {
-      reason_cancellation = "Me cancelaron";
+      reason_cancellation = 4;
     } else {
-      reason_cancellation = "Otro";
+      reason_cancellation = 5;
     }
     turnServiceCancel(turn.id, reason_cancellation).then(() => {
       Swal.fire({
