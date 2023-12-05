@@ -4,6 +4,8 @@ import React from "react";
 import AdmDetails from "@/components/admDetails/AdmDetails";
 import Login from "@/components/login/Login";
 import { useSelector } from "react-redux";
+import ReservesPanelOperator from "@/components/reservesPanelOperator/ReservesPanelOperator";
+import Reserve from "@/components/reserve/Reserve";
 
 const admDetails = () => {
   const user = useSelector((state) => state.user);

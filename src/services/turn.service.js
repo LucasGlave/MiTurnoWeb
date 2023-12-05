@@ -34,8 +34,8 @@ export const turnServiceConfirm = (id) => {
   return axios.put(`http://localhost:5001/api/turns/confirm-turn/${id}`);
 };
 
-export const turnServiceCancel = (id, reason_cancellation) => {
+export const turnServiceCancel = (id, reason_cancellation_id) => {
   return axios.put(`http://localhost:5001/api/turns/cancel-turn/${id}`, {
-    reason_cancellation,
+    reason_cancellation_id,
   });
 };

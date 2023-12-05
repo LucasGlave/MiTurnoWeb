@@ -3,6 +3,8 @@ import React from "react";
 import Login from "@/components/login/Login";
 import CreateOperators from "@/components/createOperators/CreateOperators";
 import { useSelector } from "react-redux";
+import ReservesPanelOperator from "@/components/reservesPanelOperator/ReservesPanelOperator";
+import Reserve from "@/components/reserve/Reserve";
 
 const createOperators = () => {
   const user = useSelector((state) => state.user);
