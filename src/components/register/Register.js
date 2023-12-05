@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import EyeOpen from "../../assets/visibility_FILL0_wght400_GRAD0_opsz24.svg";
 import EyeClose from "../../assets/visibility_off_FILL0_wght400_GRAD0_opsz24.svg";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const [inputValue, setInputValue] = useState("");
@@ -95,7 +96,15 @@ const Register = () => {
     }
     let temp = { ...formData };
     userServiceRegister(temp)
-      .then(() => navigate.push("/login"))
+      .then(() => {
+        Swal.fire({
+          title: "Usuario creado con éxito!",
+          text: "Revisa tu correo para confirmar tu cuenta.",
+          icon: "success",
+        }).then(() => {
+          navigate.push("/login");
+        });
+      })
       .catch((err) => {
         if (err.response.status === 409)
           setError("Esta cuenta ya existe. Inicia sesión.");
