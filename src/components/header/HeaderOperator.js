@@ -63,7 +63,7 @@ const HeaderOperator = ({ isLoggedIn, color }) => {
           gap: "5px",
           textDecoration: "none",
         }}
-        href="/user-details"
+        href="/operator-details"
       >
         <h3
           style={

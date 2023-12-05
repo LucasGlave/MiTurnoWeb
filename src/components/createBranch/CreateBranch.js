@@ -73,8 +73,7 @@ const CreateBranch = () => {
       title: "Sucursal creada con éxito",
       text: "Gracias por confiar en nuestro servicio",
       icon: "success",
-    })
-    .then(()=>navigate.push("/branch-offices-panel"))
+    }).then(() => navigate.push("/branch-offices-panel"));
   };
 
   const onSubmit = (e) => {
@@ -114,7 +113,7 @@ const CreateBranch = () => {
   };
   return (
     <div className={styles.container}>
-      <Header isPosition={"admin"} />
+      <Header isPosition={"admin"} isLoggedIn={true} />
 
       <div style={{ marginTop: "4rem", width: "60%" }} className={styles.card}>
         <div
