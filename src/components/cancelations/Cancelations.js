@@ -66,7 +66,6 @@ function Cancelations() {
         icon: "success",
         title: "El turno ha sido cancelado",
         showConfirmButton: false,
-        timer: 1500,
       }).then(() => {
         navigate.push(`/reserves-panel-client/${user.id}`);
       });
