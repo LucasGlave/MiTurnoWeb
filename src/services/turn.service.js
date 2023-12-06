@@ -30,8 +30,8 @@ export const turnServiceById = (id) => {
     .then((turn) => turn.data);
 };
 
-export const turnServiceConfirm = (id) => {
-  return axios.put(`http://localhost:5001/api/turns/confirm-turn/${id}`);
+export const turnServiceConfirm = (id, body) => {
+  return axios.put(`http://localhost:5001/api/turns/confirm-turn/${id}`, body);
 };
 
 export const turnServiceCancel = (id, reason_cancellation_id) => {
@@ -48,4 +48,8 @@ export const turnServiceDashboardAdvance = (id) => {
   return axios.get(
     `http://localhost:5001/api/turns/dashboard-in-advance/${id}`
   );
+};
+
+export const turnServiceDashboardByTime = (id) => {
+  return axios.get(`http://localhost:5001/api/turns/dashboard-by-time/${id}`);
 };

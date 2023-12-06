@@ -23,20 +23,31 @@ const ReservesPanelOperator = () => {
 
   const onExecute = (id) => {
     Swal.fire({
-      title: "¿Está seguro de confirmar la asistencia del turno?",
-      icon: "warning",
+      title: "Confirme la asistencia.",
+      text: "​",
+      icon: "question",
+      iconColor: "#a442f1",
       showCancelButton: true,
-      confirmButtonColor: "#7066e0",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Confirmar",
-      cancelButtonText: "Salir",
+      confirmButtonColor: "#a442f1",
+      cancelButtonColor: "#545454",
+      confirmButtonText: "Presente",
+      cancelButtonText: "Ausente",
     }).then((result) => {
       if (result.isConfirmed) {
-        turnServiceConfirm(id).then(() => {
+        turnServiceConfirm(id, { confirmation_id: "confirmed" }).then(() => {
           dispatch(removeElement(id));
           Swal.fire({
             title: "¡Turno confirmado!",
-            text: "El turno ha sido confirmado con éxito.",
+            text: "El cliente asistió a la reserva.",
+            icon: "success",
+          });
+        });
+      } else if (result.isDismissed) {
+        turnServiceConfirm(id, { confirmation_id: "absence" }).then(() => {
+          dispatch(removeElement(id));
+          Swal.fire({
+            title: "¡Turno confirmado!",
+            text: "El cliente faltó a la reserva.",
             icon: "success",
           });
         });
