@@ -52,10 +52,10 @@ function Cancelations() {
 
     if (checked) {
       setReasonCancellationId(value);
-      setIsReasonCancellationSelected(checked);
+      setIsReasonCancellationSelected(true);
     } else {
       setReasonCancellationId(null);
-      setIsReasonCancellationSelected(checked);
+      setIsReasonCancellationSelected(false);
     }
   };
 
@@ -181,11 +181,6 @@ function Cancelations() {
                               }
                               value={reasonCancellation.id}
                               onChange={handleInputChange}
-                              disabled={
-                                reasonCancellationId !== null &&
-                                parseInt(reasonCancellationId) !==
-                                  parseInt(reasonCancellation.id)
-                              }
                             />
                           }
                           label={<span>{reasonCancellation.reason}</span>}
@@ -194,9 +189,9 @@ function Cancelations() {
                     ))}
                   </FormGroup>
                 </FormControl>
+                <hr />
                 {handleCancellation(isReasonCancellationSelected)}
               </Box>
-              <hr />
             </div>
           </div>
           <div
