@@ -39,3 +39,13 @@ export const turnServiceCancel = (id, reason_cancellation_id) => {
     reason_cancellation_id,
   });
 };
+
+export const turnServiceDashboardGeneral = (id) => {
+  return axios.get(`http://localhost:5001/api/turns/dashboard-general/${id}`);
+};
+
+export const turnServiceDashboardAdvance = (id) => {
+  return axios.get(
+    `http://localhost:5001/api/turns/dashboard-in-advance/${id}`
+  );
+};
