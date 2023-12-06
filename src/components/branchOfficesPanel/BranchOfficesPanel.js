@@ -39,7 +39,7 @@ const BranchOfficesPanel = () => {
             dispatch(removeElement(id));
             Swal.fire({
               title: "¡Sucursal eliminada!",
-              text: "La sucursal ha sido confirmado con éxito.",
+              text: "La sucursal ha sido eliminada con éxito.",
               icon: "success",
             });
           })
