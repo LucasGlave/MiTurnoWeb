@@ -53,7 +53,12 @@ const ReserveSuccess = () => {
           con todos los detalles de tu reserva. Recordá revisar tu buzón de
           correo no deseado o promociones.
         </p>
-        <button className={styles.button}>
+        <button
+          className={styles.button}
+          onClick={() => {
+            return window.print();
+          }}
+        >
           ¿Quéres imprimir tu comprobante?
         </button>
       </div>
