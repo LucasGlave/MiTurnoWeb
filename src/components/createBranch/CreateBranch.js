@@ -109,7 +109,13 @@ const CreateBranch = () => {
     let temp = { ...formData };
     branchOfficeServiceCreate(temp)
       .then(() => sweetReserve())
-      .catch((error) => console.error(error));
+      .catch((err) => {
+        if (err.response.data === "Email already exists") {
+          setError("Esta sucursal ya existe con el mismo mail.");
+        } else if (err.response.data === "Name branch office already exists") {
+          setError("Ya se encuentra registrada una sucursal con ese nombre.");
+        } else setError("Error al intentar registrarse.");
+      });
   };
   return (
     <div className={styles.container}>
@@ -173,7 +179,7 @@ const CreateBranch = () => {
                 value={formData.phone_number}
                 name="phone_number"
                 onChange={handleInputChange}
-                onClick={handleKeyDown}
+                onKeyDown={handleKeyDown}
                 type="text"
               />
             </div>
