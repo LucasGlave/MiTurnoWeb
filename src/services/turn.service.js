@@ -8,6 +8,12 @@ export const turnServiceCreate = (formData, userId) => {
   });
 };
 
+export const turnServiceGetByConfirmation = (confirmation) => {
+  return axios
+    .get(`http://localhost:5001/api/turns/by-confirmation/${confirmation}`)
+    .then((turns) => turns.data);
+};
+
 export const turnServiceGetByConfirmationAndBranchOffice = (branchOfficeId) => {
   return axios
     .get(

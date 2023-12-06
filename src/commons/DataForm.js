@@ -1,8 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { userServiceClient } from "@/services/user.service";
-import { useSelector } from "react-redux";
+import {
+  userServiceClient,
+  userServiceGetSingle,
+} from "@/services/user.service";
+import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import styles from "../app/general.module.scss";
 import Header from "../components/header/Header";
@@ -12,6 +15,7 @@ import {
   getAllBranchOfficesService,
 } from "@/services/branchOffice.service";
 import Link from "next/link";
+import { setUser } from "@/state/user";
 
 const DataForm = ({ type, color }) => {
   //type=client,operator,admin
@@ -19,31 +23,37 @@ const DataForm = ({ type, color }) => {
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState(null);
   const user = useSelector((state) => state.user);
-  const [branchOffices, setBranchOffices] = useState([]);
+  //const [branchOfficeName, setBranchOfficeName] = useState("");
   const [formData, setFormData] = useState({
-    full_name: user.full_name,
-    dni: user.dni,
-    email: user.email,
-    phone_number: user.phone_number,
-    branch_office_id: user.branch_office_id,
+    full_name: "",
+    dni: "",
+    email: "",
+    phone_number: "",
+    branch_office_id: null,
     branch_office_name: "",
   });
 
   useEffect(() => {
-    if (formData.branch_office_id) {
-      branchOfficeServiceGetSingle(formData.branch_office_id).then(
-        (branchOffice) => {
-          setBranchOffices(branchOffice.data);
-          setFormData((prevState) => {
-            return {
-              ...prevState,
-              branch_office_name: branchOffice.data.name,
-            };
-          });
+    userServiceGetSingle(user.id)
+      .then((user) => {
+        setFormData(user);
+      })
+      .then(() => {
+        if (user.branch_office_id) {
+          branchOfficeServiceGetSingle(user.branch_office_id).then(
+            (branchOffice) => {
+              //setBranchOfficeName(branchOffice.data.name);
+              setFormData((prevState) => {
+                return {
+                  ...prevState,
+                  branch_office_name: branchOffice.data.name,
+                };
+              });
+            }
+          );
         }
-      );
-    }
-  }, [formData]);
+      });
+  }, []);
 
   const sweetEdit = () => {
     Swal.fire({
@@ -117,7 +127,10 @@ const DataForm = ({ type, color }) => {
       phone_number: formData.phone_number,
       branch_office_id: formData.branch_office_id,
     };
-    userServiceClient(temp, id).then(() => sweetEdit());
+
+    userServiceClient(temp, id).then(() => {
+      sweetEdit();
+    });
   };
 
   return (

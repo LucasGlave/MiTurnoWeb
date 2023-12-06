@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Table from "../../commons/Table";
 import {
   turnServiceConfirm,
+  turnServiceGetByConfirmation,
   turnServiceGetByConfirmationAndBranchOffice,
 } from "@/services/turn.service";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,11 +15,17 @@ const ReservesPanelOperator = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    turnServiceGetByConfirmationAndBranchOffice(user.branch_office_id).then(
-      (turns) => {
+    if (user.role_id === "operator") {
+      turnServiceGetByConfirmationAndBranchOffice(user.branch_office_id).then(
+        (turns) => {
+          dispatch(setElements(turns));
+        }
+      );
+    } else if (user.role_id === "admin" || user.role_id === "super admin") {
+      turnServiceGetByConfirmation("pending").then((turns) => {
         dispatch(setElements(turns));
-      }
-    );
+      });
+    }
   }, []);
 
   const onExecute = (id) => {
@@ -27,11 +34,12 @@ const ReservesPanelOperator = () => {
       text: "​",
       icon: "question",
       iconColor: "#a442f1",
-      showCancelButton: true,
+      showDenyButton: true,
+      allowOutsideClick: true,
       confirmButtonColor: "#a442f1",
-      cancelButtonColor: "#545454",
+      denyButtonColor: "#545454",
       confirmButtonText: "Presente",
-      cancelButtonText: "Ausente",
+      denyButtonText: "Ausente",
     }).then((result) => {
       if (result.isConfirmed) {
         turnServiceConfirm(id, { confirmation_id: "confirmed" }).then(() => {
@@ -42,7 +50,7 @@ const ReservesPanelOperator = () => {
             icon: "success",
           });
         });
-      } else if (result.isDismissed) {
+      } else if (result.isDenied) {
         turnServiceConfirm(id, { confirmation_id: "absence" }).then(() => {
           dispatch(removeElement(id));
           Swal.fire({

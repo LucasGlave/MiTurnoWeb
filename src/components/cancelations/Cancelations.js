@@ -65,7 +65,7 @@ function Cancelations() {
         position: "center",
         icon: "success",
         title: "El turno ha sido cancelado",
-        showConfirmButton: false,
+        showConfirmButton: true,
       }).then(() => {
         navigate.push(`/reserves-panel-client/${user.id}`);
       });
@@ -181,6 +181,11 @@ function Cancelations() {
                               }
                               value={reasonCancellation.id}
                               onChange={handleInputChange}
+                              disabled={
+                                reasonCancellationId !== null &&
+                                parseInt(reasonCancellationId) !==
+                                  parseInt(reasonCancellation.id)
+                              }
                             />
                           }
                           label={<span>{reasonCancellation.reason}</span>}

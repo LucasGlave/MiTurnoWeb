@@ -20,8 +20,6 @@ const CreateOperators = () => {
   const [error, setError] = useState(null);
   const user = useSelector((state) => state.user);
   const [branchOffices, setBranchOffices] = useState([]);
-  const [branchOfficeId, setBranchOfficeId] = useState(null);
-  const [isBranchOfficeSelected, setIsBranchOfficeSelected] = useState(false);
   const [eye1, setEye1] = useState("password");
   const [eye2, setEye2] = useState("password");
   const [formData, setFormData] = useState({
