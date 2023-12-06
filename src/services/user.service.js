@@ -1,8 +1,6 @@
-import { setUser } from "@/state/user";
+// "use client";
 import axios from "axios";
 axios.defaults.withCredentials = true;
-import { useParams } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
 
 export const userServiceRegister = (formData) => {
   return axios.post(`http://localhost:5001/api/users/register`, formData);
@@ -62,6 +60,14 @@ export const userServiceClient = (formData, id) => {
     { withCredentials: true }
   );
 };
+
+export const userServiceEditFromAdmin = (id, formData) => {
+  return axios.put(
+    `http://localhost:5001/api/users/edit-user-from-admin/${id}`,
+    formData
+  );
+};
+
 export const userServiceConfirmation = (token) => {
   return axios.put(`http://localhost:5001/api/users/confirm-email/${token}`);
 };
@@ -78,4 +84,12 @@ export const userServiceCreateOperators = (formData) => {
 
 export const userServiceDelete = (id) => {
   return axios.delete(`http://localhost:5001/api/users/${id}`);
+};
+
+export const userServiceChangePassword = (formData, userId) => {
+  return axios.put(
+    `http://localhost:5001/api/users/change-password/${userId}`,
+    formData,
+    { withCredentials: true }
+  );
 };

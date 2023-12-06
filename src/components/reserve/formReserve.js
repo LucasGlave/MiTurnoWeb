@@ -55,7 +55,22 @@ const FormReserve = ({
     }
     turnServiceCreate(userData, user.id)
       .then((res) => res.data)
-      .then((turn) => navigate.push(`reserve/${turn.id}`));
+      .then((turn) => navigate.push(`reserve/${turn.id}`))
+      .catch((err) => {
+        if (err.response.status === 409) {
+          Swal.fire({
+            title: "No puede sacar más de 3 turnos para la misma fecha.",
+            text: "Seleccione una fecha válida.",
+            icon: "warning",
+            confirmButtonColor: "#7066e0",
+            confirmButtonText: "Aceptar",
+          }).then((result) => {
+            if (result.isConfirmed || result.isDismissed) {
+              window.location.reload();
+            }
+          });
+        }
+      });
   };
   const sweetReserve = () => {
     Swal.fire({

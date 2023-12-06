@@ -11,6 +11,7 @@ import {
   branchOfficeServiceGetSingle,
   getAllBranchOfficesService,
 } from "@/services/branchOffice.service";
+import Link from "next/link";
 
 const DataForm = ({ type, color }) => {
   //type=client,operator,admin
@@ -223,18 +224,18 @@ const DataForm = ({ type, color }) => {
           />
 
           <div className={styles.group}>
-            <button
-              type="submit"
+            <Link
               className={styles.button}
               style={{
                 marginTop: "15px",
-                width: "100%",
                 backgroundColor: "rgba(164, 66, 241, 0.1)",
                 color: "#a442f1",
+                textDecoration: "none",
               }}
+              href="/change-password"
             >
               Cambiar contraseña
-            </button>
+            </Link>
           </div>
         </form>
       </div>

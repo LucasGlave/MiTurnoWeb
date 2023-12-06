@@ -4,10 +4,25 @@ import React from "react";
 import AdmDetails from "@/components/admDetails/AdmDetails";
 import Login from "@/components/login/Login";
 import { useSelector } from "react-redux";
+import ReservesPanelOperator from "@/components/reservesPanelOperator/ReservesPanelOperator";
+import Reserve from "@/components/reserve/Reserve";
 
 const admDetails = () => {
   const user = useSelector((state) => state.user);
-  return <>{user.id ? <AdmDetails /> : <Login />}</>;
+
+  return (
+    <>
+      {!user.id ? (
+        <Login />
+      ) : user.role_id === "super admin" || user.role_id === "admin" ? (
+        <AdmDetails />
+      ) : user.role_id === "operator" ? (
+        <ReservesPanelOperator />
+      ) : (
+        <Reserve />
+      )}
+    </>
+  );
 };
 
 export default admDetails;

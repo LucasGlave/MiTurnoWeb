@@ -9,13 +9,14 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import EyeOpen from "../../assets/visibility_FILL0_wght400_GRAD0_opsz24.svg";
 import EyeClose from "../../assets/visibility_off_FILL0_wght400_GRAD0_opsz24.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/state/user";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useRouter();
   const [eye, setEye] = useState("password");
+  const user = useSelector((state) => state.user);
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -43,8 +44,17 @@ const Login = () => {
     userServiceLogin(temp)
       .then((user) => {
         dispatch(setUser(user.data));
+        return user.data;
       })
-      .then(() => navigate.push("/reserve"))
+      .then((user) => {
+        if (user.role_id === "admin" || user.role_id === "super admin") {
+          navigate.push("/branch-offices-panel");
+        } else if (user.role_id === "operator") {
+          navigate.push("/reserves-panel-operator");
+        } else if (user.role_id === "customer") {
+          navigate.push("/reserve");
+        }
+      })
       .catch((err) => {
         if (err.response.status === 412)
           setError("Esta cuenta todavía no está confirmada. Revise su correo.");

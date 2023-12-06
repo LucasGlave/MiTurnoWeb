@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 axios.defaults.withCredentials = true;
+
 export const turnServiceCreate = (formData, userId) => {
   return axios.post(`http://localhost:5001/api/turns/${userId}`, {
     ...formData,
@@ -34,7 +35,6 @@ export const turnServiceConfirm = (id) => {
 };
 
 export const turnServiceCancel = (id, reason_cancellation_id) => {
-  console.log(typeof reason_cancellation_id);
   return axios.put(`http://localhost:5001/api/turns/cancel-turn/${id}`, {
     reason_cancellation_id,
   });

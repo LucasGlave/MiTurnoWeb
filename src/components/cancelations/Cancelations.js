@@ -2,12 +2,20 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../app/general.module.scss";
 import Header from "../header/Header";
-import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  FormLabel,
+} from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import { turnServiceById, turnServiceCancel } from "@/services/turn.service";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import { reasonCancellationServiceAll } from "@/services/reasonCancellation";
 
 function Cancelations() {
   const user = useSelector((state) => state.user);
@@ -16,12 +24,11 @@ function Cancelations() {
   const [turn, setTurn] = useState({
     horary_id: "",
   });
-  const [branchOffice, setBranchOffice] = useState("");
-  const [checked1, setChecked1] = useState(false);
-  const [checked2, setChecked2] = useState(false);
-  const [checked3, setChecked3] = useState(false);
-  const [checked4, setChecked4] = useState(false);
-  const [checked5, setChecked5] = useState(false);
+  const [branchOfficeName, setBranchOfficeName] = useState("");
+  const [reasonCancellations, setReasonCancellations] = useState([]);
+  const [reasonCancellationId, setReasonCancellationId] = useState(null);
+  const [isReasonCancellationSelected, setIsReasonCancellationSelected] =
+    useState(false);
 
   useEffect(() => {
     turnServiceById(id).then((turn) => {
@@ -32,45 +39,28 @@ function Cancelations() {
         navigate.push(`/reserves-panel-client/${user.id}`);
       } else {
         setTurn(turn);
-        setBranchOffice(turn.branch_office.name);
+        setBranchOfficeName(turn.branch_office.name);
+        reasonCancellationServiceAll().then((reasonCancellations) => {
+          setReasonCancellations(reasonCancellations);
+        });
       }
     });
   }, []);
 
-  const handleChange1 = (event) => {
-    setChecked1(event.target.checked);
-  };
+  const handleInputChange = (e) => {
+    const { value, checked } = e.target;
 
-  const handleChange2 = (event) => {
-    setChecked2(event.target.checked);
-  };
-
-  const handleChange3 = (event) => {
-    setChecked3(event.target.checked);
-  };
-
-  const handleChange4 = (event) => {
-    setChecked4(event.target.checked);
-  };
-
-  const handleChange5 = (event) => {
-    setChecked5(event.target.checked);
+    if (checked) {
+      setReasonCancellationId(value);
+      setIsReasonCancellationSelected(checked);
+    } else {
+      setReasonCancellationId(null);
+      setIsReasonCancellationSelected(checked);
+    }
   };
 
   const executeFunction = () => {
-    let reason_cancellation = "";
-    if (checked1 === true) {
-      reason_cancellation = 1;
-    } else if (checked2 === true) {
-      reason_cancellation = 2;
-    } else if (checked3 === true) {
-      reason_cancellation = 3;
-    } else if (checked4 === true) {
-      reason_cancellation = 4;
-    } else {
-      reason_cancellation = 5;
-    }
-    turnServiceCancel(turn.id, reason_cancellation).then(() => {
+    turnServiceCancel(turn.id, reasonCancellationId).then(() => {
       Swal.fire({
         position: "center",
         icon: "success",
@@ -167,118 +157,49 @@ function Cancelations() {
             <h1 style={{ marginTop: "0px", marginBottom: "3rem" }}>
               Cancelar reserva
             </h1>
-
             <p>Hola {user.full_name},</p>
             <h3>¿Por que desea cancelar su reserva?</h3>
             <hr />
-            <FormGroup>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FormControlLabel
-                  disabled={checked2 || checked3 || checked4 || checked5}
-                  control={
-                    <Checkbox checked={checked1} onChange={handleChange1} />
-                  }
-                  label={
-                    <span style={checked1 ? { fontWeight: "bold" } : null}>
-                      Ya no quiero ir
-                    </span>
-                  }
-                />
-              </div>
-              {handleCancellation(checked1)}
+            <div>
+              <Box>
+                <FormControl>
+                  <FormGroup>
+                    {reasonCancellations.map((reasonCancellation) => (
+                      <div
+                        key={reasonCancellation.id}
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                        }}
+                      >
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={
+                                parseInt(reasonCancellationId) ===
+                                parseInt(reasonCancellation.id)
+                              }
+                              value={reasonCancellation.id}
+                              onChange={handleInputChange}
+                              disabled={
+                                reasonCancellationId !== null &&
+                                parseInt(reasonCancellationId) !==
+                                  parseInt(reasonCancellation.id)
+                              }
+                            />
+                          }
+                          label={<span>{reasonCancellation.reason}</span>}
+                        />
+                      </div>
+                    ))}
+                  </FormGroup>
+                </FormControl>
+                {handleCancellation(isReasonCancellationSelected)}
+              </Box>
               <hr />
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FormControlLabel
-                  disabled={checked1 || checked3 || checked4 || checked5}
-                  control={
-                    <Checkbox checked={checked2} onChange={handleChange2} />
-                  }
-                  label={
-                    <span style={checked2 ? { fontWeight: "bold" } : null}>
-                      Me equivoqué de horario
-                    </span>
-                  }
-                />
-              </div>
-              {handleCancellation(checked2)}
-              <hr />
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FormControlLabel
-                  disabled={checked1 || checked2 || checked4 || checked5}
-                  control={
-                    <Checkbox checked={checked3} onChange={handleChange3} />
-                  }
-                  label={
-                    <span style={checked3 ? { fontWeight: "bold" } : null}>
-                      Encontré un lugar mejor
-                    </span>
-                  }
-                />
-              </div>
-              {handleCancellation(checked3)}
-              <hr />
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FormControlLabel
-                  disabled={checked1 || checked2 || checked3 || checked5}
-                  control={
-                    <Checkbox checked={checked4} onChange={handleChange4} />
-                  }
-                  label={
-                    <span style={checked4 ? { fontWeight: "bold" } : null}>
-                      Me cancelaron
-                    </span>
-                  }
-                />
-              </div>
-              {handleCancellation(checked4)}
-              <hr />
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FormControlLabel
-                  disabled={checked1 || checked2 || checked3 || checked4}
-                  control={
-                    <Checkbox checked={checked5} onChange={handleChange5} />
-                  }
-                  label={
-                    <span style={checked5 ? { fontWeight: "bold" } : null}>
-                      Otro
-                    </span>
-                  }
-                />
-              </div>
-              {handleCancellation(checked5)}
-            </FormGroup>
+            </div>
           </div>
-
           <div
             className={styles.group}
             style={{ width: "30%", marginTop: "3rem" }}
@@ -295,7 +216,7 @@ function Cancelations() {
               <strong>Horario:</strong> {turn.horary_id.slice(0, 5)}
             </p>
             <p>
-              <strong>Sucursal:</strong> {branchOffice}
+              <strong>Sucursal:</strong> {branchOfficeName}
             </p>
           </div>
           <div></div>

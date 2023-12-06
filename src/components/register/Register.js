@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import EyeOpen from "../../assets/visibility_FILL0_wght400_GRAD0_opsz24.svg";
 import EyeClose from "../../assets/visibility_off_FILL0_wght400_GRAD0_opsz24.svg";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const [inputValue, setInputValue] = useState("");
@@ -78,9 +79,15 @@ const Register = () => {
     const missing = mustHave.filter((e) => !formData[e]);
 
     if (missing.length > 0) {
-      const message = `Completar los campos ${missing
-        .map((e) => ` ${frontNames[e]}`)
-        .join(" y ")}.`;
+      const message =
+        missing.length === 1
+          ? `Completar el campo ${frontNames[missing[0]]}.`
+          : `Completar los campos ${missing
+              .slice(0, -1)
+              .map((e) => ` ${frontNames[e]}`)
+              .join(",")}${missing.length > 1 ? " y" : ""} ${
+              frontNames[missing[missing.length - 1]]
+            }.`;
       setError(message);
       return;
     }
@@ -95,11 +102,23 @@ const Register = () => {
     }
     let temp = { ...formData };
     userServiceRegister(temp)
-      .then(() => navigate.push("/login"))
+      .then(() => {
+        Swal.fire({
+          title: "Usuario creado con éxito!",
+          text: "Revisa tu correo para confirmar tu cuenta.",
+          icon: "success",
+        }).then(() => {
+          navigate.push("/login");
+        });
+      })
       .catch((err) => {
-        if (err.response.status === 409)
+        if (err.response.data === "Email already exists") {
           setError("Esta cuenta ya existe. Inicia sesión.");
-        else setError("Error al intentar registrarse.");
+        } else if (err.response.data === "DNI already exists") {
+          setError(
+            "Ya se encuentra registrada una cuenta con ese Dni. Inicia sesión."
+          );
+        } else setError("Error al intentar registrarse.");
       });
   };
   return (
