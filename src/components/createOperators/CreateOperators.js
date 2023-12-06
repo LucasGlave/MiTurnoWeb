@@ -133,8 +133,13 @@ const CreateOperators = () => {
         navigate.push("/operators-panel");
       })
       .catch((err) => {
-        if (err.response.status === 409) setError("Este email ya existe.");
-        else setError("Error al intentar registrar operador.");
+        if (err.response.data === "Email already exists") {
+          setError("Esta cuenta ya existe. Inicia sesión.");
+        } else if (err.response.data === "DNI already exists") {
+          setError(
+            "Ya se encuentra registrada una cuenta con ese Dni. Inicia sesión."
+          );
+        } else setError("Error al intentar registrarse.");
       });
   };
 

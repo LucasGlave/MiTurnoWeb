@@ -112,9 +112,13 @@ const Register = () => {
         });
       })
       .catch((err) => {
-        if (err.response.status === 409)
+        if (err.response.data === "Email already exists") {
           setError("Esta cuenta ya existe. Inicia sesión.");
-        else setError("Error al intentar registrarse.");
+        } else if (err.response.data === "DNI already exists") {
+          setError(
+            "Ya se encuentra registrada una cuenta con ese Dni. Inicia sesión."
+          );
+        } else setError("Error al intentar registrarse.");
       });
   };
   return (
