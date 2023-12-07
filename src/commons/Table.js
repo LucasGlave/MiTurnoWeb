@@ -50,6 +50,11 @@ const Table = ({ type, onExecute, onDelete, color }) => {
       setLabelName("Nombre y Apellido");
       setLabelReserveOrEmail("Reserva");
       setLabelButton("Confirmación");
+    } else if (type === "AdminReserves") {
+      setHeaderType("admin");
+      setLabelName("Nombre y Apellido");
+      setLabelReserveOrEmail("Reserva");
+      setLabelButton("Confirmación");
     }
   }, []);
 
@@ -175,6 +180,7 @@ const Table = ({ type, onExecute, onDelete, color }) => {
                       >
                         {labelButton}
                       </div>
+
                     )}
                   </div>
                 </div>

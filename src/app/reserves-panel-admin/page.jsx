@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
-import AdmDetails from "@/components/admDetails/AdmDetails";
+import ReservesPanelAdmin from "@/components/reservesPanelAdmin/ReservesPanelAdmin";
 import Login from "@/components/login/Login";
 import { useSelector } from "react-redux";
 import ReservesPanelOperator from "@/components/reservesPanelOperator/ReservesPanelOperator";
 import Reserve from "@/components/reserve/Reserve";
 
-const admDetails = () => {
+const page = () => {
   const user = useSelector((state) => state.user);
 
   return (
@@ -14,7 +14,7 @@ const admDetails = () => {
       {!user.id ? (
         <Login />
       ) : user.role_id === "super admin" || user.role_id === "admin" ? (
-        <AdmDetails />
+        <ReservesPanelAdmin />
       ) : user.role_id === "operator" ? (
         <ReservesPanelOperator />
       ) : (
@@ -24,4 +24,4 @@ const admDetails = () => {
   );
 };
 
-export default admDetails;
+export default page;
