@@ -26,10 +26,12 @@ const FormReserve = ({
     turn_date: date,
     // email: "",
   });
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
   };
+
   useEffect(() => {
     if (
       userData.horary_id !== "placeholder" &&
@@ -42,6 +44,7 @@ const FormReserve = ({
       functionForm(false);
     }
   }, [userData]);
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (
@@ -72,6 +75,7 @@ const FormReserve = ({
         }
       });
   };
+
   const sweetReserve = () => {
     Swal.fire({
       title: "Turno reservado con éxito",
@@ -80,6 +84,7 @@ const FormReserve = ({
     });
     navigate.push("/reserve/id");
   };
+
   const handleKeyDown = (event) => {
     if (
       !(
@@ -93,6 +98,7 @@ const FormReserve = ({
       event.preventDefault();
     }
   };
+
   useEffect(() => {
     horaryServiceByDate(date, branchOfficeId).then((horaries) => {
       horaries.data.pop(1);
@@ -106,7 +112,7 @@ const FormReserve = ({
       }
       setHoraries(horaries.data);
     });
-  }, [branchOfficeId]);
+  }, [branchOfficeId, date]);
   return (
     <div style={{ width: "100%" }}>
       <form style={{ alignItems: "flex-start" }}>
