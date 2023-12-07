@@ -60,12 +60,12 @@ const Register = () => {
     setError(null);
 
     const frontNames = {
-      full_name: "Nombre y Apellido",
-      dni: "DNI",
-      email: "Email",
-      phone_number: "Telefono",
-      password: "Contraseña",
-      rep_password: "Repetir Contraseña",
+      full_name: '"Nombre y Apellido"',
+      dni: '"DNI"',
+      email: '"Email"',
+      phone_number: '"Telefono"',
+      password: '"Contraseña"',
+      rep_password: '"Repetir Contraseña"',
     };
 
     const mustHave = [
