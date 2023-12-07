@@ -27,7 +27,7 @@ const Reserve = () => {
   const [branchOffices, setBranchOffices] = useState([]);
   const [branchOfficeId, setBranchOfficeId] = useState(null);
   const [disabledDates, setDisabledDates] = useState([]);
-  const [timer, setTimer] = useState(30);
+  const [timer, setTimer] = useState(120);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -61,11 +61,16 @@ const Reserve = () => {
   };
 
   const changeSelect = (e) => {
+    setSelectedDate(null);
+    setIsDaySelected(false);
     if (e.target.value !== "placeholder") {
       branchOfficeServiceGetDates(e.target.value)
-        .then((res) => setDisabledDates(res.data))
+        .then((res) => {
+          setDisabledDates(res.data);
+        })
         .catch(() => {});
     }
+
     selectBranchOffice(e);
   };
 
@@ -77,10 +82,10 @@ const Reserve = () => {
     if (date < today || date.getDay() === 0 || date.getDay() === 6) {
       return true;
     }
-    return disabledDates.some(
-      (disabledDate) =>
-        date.toDateString() === new Date(disabledDate).toDateString()
-    );
+    return disabledDates.some((disabledDate) => {
+      let temp = disabledDate.split("T");
+      return date.toDateString() === new Date(temp[0]).toDateString();
+    });
   };
   if (selectedDate != null && !isDaySelected) setIsDaySelected(true);
 
@@ -188,7 +193,9 @@ const Reserve = () => {
             marginRight: "2rem",
           }}
         >
-          <div className={styles.button}>{formatTime(timer)}</div>
+          <div className={styles.button} style={{ cursor: "default" }}>
+            {formatTime(timer)}
+          </div>
         </div>
       </div>
       <ToastContainer

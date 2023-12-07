@@ -24,7 +24,6 @@ const FormReserve = ({
     phone_number: "",
     branch_office_id: branchOfficeId,
     turn_date: date,
-    // email: "",
   });
 
   const handleInputChange = (e) => {
@@ -37,7 +36,6 @@ const FormReserve = ({
       userData.horary_id !== "placeholder" &&
       userData.full_name &&
       userData.phone_number
-      // userData.email
     ) {
       functionForm(true);
     } else {
@@ -47,12 +45,7 @@ const FormReserve = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (
-      !userData.full_name ||
-      !userData.phone_number ||
-      // !userData.email ||
-      !userData.horary_id
-    ) {
+    if (!userData.full_name || !userData.phone_number || !userData.horary_id) {
       setError("Por favor, complete todos los campos.");
       return;
     }
@@ -112,6 +105,9 @@ const FormReserve = ({
       }
       setHoraries(horaries.data);
     });
+    setUserData((prevState) => {
+      return { ...prevState, turn_date: date };
+    });
   }, [branchOfficeId, date]);
   return (
     <div style={{ width: "100%" }}>
@@ -150,14 +146,6 @@ const FormReserve = ({
             />
           </div>
         </div>
-        {/* <h2>Mail</h2>
-        <div className={styles.group} style={{ width: "100%" }}>
-          <input
-            value={userData.email}
-            name="email"
-            onChange={handleInputChange}
-          />
-        </div> */}
       </form>
       {availability && <p>{availability}</p>}
       <div style={{ marginTop: "2rem" }}>
