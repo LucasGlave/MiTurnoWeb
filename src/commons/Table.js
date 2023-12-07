@@ -83,90 +83,71 @@ const Table = ({ type, onExecute, onDelete, color }) => {
         >
           {elements.length ? (
             elementsPagination.map((element) => (
-              <>
-                <div
-                  key={element.id}
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    width: "100%",
-                    justifyContent: "space-between",
-                    margin: "1rem 0 ",
-                  }}
-                  className={styles.card}
-                >
-                  <div className={styles.element}>
-                    <h2>{labelName}</h2>
-                    <h3>
-                      {element.full_name
-                        ? element.full_name
-                        : element.name
-                        ? element.name
-                        : element.user.full_name
-                        ? element.user.full_name
-                        : null}
-                    </h3>
-                  </div>
-                  <div className={styles.element}>
-                    <h2>{labelReserveOrEmail}</h2>
-                    <h3>
-                      {element.email
-                        ? element.email
-                        : `${element.turn_date} - ${element.horary_id.slice(
-                            0,
-                            5
-                          )}`}
-                    </h3>
-                  </div>
-                  <div className={styles.element}>
-                    <h2>{labelReserveOrCapacityOrBranchOffice}</h2>
-                    <h3>
-                      {element.boxes
-                        ? element.boxes
-                        : element.branch_office.name
-                        ? element.branch_office.name
-                        : element.reservation_date
-                        ? element.reservation_date
-                        : null}
-                    </h3>
-                  </div>
-                  <div className={styles.element}>
-                    <h2>{labelNumberReserveOrHorarysOrPhoneNumber}</h2>
-                    <h3>
-                      {type === "AdminOperators"
-                        ? element.phone_number
-                        : element.opening_time
-                        ? `${element.opening_time.slice(
-                            0,
-                            5
-                          )} - ${element.closing_time.slice(0, 5)}`
-                        : element.id
-                        ? element.id
-                        : null}
-                    </h3>
-                  </div>
-                  <div>
-                    {type === "AdminBranchOffices" ||
-                    type === "AdminOperators" ? (
-                      <div className={styles.buttonsContainer}>
-                        <div
-                          onClick={() => {
-                            onExecute(element.id);
-                          }}
-                          className={styles.button}
-                        >
-                          {labelButton}
-                        </div>
-                        <div
-                          onClick={() => {
-                            onDelete(element.id);
-                          }}
-                          className={`${styles.button} ${styles.deleteButton}`}
-                        >
-                          Eliminar
-                        </div>
-                      </div>
-                    ) : (
+              <div
+                key={element.id}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  width: "100%",
+                  justifyContent: "space-between",
+                  margin: "1rem 0 ",
+                }}
+                className={styles.card}
+              >
+                <div className={styles.element}>
+                  <h2>{labelName}</h2>
+                  <h3>
+                    {element.full_name
+                      ? element.full_name
+                      : element.name
+                      ? element.name
+                      : element.user.full_name
+                      ? element.user.full_name
+                      : null}
+                  </h3>
+                </div>
+                <div className={styles.element}>
+                  <h2>{labelReserveOrEmail}</h2>
+                  <h3>
+                    {element.email
+                      ? element.email
+                      : `${element.turn_date} - ${element.horary_id.slice(
+                          0,
+                          5
+                        )}`}
+                  </h3>
+                </div>
+                <div className={styles.element}>
+                  <h2>{labelReserveOrCapacityOrBranchOffice}</h2>
+                  <h3>
+                    {element.boxes
+                      ? element.boxes
+                      : element.branch_office.name
+                      ? element.branch_office.name
+                      : element.reservation_date
+                      ? element.reservation_date
+                      : null}
+                  </h3>
+                </div>
+                <div className={styles.element}>
+                  <h2>{labelNumberReserveOrHorarysOrPhoneNumber}</h2>
+                  <h3>
+                    {type === "AdminOperators"
+                      ? element.phone_number
+                      : element.opening_time
+                      ? `${element.opening_time.slice(
+                          0,
+                          5
+                        )} - ${element.closing_time.slice(0, 5)}`
+                      : element.id
+                      ? element.id
+                      : null}
+                  </h3>
+                </div>
+                <div>
+                  {type === "AdminBranchOffices" ||
+                  type === "AdminOperators" ? (
+                    <div className={styles.buttonsContainer}>
                       <div
                         onClick={() => {
                           onExecute(element.id);
@@ -175,10 +156,27 @@ const Table = ({ type, onExecute, onDelete, color }) => {
                       >
                         {labelButton}
                       </div>
-                    )}
-                  </div>
+                      <div
+                        onClick={() => {
+                          onDelete(element.id);
+                        }}
+                        className={`${styles.button} ${styles.deleteButton}`}
+                      >
+                        Eliminar
+                      </div>
+                    </div>
+                  ) : (
+                    <div
+                      onClick={() => {
+                        onExecute(element.id);
+                      }}
+                      className={styles.button}
+                    >
+                      {labelButton}
+                    </div>
+                  )}
                 </div>
-              </>
+              </div>
             ))
           ) : (
             <div>
