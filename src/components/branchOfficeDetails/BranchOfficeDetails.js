@@ -131,7 +131,11 @@ const BranchOfficeDetails = () => {
       .then(() => {
         sweetEdit();
       })
-      .catch((error) => console.error(error));
+      .catch((err) => {
+        if (err.response.data === "Name branch office already exists") {
+          setError("Ya se encuentra registrada una sucursal con ese nombre.");
+        } else setError("Error al intentar editar sucursal.");
+      });
   };
 
   return (
@@ -294,7 +298,7 @@ const BranchOfficeDetails = () => {
             </div>
           </div>
           <div className={styles.group}>
-          {error && <p className="error-message">{error}</p>}
+            {error && <p className="error-message">{error}</p>}
             <button className={styles.button} type="submit">
               Guardar cambios
             </button>

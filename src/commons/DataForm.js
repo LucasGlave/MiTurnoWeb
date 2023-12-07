@@ -128,9 +128,15 @@ const DataForm = ({ type, color }) => {
       branch_office_id: formData.branch_office_id,
     };
 
-    userServiceClient(temp, id).then(() => {
-      sweetEdit();
-    });
+    userServiceClient(temp, id)
+      .then(() => {
+        sweetEdit();
+      })
+      .catch((err) => {
+        if (err.response.data === "DNI already exists") {
+          setError("Ya se encuentra registrada una cuenta con ese Dni.");
+        } else setError("Error al intentar registrarse.");
+      });
   };
 
   return (
