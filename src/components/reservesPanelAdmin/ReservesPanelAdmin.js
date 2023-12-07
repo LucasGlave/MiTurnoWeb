@@ -9,16 +9,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeElement, setElements } from "@/state/elements";
 import Swal from "sweetalert2";
 
-const ReservesPanelOperator = () => {
-  const user = useSelector((state) => state.user);
+const ReservesPanelAdmin = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    turnServiceGetByConfirmationAndBranchOffice(user.branch_office_id).then(
-      (turns) => {
-        dispatch(setElements(turns));
-      }
-    );
+    turnServiceGetByConfirmation("pending").then((turns) => {
+      dispatch(setElements(turns));
+    });
   }, []);
 
   const onExecute = (id) => {
@@ -57,12 +54,8 @@ const ReservesPanelOperator = () => {
   };
 
   return (
-    <Table
-      type="OperatorReserves"
-      onExecute={onExecute}
-      color={"reserve-panel"}
-    />
+    <Table type="AdminReserves" onExecute={onExecute} color={"admin-panel"} />
   );
 };
 
-export default ReservesPanelOperator;
+export default ReservesPanelAdmin;
