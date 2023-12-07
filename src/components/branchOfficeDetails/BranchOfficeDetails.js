@@ -134,7 +134,7 @@ const BranchOfficeDetails = () => {
       .catch((err) => {
         if (err.response.data === "Name branch office already exists") {
           setError("Ya se encuentra registrada una sucursal con ese nombre.");
-        } else setError("Error al intentar registrarse.");
+        } else setError("Error al intentar editar sucursal.");
       });
   };
 

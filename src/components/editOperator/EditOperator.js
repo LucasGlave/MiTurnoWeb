@@ -121,7 +121,7 @@ const EditOperator = () => {
       .catch((err) => {
         if (err.response.data === "DNI already exists") {
           setError("Ya se encuentra registrada una cuenta con ese Dni.");
-        } else setError("Error al intentar registrarse.");
+        } else setError("Error al intentar editar perfil.");
       });
   };
 
