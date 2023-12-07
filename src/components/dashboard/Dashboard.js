@@ -48,6 +48,8 @@ const Dashboard = () => {
   const [stateAdvance, setStateAdvance] = useState(null);
   const [stateYear, setStateYear] = useState({});
   const [arrayDataset, setArrayDataset] = useState([]);
+  const [advancePercentage, setAdvancePercentage] = useState(null);
+  const [notAdvancePercentage, setNotAdvancePercentage] = useState(null);
   const [checked, setChecked] = useState({
     cancelled: true,
     absence: true,
@@ -160,7 +162,12 @@ const Dashboard = () => {
       turnServiceDashboardByTime(branch).then((res) => setStateYear(res.data));
     }
   }, [branch]);
-
+  useEffect(() => {
+    setAdvancePercentage(
+      ((stateReserve.total - stateAdvance) * 100) / stateReserve.total
+    );
+    setNotAdvancePercentage((stateAdvance * 100) / stateReserve.total);
+  }, [stateAdvance, stateReserve]);
   const options = {
     responsive: true,
     plugins: {
@@ -329,7 +336,7 @@ const Dashboard = () => {
                 padding: 30,
               }}
             >
-              {branch ? (
+              {branch && stateReserve.total ? (
                 <Doughnut
                   data={data}
                   options={{
@@ -502,7 +509,7 @@ const Dashboard = () => {
               justifyContent: "space-between",
             }}
           >
-            {branch ? (
+            {branch && stateReserve.total ? (
               <>
                 <p
                   style={{
@@ -517,10 +524,11 @@ const Dashboard = () => {
                     transition: "width 0.5s ease-in-out",
                   }}
                 />
-                <h3>{`${`${
-                  ((stateReserve.total - stateAdvance) * 100) /
-                  stateReserve.total
-                }`.slice(0, 2)}%`}</h3>
+                {advancePercentage === 100 ? (
+                  <h3>{advancePercentage}%</h3>
+                ) : (
+                  <h3>{advancePercentage.toString().slice(0, 2)}%</h3>
+                )}
               </>
             ) : (
               <p
@@ -544,7 +552,7 @@ const Dashboard = () => {
               justifyContent: "space-between",
             }}
           >
-            {branch ? (
+            {branch && stateReserve.total ? (
               <>
                 <p
                   style={{
@@ -556,10 +564,11 @@ const Dashboard = () => {
                     transition: "width 0.5s ease-in-out",
                   }}
                 />
-                <h3>{`${`${(stateAdvance * 100) / stateReserve.total}`.slice(
-                  0,
-                  2
-                )}%`}</h3>
+                {notAdvancePercentage === 100 ? (
+                  <h3>{notAdvancePercentage}%</h3>
+                ) : (
+                  <h3>{notAdvancePercentage.toString().slice(0, 2)}%</h3>
+                )}
               </>
             ) : (
               <p
